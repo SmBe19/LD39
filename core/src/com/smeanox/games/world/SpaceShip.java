@@ -7,18 +7,37 @@ import java.util.EnumMap;
 public class SpaceShip {
 
 	private final SpaceShipType type;
+	private String name;
 	private Planet start, destination;
 	private float distance, progress;
 	private boolean inSpace;
 	private float weight;
 	private EnumMap<ResourceType, Rapper<Float>> resources;
 
-	public SpaceShip(SpaceShipType type) {
+	// TODO add ship construction and ship cost
+	public SpaceShip(SpaceShipType type, String name, Planet start) {
 		this.type = type;
+		this.name = name;
+		this.start = start;
+		this.destination = start;
+		start.getSpaceShips().add(this);
+
+		resources = new EnumMap<ResourceType, Rapper<Float>>(ResourceType.class);
+		for (ResourceType resourceType : ResourceType.values()) {
+			resources.put(resourceType, new Rapper<Float>(0f));
+		}
 	}
 
 	public SpaceShipType getType() {
 		return type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Planet getStart() {
@@ -49,35 +68,35 @@ public class SpaceShip {
 		return resources;
 	}
 
-	private void updateDistanceAndWeight(){
+	private void updateDistanceAndWeight() {
 		distance = (float) Math.sqrt((destination.getX() - start.getX()) * (destination.getX() - start.getX()) +
 				(destination.getY() - start.getY()) * (destination.getY() - start.getY()));
-		weight = 0;
+		weight = type.config.weight;
 		for (ResourceType resourceType : ResourceType.values()) {
 			weight += resources.get(resourceType).val * resourceType.weight;
 		}
 	}
 
-	public boolean moveResource(ResourceType type, float amountPlanetToSpaceShip){
-		if (start.getResources().get(type).val < amountPlanetToSpaceShip) {
+	public boolean moveResource(ResourceType type, float amountPlanetToSpaceShip) {
+		if (start.getResources().get(type).val < amountPlanetToSpaceShip || resources.get(type).val + amountPlanetToSpaceShip < 0) {
 			return false;
 		}
 		start.getResources().get(type).val -= amountPlanetToSpaceShip;
 		resources.get(type).val += amountPlanetToSpaceShip;
-		if (type == ResourceType.dudes){
+		if (type == ResourceType.dudes) {
 			start.addTotalDudes((int) -amountPlanetToSpaceShip);
 		}
 		return true;
 	}
 
 	public boolean canStart(Planet destination) {
-		if (inSpace){
+		if (inSpace) {
 			return false;
 		}
 		this.destination = destination;
 		updateDistanceAndWeight();
 		float usage = type.config.propellantPerWeightAndDistance * distance * weight;
-		if (usage > resources.get(ResourceType.propellant).val){
+		if (usage > resources.get(ResourceType.propellant).val) {
 			return false;
 		}
 		return true;
@@ -107,8 +126,8 @@ public class SpaceShip {
 		}
 	}
 
-	private void arrive(){
-		if (!inSpace){
+	private void arrive() {
+		if (!inSpace) {
 			return;
 		}
 		inSpace = false;

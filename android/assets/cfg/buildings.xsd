@@ -13,23 +13,14 @@
 
     <xs:complexType name="building">
         <xs:sequence>
-            <xs:element name="texture">
-                <xs:complexType>
-                    <xs:attribute name="id" type="xs:string"/>
-                    <xs:attribute name="x" type="xs:int"/>
-                    <xs:attribute name="y" type="xs:int"/>
-                    <xs:attribute name="width" type="xs:int"/>
-                    <xs:attribute name="height" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
             <xs:element name="properties">
                 <xs:complexType>
-                    <xs:attribute name="width" type="xs:int"/>
-                    <xs:attribute name="height" type="xs:int"/>
-                    <xs:attribute name="dudes_needed" type="xs:int"/>
-                    <xs:attribute name="dudes_capacity_increase" type="xs:int"/>
-                    <xs:attribute name="spaceships_increase" type="xs:int"/>
-                    <xs:attribute name="level_usage" type="xs:float"/>
+                    <xs:attribute name="width" type="xs:int" use="required"/>
+                    <xs:attribute name="height" type="xs:int" use="required"/>
+                    <xs:attribute name="dudes_needed" type="xs:int" use="required"/>
+                    <xs:attribute name="dudes_capacity_increase" type="xs:int" use="required"/>
+                    <xs:attribute name="spaceships_increase" type="xs:int" use="required"/>
+                    <xs:attribute name="level_usage" type="xs:float" use="required"/>
                 </xs:complexType>
             </xs:element>
             <xs:element name="needGridElement">
@@ -37,7 +28,7 @@
                     <xs:sequence>
                         <xs:element name="element">
                             <xs:complexType>
-                                <xs:attribute name="type" type="gridelement"/>
+                                <xs:attribute name="type" type="gridelement" use="required"/>
                             </xs:complexType>
                         </xs:element>
                     </xs:sequence>
@@ -45,9 +36,12 @@
             </xs:element>
             <xs:element name="resourcesBuild" type="resourceList"/>
             <xs:element name="resourcesDestroy" type="resourceList"/>
-            <xs:element name="resourceUsage" type="resourceList"/>
+            <xs:element name="resourcesUsage" type="resourceList"/>
         </xs:sequence>
-        <xs:attribute name="key" type="xs:string"/>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="texture" type="xs:string" use="required"/>
+        <xs:attribute name="preview" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="gridelement">
@@ -65,8 +59,8 @@
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="resource">
                 <xs:complexType>
-                    <xs:attribute name="type" type="resource"/>
-                    <xs:attribute name="amount" type="xs:float"/>
+                    <xs:attribute name="type" type="resource" use="required"/>
+                    <xs:attribute name="amount" type="xs:float" use="required"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>

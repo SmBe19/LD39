@@ -2,20 +2,16 @@
 <spaceships xmlns="http://games.smeanox.com"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://games.smeanox.com spaceships.xsd">
-    <spaceship key="small">
-        <texture id="spaceships" x="0" y="0" width="10" height="10"/>
-        <properties capacity="10" propellant="1" speed="1" buildTime="5"/>
+    <spaceship key="small" name="small" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
+        <properties capacity="10" propellant="1" speed="1" weight="5"/>
     </spaceship>
-    <spaceship key="medium">
-        <texture id="spaceships" x="0" y="0" width="10" height="10"/>
-        <properties capacity="10" propellant="1" speed="1" buildTime="5"/>
+    <spaceship key="medium" name="medium" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
+        <properties capacity="10" propellant="1" speed="1" weight="5"/>
     </spaceship>
-    <spaceship key="big">
-        <texture id="spaceships" x="0" y="0" width="10" height="10"/>
-        <properties capacity="10" propellant="1" speed="1" buildTime="5"/>
+    <spaceship key="large" name="large" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
+        <properties capacity="10" propellant="1" speed="1" weight="5"/>
     </spaceship>
-    <spaceship key="giant">
-        <texture id="spaceships" x="0" y="0" width="10" height="10"/>
-        <properties capacity="10" propellant="1" speed="1" buildTime="5"/>
+    <spaceship key="giant" name="giant" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
+        <properties capacity="10" propellant="1" speed="1" weight="5"/>
     </spaceship>
 </spaceships>

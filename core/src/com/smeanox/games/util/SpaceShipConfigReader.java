@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.XmlReader;
 import com.smeanox.games.Consts;
-import com.smeanox.games.screen.Textures;
-import com.smeanox.games.world.BuildingConfig;
+import com.smeanox.games.screen.Atlas;
 import com.smeanox.games.world.SpaceShipConfig;
 
 import java.io.IOException;
@@ -27,14 +26,17 @@ public class SpaceShipConfigReader {
 		XmlReader.Element root = xmlReader.parse(Gdx.files.internal(file));
 		for (XmlReader.Element spaceship : root.getChildrenByName("spaceship")) {
 			String key = spaceship.getAttribute("key");
-			XmlReader.Element texture = spaceship.getChildByName("texture");
-			TextureRegion textureRegion = new TextureRegion(Textures.valueOf(texture.getAttribute("id")).texture,
-					texture.getInt("x"), texture.getInt("y"),
-					texture.getInt("width"), texture.getInt("height"));
+			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("texture"));
+			TextureRegion smallTextureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("small_texture"));
 			XmlReader.Element properties = spaceship.getChildByName("properties");
-			configs.put(key, new SpaceShipConfig(textureRegion, properties.getFloat("capacity"),
-					properties.getFloat("propellant"), properties.getFloat("speed"),
-					properties.getFloat("buildTime")));
+			configs.put(key, new SpaceShipConfig(
+					textureRegion,
+					smallTextureRegion,
+					spaceship.getAttribute("name"),
+					properties.getFloat("capacity"),
+					properties.getFloat("propellant"),
+					properties.getFloat("speed"),
+					properties.getFloat("weight")));
 		}
 	}
 

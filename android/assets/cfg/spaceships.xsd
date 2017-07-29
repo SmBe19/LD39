@@ -13,24 +13,45 @@
 
     <xs:complexType name="spaceship">
         <xs:sequence>
-            <xs:element name="texture">
-                <xs:complexType>
-                    <xs:attribute name="id" type="xs:string"/>
-                    <xs:attribute name="x" type="xs:int"/>
-                    <xs:attribute name="y" type="xs:int"/>
-                    <xs:attribute name="width" type="xs:int"/>
-                    <xs:attribute name="height" type="xs:int"/>
-                </xs:complexType>
-            </xs:element>
             <xs:element name="properties">
                 <xs:complexType>
-                    <xs:attribute name="capacity" type="xs:float"/>
-                    <xs:attribute name="propellant" type="xs:float"/>
-                    <xs:attribute name="speed" type="xs:float"/>
-                    <xs:attribute name="buildTime" type="xs:float"/>
+                    <xs:attribute name="capacity" type="xs:float" use="required"/>
+                    <xs:attribute name="propellant" type="xs:float" use="required"/>
+                    <xs:attribute name="speed" type="xs:float" use="required"/>
+                    <xs:attribute name="weight" type="xs:float" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="resourcesBuild" type="resourceList"/>
+            <xs:element name="resourcesDestroy" type="resourceList"/>
+        </xs:sequence>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="texture" type="xs:string" use="required"/>
+        <xs:attribute name="small_texture" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="resourceList">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="resource">
+                <xs:complexType>
+                    <xs:attribute name="type" type="resource" use="required"/>
+                    <xs:attribute name="amount" type="xs:float" use="required"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="key" type="xs:string"/>
     </xs:complexType>
+
+    <xs:simpleType name="resource">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="electricity"/>
+            <xs:enumeration value="metal"/>
+            <xs:enumeration value="propellant"/>
+            <xs:enumeration value="water"/>
+            <xs:enumeration value="dudes"/>
+            <xs:enumeration value="solarpanel"/>
+            <xs:enumeration value="oil"/>
+            <xs:enumeration value="gas"/>
+            <xs:enumeration value="coal"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

@@ -1,27 +1,339 @@
 package com.smeanox.games.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.smeanox.games.Consts;
+import com.smeanox.games.world.BuildingType;
+import com.smeanox.games.world.Planet;
+import com.smeanox.games.world.SpaceShip;
+import com.smeanox.games.world.SpaceShipType;
 import com.smeanox.games.world.Universe;
+
+import java.util.List;
+
+import static com.badlogic.gdx.Gdx.input;
 
 public class GameScreen implements Screen {
 
-	private SpriteBatch batch;
-	private Camera camera;
-	private Universe universe;
+	private final Universe universe;
+	private final ResourceWidget spaceMapResourceWidget;
+	private final SpaceShipDetailWidget spaceShipDetailWidget;
+	private final SpaceShipLoadingWidget spaceShipLoadingWidget;
 	private float unusedTime;
+	private Planet currentPlanet;
+	private SpaceShip currentSpaceShip;
+	private boolean selectingStart;
+
+	private final Stage buildStage, spaceStage, portStage;
+	private final Skin skin;
+	private Stage currentStage;
+	private final BuildWidget buildWidget;
+	private ResourceWidget resourceWidgetBuild, resourceWidgetPort;
+	private final SpaceMapWidget spaceMapWidget;
+	private final VerticalGroup shipListBuild, shipListSpace;
+	private final VerticalGroup planetList;
+	private final TextField planetNameTextField, spaceShipNameTextField;
+	private final HorizontalGroup buildingsList;
+	private final Image spaceShipImage;
 
 	public GameScreen() {
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT);
-
 		universe = new Universe();
+		universe.bigBang();
+		currentPlanet = universe.getPlanets().get(0);
+		currentSpaceShip = new SpaceShip(SpaceShipType.medium, "Ship", currentPlanet);
+		universe.getSpaceShips().add(currentSpaceShip);
 		unusedTime = 0;
+
+		skin = new Skin();
+		skin.addRegions(Atlas.ui.atlas);
+		skin.addRegions(Atlas.textures.atlas);
+		skin.load(Gdx.files.internal("uiskin.json"));
+
+		buildStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+		spaceStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+		portStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+
+		buildWidget = new BuildWidget();
+		resourceWidgetBuild = new ResourceWidget(skin, true);
+		resourceWidgetPort = new ResourceWidget(skin, true);
+		spaceMapResourceWidget = new ResourceWidget(skin, false);
+		spaceMapWidget = new SpaceMapWidget(skin, universe);
+		planetList = new VerticalGroup();
+		shipListBuild = new VerticalGroup();
+		shipListSpace = new VerticalGroup();
+		buildingsList = new HorizontalGroup();
+		planetNameTextField = new TextField("", skin);
+		spaceShipNameTextField = new TextField("", skin);
+		spaceShipImage = new Image();
+		spaceShipDetailWidget = new SpaceShipDetailWidget(skin);
+		spaceShipLoadingWidget = new SpaceShipLoadingWidget(skin);
+
+		initUI();
+
+		setCurrentPlanet(universe.getPlanets().get(0));
+		activateStage(buildStage);
+	}
+
+	private void initUI() {
+		initBuildStage();
+		initSpaceStage();
+		initPortStage();
+	}
+
+	private void initBuildStage() {
+		Image background = new Image(skin.getDrawable("ui/background"));
+		background.setScaling(Scaling.fill);
+		background.setFillParent(true);
+		buildStage.addActor(background);
+
+		Table buildTable = new Table(skin);
+		buildTable.setFillParent(true);
+		buildStage.addActor(buildTable);
+
+		buildTable.row().height(30);
+		buildTable.add();
+		buildTable.add(resourceWidgetBuild);
+		buildTable.add();
+		buildTable.row();
+
+		// planets
+		planetList.padLeft(5);
+		// TODO fix alignment
+		planetList.align(Align.left);
+		for (final Planet planet : universe.getPlanets()) {
+			PlanetWidget planetWidget = new PlanetWidget(planet, skin);
+			planetWidget.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					setCurrentPlanet(planet);
+				}
+			});
+			planetList.addActor(planetWidget);
+		}
+		VerticalGroup planetStuff = new VerticalGroup();
+		planetStuff.align(Align.left);
+		planetNameTextField.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				currentPlanet.setName(((TextField) actor).getText());
+			}
+		});
+		addEscToTextField(planetNameTextField);
+		planetStuff.addActor(planetNameTextField);
+		planetStuff.addActor(planetList);
+		buildTable.add(planetStuff).width(150);
+
+		// build grid
+		ScrollPane buildScrollPane = new ScrollPane(buildWidget, skin, "no-bars");
+		buildTable.add(buildScrollPane).expand();
+
+		// spaceships
+		shipListBuild.padRight(5);
+		shipListBuild.align(Align.right);
+		buildTable.add(shipListBuild).width(150);
+
+		buildTable.row().height(100);
+
+		// spacemap
+		ImageButton spacemapButton = new ImageButton(skin.getDrawable("ui/button_spacemap"));
+		spacemapButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				activateStage(spaceStage);
+			}
+		});
+		buildTable.add(spacemapButton);
+
+		// buildings
+		ScrollPane buildingsScrollPane = new ScrollPane(buildingsList, skin);
+		buildingsList.addActor(createBuildingButton(new Image(skin.getDrawable("building/cancel")),
+				"Cancel", new ChangeListener() {
+					@Override
+					public void changed(ChangeEvent event, Actor actor) {
+						buildWidget.setCurrentDestroy(false);
+						buildWidget.setCurrentBuildingType(null);
+					}
+				}));
+		buildingsList.addActor(createBuildingButton(new Image(skin.getDrawable("building/destroy")),
+				"Remove", new ChangeListener() {
+					@Override
+					public void changed(ChangeEvent event, Actor actor) {
+						buildWidget.setCurrentDestroy(true);
+					}
+				}));
+		for (final BuildingType buildingType : BuildingType.values()) {
+			buildingsList.addActor(createBuildingButton(new Image(buildingType.config.previewTexture),
+					buildingType.config.name, new ChangeListener() {
+						@Override
+						public void changed(ChangeEvent event, Actor actor) {
+							buildWidget.setCurrentBuildingType(buildingType);
+						}
+					}));
+		}
+		buildTable.add(buildingsScrollPane);
+
+		buildTable.add();
+
+		buildTable.setDebug(Consts.DEBUG, true);
+	}
+
+	private void addEscToTextField(TextField textField) {
+		textField.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if (keycode == Input.Keys.ESCAPE) {
+					buildStage.setKeyboardFocus(null);
+					spaceStage.setKeyboardFocus(null);
+					portStage.setKeyboardFocus(null);
+					return true;
+				}
+				return false;
+			}
+		});
+	}
+
+	private Button createBuildingButton(Image preview, String text, EventListener listener) {
+		Button building = new Button(skin);
+		preview.setScaling(Scaling.fit);
+		building.add(preview).height(Value.percentHeight(0.4f)).width(Value.percentHeight(0.4f));
+		building.row();
+		building.add(new Label(text, skin));
+		building.addListener(listener);
+		return building;
+	}
+
+	private void initSpaceStage() {
+		Image background = new Image(skin.getDrawable("ui/background"));
+		background.setScaling(Scaling.fill);
+		background.setFillParent(true);
+		spaceStage.addActor(background);
+
+		spaceMapWidget.addListener(new SpaceMapWidget.PlanetClickedListener() {
+			@Override
+			public void clicked(SpaceMapWidget.PlanetClickedEvent event, Planet planet) {
+				if(selectingStart){
+					if(currentSpaceShip.canStart(planet)){
+						currentSpaceShip.start(planet);
+						setSelectingStart(false);
+					}
+				} else {
+					setCurrentPlanet(planet);
+					activateStage(buildStage);
+				}
+			}
+		});
+		spaceMapWidget.setResourceWidget(spaceMapResourceWidget);
+		ScrollPane spaceMapScrollPane = new ScrollPane(spaceMapWidget, skin, "no-bars");
+		spaceMapScrollPane.setFillParent(true);
+		spaceStage.addActor(spaceMapScrollPane);
+
+		Table spaceTable = new Table(skin);
+		spaceTable.setFillParent(true);
+		spaceStage.addActor(spaceTable);
+
+		spaceTable.row().height(30);
+		spaceTable.add();
+		spaceTable.row();
+		spaceTable.add(spaceMapResourceWidget);
+		spaceTable.add().expand();
+		shipListSpace.padRight(5);
+		shipListSpace.align(Align.right);
+		spaceTable.add(shipListSpace).width(150);
+		spaceTable.row().height(100);
+		ImageButton backButton = new ImageButton(skin.getDrawable("ui/button_back"));
+		backButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				activateStage(selectingStart ? portStage : buildStage);
+				setSelectingStart(false);
+			}
+		});
+		spaceTable.add(backButton).width(150);
+
+		spaceTable.setDebug(Consts.DEBUG, true);
+	}
+
+	private void initPortStage() {
+		Image background = new Image(skin.getDrawable("ui/background"));
+		background.setScaling(Scaling.fill);
+		background.setFillParent(true);
+		portStage.addActor(background);
+
+		Table portTable = new Table(skin);
+		portTable.setFillParent(true);
+		portStage.addActor(portTable);
+
+		portTable.row().height(30);
+		portTable.add();
+		portTable.add(resourceWidgetPort);
+		portTable.add();
+		portTable.row();
+
+		spaceShipNameTextField.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				currentSpaceShip.setName(((TextField) actor).getText());
+			}
+		});
+		addEscToTextField(spaceShipNameTextField);
+		portTable.add(spaceShipNameTextField);
+		spaceShipImage.setScaling(Scaling.fit);
+		portTable.add(spaceShipImage).expand();
+		portTable.add(spaceShipDetailWidget).width(200);
+		portTable.row().height(100);
+		ImageButton backButton = new ImageButton(skin.getDrawable("ui/button_back"));
+		backButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				activateStage(buildStage);
+			}
+		});
+		portTable.add(backButton);
+		portTable.add(spaceShipLoadingWidget);
+		ImageButton launchButton = new ImageButton(skin.getDrawable("ui/button_launch"));
+		launchButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				setCurrentPlanet(currentSpaceShip.getStart());
+				setSelectingStart(true);
+				activateStage(spaceStage);
+			}
+		});
+		portTable.add(launchButton).width(200);
+
+		portTable.setDebug(Consts.DEBUG, true);
+	}
+
+	private void activateStage(Stage stage) {
+		currentStage = stage;
+		input.setInputProcessor(currentStage);
+		setCurrentPlanet(currentPlanet);
+		setCurrentSpaceShip(currentSpaceShip);
+		initSpaceShipList(shipListSpace, universe.getSpaceShips());
 	}
 
 	@Override
@@ -31,16 +343,67 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+		currentStage.act(delta);
+		currentStage.draw();
 	}
 
 	private void update(float delta) {
-		unusedTime += delta;
-		while(unusedTime >= Consts.UNIVERSE_STEP_SIZE){
+		unusedTime += delta * 1000;
+		while (unusedTime >= Consts.UNIVERSE_STEP_SIZE) {
 			universe.step();
 			unusedTime -= Consts.UNIVERSE_STEP_SIZE;
 		}
+	}
+
+	public Planet getCurrentPlanet() {
+		return currentPlanet;
+	}
+
+	public void setCurrentPlanet(Planet currentPlanet) {
+		this.currentPlanet = currentPlanet;
+		buildWidget.setPlanet(currentPlanet);
+		resourceWidgetBuild.setPlanet(currentPlanet);
+		planetNameTextField.setText(currentPlanet.getName());
+		spaceMapWidget.setCurrentPlanet(currentPlanet);
+		resourceWidgetPort.setPlanet(currentPlanet);
+
+		// TODO update list once a ship arrives
+		initSpaceShipList(shipListBuild, currentPlanet.getSpaceShips());
+	}
+
+	private void initSpaceShipList(Group group, List<SpaceShip> ships) {
+		group.clearChildren();
+		for (final SpaceShip spaceShip : ships) {
+			ShipWidget shipWidget = new ShipWidget(spaceShip, skin);
+			shipWidget.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					setCurrentSpaceShip(spaceShip);
+					activateStage(portStage);
+				}
+			});
+			group.addActor(shipWidget);
+		}
+	}
+
+	public boolean isSelectingStart() {
+		return selectingStart;
+	}
+
+	public void setSelectingStart(boolean selectingStart) {
+		this.selectingStart = selectingStart;
+	}
+
+	public SpaceShip getCurrentSpaceShip() {
+		return currentSpaceShip;
+	}
+
+	public void setCurrentSpaceShip(SpaceShip currentSpaceShip) {
+		this.currentSpaceShip = currentSpaceShip;
+		spaceShipImage.setDrawable(new TextureRegionDrawable(currentSpaceShip.getType().config.texture));
+		spaceShipNameTextField.setText(currentSpaceShip.getName());
+		spaceShipDetailWidget.setSpaceShip(currentSpaceShip);
+		spaceShipLoadingWidget.setSpaceShip(currentSpaceShip);
 	}
 
 	@Override
@@ -50,10 +413,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		float ratio = (float) width / height;
-		camera.viewportWidth = ratio * Consts.DESIGN_HEIGHT;
-		camera.viewportHeight = Consts.DESIGN_HEIGHT;
-		camera.update();
+		buildStage.getViewport().update(width, height, true);
+		spaceStage.getViewport().update(width, height, true);
+		portStage.getViewport().update(width, height, true);
 	}
 
 	@Override
@@ -73,6 +435,12 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
+		buildStage.dispose();
+		spaceStage.dispose();
+		portStage.dispose();
+		skin.dispose();
+		for (Atlas atlas : Atlas.values()) {
+			atlas.atlas.dispose();
+		}
 	}
 }

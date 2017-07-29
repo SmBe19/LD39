@@ -16,8 +16,11 @@ public class Building {
 		return type;
 	}
 
-	public boolean canBuild(Planet planet, int x, int y) {
+	public static boolean canBuild(BuildingType type, Planet planet, int x, int y) {
 		if (!type.config.needGridElementType.contains(planet.getGrid()[y][x].getType())) {
+			return false;
+		}
+		if (planet.getGrid()[y][x] != null){
 			return false;
 		}
 		for (ResourceType resourceType : ResourceType.values()) {
@@ -26,6 +29,10 @@ public class Building {
 			}
 		}
 		return true;
+	}
+
+	public boolean canBuild(Planet planet, int x, int y) {
+		return Building.canBuild(type, planet, x, y);
 	}
 
 	public void build(Planet planet, int x, int y) {
@@ -71,7 +78,7 @@ public class Building {
 		planet.getGrid()[y][x].addLevel(-type.config.levelUsage);
 	}
 
-	public boolean canDestroy(Planet planet) {
+	public static boolean canDestroy(BuildingType type, Planet planet) {
 		for (ResourceType resourceType : ResourceType.values()) {
 			if (planet.getResources().get(resourceType).val < type.config.resourcesDestroy.get(resourceType)){
 				return false;
@@ -81,6 +88,10 @@ public class Building {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean canDestroy(Planet planet) {
+		return Building.canDestroy(type, planet);
 	}
 
 	public void destroy(Planet planet) {

@@ -1,23 +1,23 @@
 package com.smeanox.games.world;
 
 public class GridElement {
-	private GridElemenType type;
+	private GridElementType type;
 	private Building building;
 	private float level;
 	private int x, y;
 
-	public GridElement(GridElemenType type, float level, int x, int y) {
+	public GridElement(GridElementType type, float level, int x, int y) {
 		this.type = type;
 		this.level = level;
 		this.x = x;
 		this.y = y;
 	}
 
-	public GridElemenType getType() {
+	public GridElementType getType() {
 		return type;
 	}
 
-	public void setType(GridElemenType type) {
+	public void setType(GridElementType type) {
 		this.type = type;
 	}
 
