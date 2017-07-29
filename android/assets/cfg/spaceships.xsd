@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://games.smeanox.com"
+           xmlns="http://games.smeanox.com"
+           elementFormDefault="qualified">
+    <xs:element name="spaceships">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="spaceship" type="spaceship"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="spaceship">
+        <xs:sequence>
+            <xs:element name="texture">
+                <xs:complexType>
+                    <xs:attribute name="id" type="xs:string"/>
+                    <xs:attribute name="x" type="xs:int"/>
+                    <xs:attribute name="y" type="xs:int"/>
+                    <xs:attribute name="width" type="xs:int"/>
+                    <xs:attribute name="height" type="xs:int"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="properties">
+                <xs:complexType>
+                    <xs:attribute name="capacity" type="xs:float"/>
+                    <xs:attribute name="propellant" type="xs:float"/>
+                    <xs:attribute name="speed" type="xs:float"/>
+                    <xs:attribute name="buildTime" type="xs:float"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="key" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>

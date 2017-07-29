@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<buildings xmlns="http://games.smeanox.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://games.smeanox.com buildings.xsd">
+    <building key="oil">
+        <texture id="buildings" x="0" y="0" width="10" height="10"/>
+        <properties width="1" height="1" dudes_needed="1" dudes_capacity_increase="0"
+                    spaceships_increase="0" level_usage="1"/>
+        <needGridElement>
+            <element type="oil"/>
+        </needGridElement>
+        <resourcesBuild>
+            <resource type="electricity" amount="5"/>
+        </resourcesBuild>
+        <resourcesDestroy>
+            <resource type="electricity" amount="-5"/>
+        </resourcesDestroy>
+        <resourceUsage>
+            <resource type="electricity" amount="1"/>
+            <resource type="gas" amount="1"/>
+        </resourceUsage>
+    </building>
+</buildings>
