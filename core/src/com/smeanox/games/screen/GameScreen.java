@@ -130,8 +130,8 @@ public class GameScreen implements Screen {
 		Table buildTable = new Table(skin);
 		buildTable.setFillParent(true);
 		buildStage.addActor(buildTable);
-		buildTable.columnDefaults(0).width(150);
-		buildTable.columnDefaults(2).width(150);
+		buildTable.columnDefaults(0).width(200);
+		buildTable.columnDefaults(2).width(200);
 
 		buildTable.row().height(50);
 		buildTable.add(resourceWidgetBuild).colspan(3).width(Value.prefWidth);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.smeanox.games.Consts;
@@ -31,25 +32,21 @@ public class BuildWidget extends Widget {
 		currentBuildingType = null;
 		currentDestroy = false;
 
-		addListener(new InputListener(){
-			@Override
-			public boolean mouseMoved(InputEvent event, float x, float y) {
-				setxy(x, y);
-				return true;
-			}
+		addListener(new ClickListener(){
 
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public void clicked(InputEvent event, float x, float y) {
 				setxy(x, y);
+				if(event.getButton() != Input.Buttons.LEFT){
+					return;
+				}
 				if (currentDestroy){
 					GridElement gridElement = planet.getGrid()[mouseYY][mouseXX];
 					if (gridElement.getBuilding() != null && gridElement.getBuilding().canDestroy(planet)) {
 						gridElement.getBuilding().destroy(planet);
 					}
-					return true;
 				} else if (currentBuildingType != null){
 					new Building(currentBuildingType).build(planet, mouseXX, mouseYY);
-					return true;
 				} else {
 					long now = planet.getTime();
 					if (now - lastTouchDown < Consts.DOUBLE_CLICK_TIME){
@@ -62,8 +59,12 @@ public class BuildWidget extends Widget {
 						lastTouchDown = now;
 					}
 				}
+			}
 
-				return super.touchDown(event, x, y, pointer, button);
+			@Override
+			public boolean mouseMoved(InputEvent event, float x, float y) {
+				setxy(x, y);
+				return super.mouseMoved(event, x, y);
 			}
 
 			@Override

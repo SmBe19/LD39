@@ -19,212 +19,212 @@ arial16
   index: -1
 arial32
   rotate: false
-  xy: 128, 862
+  xy: 0, 862
   size: 512, 164
   orig: 512, 164
   offset: 0, 0
   index: -1
 building/cancel
   rotate: false
-  xy: 256, 478
+  xy: 640, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 building/city
   rotate: false
-  xy: 512, 478
-  size: 128, 128
-  orig: 128, 128
+  xy: 900, 250
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 building/coalmine
-  rotate: false
-  xy: 896, 478
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/coalplant
-  rotate: false
-  xy: 640, 478
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/destroy
-  rotate: false
-  xy: 768, 478
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/gasplant
-  rotate: false
-  xy: 0, 478
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/gasrig
-  rotate: false
-  xy: 868, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/metalmine
-  rotate: false
-  xy: 228, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/oilplant
-  rotate: false
-  xy: 100, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/oilrig
-  rotate: false
-  xy: 356, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/prev_city
-  rotate: false
-  xy: 484, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/prev_coalmine
-  rotate: false
-  xy: 612, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/prev_coalplant
-  rotate: false
-  xy: 740, 350
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/prev_gasplant
   rotate: false
   xy: 0, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_gasrig
+building/coalplant
+  rotate: false
+  xy: 256, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/destroy
+  rotate: false
+  xy: 896, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/gasplant
+  rotate: false
+  xy: 512, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/gasrig
+  rotate: false
+  xy: 128, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/metalmine
+  rotate: false
+  xy: 728, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/oilplant
+  rotate: false
+  xy: 600, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/oilrig
+  rotate: false
+  xy: 100, 350
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+building/prev_city
+  rotate: false
+  xy: 856, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_coalmine
+  rotate: false
+  xy: 0, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_coalplant
+  rotate: false
+  xy: 768, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_gasplant
   rotate: false
   xy: 128, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_metalmine
+building/prev_gasrig
   rotate: false
   xy: 128, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_oilplant
+building/prev_metalmine
   rotate: false
   xy: 512, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_oilrig
+building/prev_oilplant
   rotate: false
   xy: 384, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_propellantfactory
+building/prev_oilrig
   rotate: false
   xy: 768, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_solarfactory
+building/prev_propellantfactory
   rotate: false
   xy: 896, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_solarplant
-  rotate: false
-  xy: 0, 862
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/prev_spaceport
+building/prev_solarfactory
   rotate: false
   xy: 640, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_street
+building/prev_solarplant
   rotate: false
   xy: 256, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/prev_waterplant
+building/prev_spaceport
   rotate: false
   xy: 384, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/propellantfactory
+building/prev_street
   rotate: false
   xy: 0, 734
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/solarfactory
-  rotate: false
-  xy: 256, 606
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-building/solarplant
+building/prev_waterplant
   rotate: false
   xy: 512, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/spaceport
+building/propellantfactory
   rotate: false
   xy: 896, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/street
+building/solarfactory
   rotate: false
   xy: 640, 606
   size: 128, 128
   orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/solarplant
+  rotate: false
+  xy: 0, 350
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+building/spaceport
+  rotate: false
+  xy: 200, 350
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+building/street
+  rotate: false
+  xy: 300, 350
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 building/waterplant
@@ -236,14 +236,14 @@ building/waterplant
   index: -1
 ground/coal
   rotate: false
-  xy: 0, 350
+  xy: 400, 350
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 ground/gas
   rotate: false
-  xy: 900, 250
+  xy: 500, 350
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
@@ -501,14 +501,14 @@ ui/button_back
   index: -1
 ui/button_launch
   rotate: false
-  xy: 128, 478
+  xy: 384, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 ui/button_spacemap
   rotate: false
-  xy: 384, 478
+  xy: 256, 606
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

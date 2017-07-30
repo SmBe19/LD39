@@ -7,9 +7,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -28,9 +25,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="electricity" amount="1"/>
@@ -47,9 +41,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -69,9 +60,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -91,9 +79,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -167,9 +152,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -189,9 +171,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -211,9 +190,6 @@
                     spaceships_increase="2" level_usage="1"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
@@ -232,9 +208,6 @@
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
-            <element type="oil"/>
-            <element type="gas"/>
-            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
