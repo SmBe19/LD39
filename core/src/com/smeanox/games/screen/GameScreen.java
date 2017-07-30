@@ -87,7 +87,7 @@ public class GameScreen implements Screen {
 		spaceStage = new Stage(new ScreenViewport());
 		portStage = new Stage(new ScreenViewport());
 
-		buildWidget = new BuildWidget();
+		buildWidget = new BuildWidget(skin);
 		resourceWidgetBuild = new ResourceWidget(skin, true);
 		resourceInfoWidget = new ResourceInfoWidget(skin);
 		resourceWidgetPort = new ResourceWidget(skin, true);

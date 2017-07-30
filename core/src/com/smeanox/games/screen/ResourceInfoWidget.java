@@ -111,6 +111,7 @@ public class ResourceInfoWidget extends Widget {
 						cnt[1]++;
 					}
 				}
+				System.out.println(cnt[0] + " " + cnt[1]);
 				for (int i = 0; i < 2; i++) {
 					prefHeight += cnt[i] * Consts.RESOURCE_HEIGHT;
 				}
@@ -232,7 +233,7 @@ public class ResourceInfoWidget extends Widget {
 				ay -= Consts.RESOURCE_HEIGHT;
 			}
 		}
-		if (ax != x || buildingType == null) {
+		if (ax != x) {
 			ay -= Consts.RESOURCE_HEIGHT;
 		}
 		return ay;

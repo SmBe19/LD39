@@ -2,9 +2,10 @@ package com.smeanox.games.screen;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.smeanox.games.Consts;
@@ -15,6 +16,8 @@ import com.smeanox.games.world.Planet;
 
 public class BuildWidget extends Widget {
 
+	private final Skin skin;
+	private final BitmapFont font;
 	private Planet planet;
 	private float prefWidth, prefHeight;
 	private BuildingType currentBuildingType;
@@ -25,13 +28,14 @@ public class BuildWidget extends Widget {
 
 	private long lastTouchDown;
 
-	// TODO show level
-
-	public BuildWidget() {
+	public BuildWidget(Skin skin) {
+		this.skin = skin;
 		prefWidth = 0;
 		prefHeight = 0;
 		currentBuildingType = null;
 		currentDestroy = false;
+
+		font = skin.getFont("font-arial12");
 
 		addListener(new ClickListener(){
 
@@ -189,6 +193,10 @@ public class BuildWidget extends Widget {
 							Consts.GRID_WIDTH, Consts.GRID_HEIGHT);
 
 					batch.setColor(1, 1, 1, 1);
+
+					if (building.getType().config.levelUsage != 0) {
+						font.draw(batch, "" + MathUtils.round(gridElement.getLevel()), ax + x * Consts.GRID_WIDTH, ay + font.getCapHeight() + y * Consts.GRID_HEIGHT);
+					}
 				}
 			}
 		}
