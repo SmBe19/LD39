@@ -157,7 +157,7 @@ public class BuildWidget extends Widget {
 							batch.setColor(1, 1, 1, 0.5f);
 						}
 					} else if (!building.isActive()){
-						batch.setColor(0.7f, 0.7f, 0.7f, 1);
+						batch.setColor(1f, 0.3f, 0.3f, 0.5f);
 					}
 
 					batch.draw(building.getType().config.texture,

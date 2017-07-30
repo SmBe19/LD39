@@ -175,7 +175,7 @@ public class SpaceShip {
 			ErrorCatcher.get().setStart("Not enough propellant to reach destination.");
 			return false;
 		}
-		if (destination.getFreeSpaceShipCapacity() < 1){
+		if (destination.getFreeSpaceShipCapacity() < 1 && destination.isVisited()){
 			ErrorCatcher.get().setStart("Not enough capacity on the destination planet.");
 			return false;
 		}

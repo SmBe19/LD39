@@ -50,7 +50,7 @@ public class BuildingConfigReader {
 		for (XmlReader.Element building : root.getChildrenByName("building")) {
 			String key = building.getAttribute("key");
 			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(building.getAttribute("texture", "building/" + key));
-			TextureRegion previewTexture = Atlas.textures.atlas.findRegion(building.getAttribute("preview", "building/prev_" + key));
+			TextureRegion previewTexture = Atlas.textures.atlas.findRegion(building.getAttribute("preview", "building/" + key));
 			XmlReader.Element properties = building.getChildByName("properties");
 			XmlReader.Element needGridElement = building.getChildByName("needGridElement");
 			XmlReader.Element resourcesBuild = building.getChildByName("resourcesBuild");

@@ -19,7 +19,7 @@ public class Consts {
 	public static final String SPACESHIPS_CONFIG = "cfg/spaceships.xml";
 
 	public static final int UNIVERSE_STEP_SIZE = 100;
-	public static final float UNIVERSE_TIME_MULTIPLIER = 1000f / Consts.UNIVERSE_STEP_SIZE;
+	public static final float UNIVERSE_TIME_MULTIPLIER = Consts.UNIVERSE_STEP_SIZE / 1000f;
 
 	public static final float GRID_WIDTH = 50;
 	public static final float GRID_HEIGHT = 50;
