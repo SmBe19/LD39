@@ -53,8 +53,6 @@ public class Building {
 		for (ResourceType resourceType : ResourceType.values()) {
 			planet.getResources().get(resourceType).val -= type.config.resourcesBuild.get(resourceType);
 		}
-		planet.addDudesCapacity(type.config.dudesCapacityIncrease);
-		planet.addSpaceShipsCapacity(type.config.spaceShipsCapacityIncrease);
 		if (canActivate(planet)){
 			activate(planet);
 		}
@@ -92,27 +90,18 @@ public class Building {
 		planet.getGrid()[y][x].addLevel(-type.config.levelUsage);
 	}
 
-	public static boolean canDestroy(BuildingType type, Planet planet) {
+	public boolean canDestroy(Planet planet) {
+		if (!canDeactivate(planet)){
+			return false;
+		}
 		for (ResourceType resourceType : ResourceType.values()) {
 			if (planet.getResources().get(resourceType).val < type.config.resourcesDestroy.get(resourceType)){
 				ErrorCatcher.get().setBuilding("Not enough " + resourceType + ".");
 				return false;
 			}
 		}
-		if (planet.getDudesCapacity() - type.config.dudesCapacityIncrease < planet.getTotalDudes()){
-			ErrorCatcher.get().setBuilding("Not enough capacity to house all dudes.");
-			return false;
-		}
-		if (planet.getFreeSpaceShipCapacity() < type.config.spaceShipsCapacityIncrease) {
-			ErrorCatcher.get().setBuilding("Not enough capacity to store all space ships.");
-			return false;
-		}
 		ErrorCatcher.get().setBuilding("");
 		return true;
-	}
-
-	public boolean canDestroy(Planet planet) {
-		return Building.canDestroy(type, planet);
 	}
 
 	public void destroy(Planet planet) {
@@ -126,8 +115,7 @@ public class Building {
 		for (ResourceType resourceType : ResourceType.values()) {
 			planet.getResources().get(resourceType).val -= type.config.resourcesDestroy.get(resourceType);
 		}
-		planet.addDudesCapacity(-type.config.dudesCapacityIncrease);
-		planet.addSpaceShipsCapacity(-type.config.spaceShipsCapacityIncrease);
+		deactivate(planet);
 	}
 
 	public boolean isActive() {
@@ -154,10 +142,25 @@ public class Building {
 		active = true;
 
 		planet.getResources().get(ResourceType.dudes).val -= type.config.dudesNeeded;
+		planet.addDudesCapacity(type.config.dudesCapacityIncrease);
+		planet.addSpaceShipsCapacity(type.config.spaceShipsCapacityIncrease);
 	}
 
+	// TODO city does not correctly deactivate
 	public boolean canDeactivate(Planet planet) {
-		return active;
+		if (!active){
+			return false;
+		}
+		if (planet.getTotalDudes() < planet.getDudesCapacity() - type.config.dudesCapacityIncrease){
+			ErrorCatcher.get().setBuilding("Not enough capacity to house all dudes.");
+			return false;
+		}
+		if (planet.getFreeSpaceShipCapacity() < type.config.spaceShipsCapacityIncrease){
+			ErrorCatcher.get().setBuilding("Not enough capacity to store all space ships.");
+			return false;
+		}
+		ErrorCatcher.get().setBuilding("");
+		return true;
 	}
 
 	public void deactivate(Planet planet) {
@@ -168,6 +171,8 @@ public class Building {
 		active = false;
 
 		planet.getResources().get(ResourceType.dudes).val += type.config.dudesNeeded;
+		planet.addDudesCapacity(-type.config.dudesCapacityIncrease);
+		planet.addSpaceShipsCapacity(-type.config.spaceShipsCapacityIncrease);
 	}
 
 	public void toggle(Planet planet){

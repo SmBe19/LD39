@@ -1,5 +1,6 @@
 package com.smeanox.games.screen;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -65,6 +66,17 @@ public class BuildWidget extends Widget {
 				return super.touchDown(event, x, y, pointer, button);
 			}
 
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Input.Keys.ESCAPE){
+					currentDestroy = false;
+					currentBuildingType = null;
+					getStage().setKeyboardFocus(null);
+					return true;
+				}
+				return false;
+			}
+
 			private void setxy(float x, float y) {
 				mouseX = x;
 				mouseY = y;
@@ -82,6 +94,7 @@ public class BuildWidget extends Widget {
 		this.planet = planet;
 		prefWidth = Consts.GRID_WIDTH * planet.getWidth();
 		prefHeight = Consts.GRID_HEIGHT * planet.getHeight();
+		invalidateHierarchy();
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class SpaceShipConfigReader {
 			result.put(resourceType, 0f);
 		}
 		for (XmlReader.Element resource : element.getChildrenByName("resource")) {
-			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount"));
+			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount") * Consts.UNIVERSE_TIME_MULTIPLIER);
 		}
 		return result;
 	}
@@ -39,8 +39,8 @@ public class SpaceShipConfigReader {
 		XmlReader.Element root = xmlReader.parse(Gdx.files.internal(file));
 		for (XmlReader.Element spaceship : root.getChildrenByName("spaceship")) {
 			String key = spaceship.getAttribute("key");
-			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("texture"));
-			TextureRegion smallTextureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("small_texture"));
+			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("texture", "spaceship/" + key));
+			TextureRegion smallTextureRegion = Atlas.textures.atlas.findRegion(spaceship.getAttribute("small_texture", "spaceship/small_" + key));
 			XmlReader.Element properties = spaceship.getChildByName("properties");
 			XmlReader.Element resourcesBuild = spaceship.getChildByName("resourcesBuild");
 			XmlReader.Element resourcesDestroy = spaceship.getChildByName("resourcesDestroy");
@@ -49,8 +49,8 @@ public class SpaceShipConfigReader {
 					smallTextureRegion,
 					spaceship.getAttribute("name"),
 					properties.getFloat("capacity"),
-					properties.getFloat("propellant"),
-					properties.getFloat("speed"),
+					properties.getFloat("propellant") * Consts.UNIVERSE_TIME_MULTIPLIER,
+					properties.getFloat("speed") * Consts.UNIVERSE_TIME_MULTIPLIER,
 					properties.getFloat("weight"),
 					readResourceList(resourcesBuild),
 					readResourceList(resourcesDestroy)));

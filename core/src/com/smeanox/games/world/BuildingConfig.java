@@ -1,6 +1,7 @@
 package com.smeanox.games.world;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.smeanox.games.Consts;
 
 import java.util.EnumMap;
 import java.util.EnumSet;

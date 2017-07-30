@@ -108,7 +108,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -199,10 +199,57 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">img/arial12.png</key>
+            <key type="filename">img/arial16.png</key>
+            <key type="filename">img/arial32.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,128,256,256</rect>
+                <key>scale9Paddings</key>
+                <rect>128,128,256,256</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">img/building/cancel.png</key>
+            <key type="filename">img/building/city.png</key>
+            <key type="filename">img/building/coalmine.png</key>
+            <key type="filename">img/building/coalplant.png</key>
             <key type="filename">img/building/destroy.png</key>
-            <key type="filename">img/building/oil.png</key>
+            <key type="filename">img/building/gasplant.png</key>
+            <key type="filename">img/building/gasrig.png</key>
+            <key type="filename">img/building/metalmine.png</key>
+            <key type="filename">img/building/oilplant.png</key>
+            <key type="filename">img/building/oilrig.png</key>
+            <key type="filename">img/building/prev_city.png</key>
+            <key type="filename">img/building/prev_coalmine.png</key>
+            <key type="filename">img/building/prev_coalplant.png</key>
+            <key type="filename">img/building/prev_gasplant.png</key>
+            <key type="filename">img/building/prev_gasrig.png</key>
+            <key type="filename">img/building/prev_metalmine.png</key>
+            <key type="filename">img/building/prev_oilplant.png</key>
+            <key type="filename">img/building/prev_oilrig.png</key>
+            <key type="filename">img/building/prev_propellantfactory.png</key>
+            <key type="filename">img/building/prev_solarfactory.png</key>
+            <key type="filename">img/building/prev_solarplant.png</key>
+            <key type="filename">img/building/prev_spaceport.png</key>
+            <key type="filename">img/building/prev_street.png</key>
+            <key type="filename">img/building/prev_waterplant.png</key>
+            <key type="filename">img/building/propellantfactory.png</key>
+            <key type="filename">img/building/solarfactory.png</key>
+            <key type="filename">img/building/solarplant.png</key>
+            <key type="filename">img/building/spaceport.png</key>
+            <key type="filename">img/building/street.png</key>
+            <key type="filename">img/building/waterplant.png</key>
+            <key type="filename">img/ground/coal.png</key>
+            <key type="filename">img/ground/gas.png</key>
+            <key type="filename">img/ground/metal.png</key>
+            <key type="filename">img/ground/oil.png</key>
             <key type="filename">img/ground/sand.png</key>
+            <key type="filename">img/ground/water.png</key>
             <key type="filename">img/resource/coal.png</key>
             <key type="filename">img/resource/dudes.png</key>
             <key type="filename">img/resource/electricity.png</key>
@@ -212,8 +259,23 @@
             <key type="filename">img/resource/propellant.png</key>
             <key type="filename">img/resource/solarpanel.png</key>
             <key type="filename">img/resource/water.png</key>
-            <key type="filename">img/space/planet.png</key>
-            <key type="filename">img/spaceship/spaceship.png</key>
+            <key type="filename">img/space/alphacentauri.png</key>
+            <key type="filename">img/space/earth.png</key>
+            <key type="filename">img/space/planet0.png</key>
+            <key type="filename">img/space/planet1.png</key>
+            <key type="filename">img/space/planet2.png</key>
+            <key type="filename">img/space/planet3.png</key>
+            <key type="filename">img/space/planet4.png</key>
+            <key type="filename">img/space/planet5.png</key>
+            <key type="filename">img/space/planet6.png</key>
+            <key type="filename">img/spaceship/giant.png</key>
+            <key type="filename">img/spaceship/large.png</key>
+            <key type="filename">img/spaceship/medium.png</key>
+            <key type="filename">img/spaceship/small.png</key>
+            <key type="filename">img/spaceship/small_giant.png</key>
+            <key type="filename">img/spaceship/small_large.png</key>
+            <key type="filename">img/spaceship/small_medium.png</key>
+            <key type="filename">img/spaceship/small_small.png</key>
             <key type="filename">img/ui/background.png</key>
             <key type="filename">img/ui/button_back.png</key>
             <key type="filename">img/ui/button_launch.png</key>
@@ -230,43 +292,42 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">img/font_default.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>128,49,256,98</rect>
-                <key>scale9Paddings</key>
-                <rect>128,49,256,98</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">img/font_resource.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>128,128,256,256</rect>
-                <key>scale9Paddings</key>
-                <rect>128,128,256,256</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">img/resource/background.png</key>
-            <key type="filename">img/spaceship/background.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <true/>
                 <key>scale9Borders</key>
-                <rect>8,8,16,16</rect>
+                <rect>6,6,8,8</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,16,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">img/skin/default-round-down.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>5,5,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">img/skin/default-round.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>5,5,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

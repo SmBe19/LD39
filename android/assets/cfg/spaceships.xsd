@@ -26,8 +26,8 @@
         </xs:sequence>
         <xs:attribute name="key" type="xs:string" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="texture" type="xs:string" use="required"/>
-        <xs:attribute name="small_texture" type="xs:string" use="required"/>
+        <xs:attribute name="texture" type="xs:string" use="optional"/>
+        <xs:attribute name="small_texture" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="resourceList">

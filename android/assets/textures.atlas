@@ -1,202 +1,514 @@
 textures.png
-size: 512, 1060
+size: 1024, 2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+arial12
+  rotate: false
+  xy: 44, 0
+  size: 512, 32
+  orig: 512, 32
+  offset: 0, 0
+  index: -1
+arial16
+  rotate: false
+  xy: 200, 50
+  size: 512, 64
+  orig: 512, 64
+  offset: 0, 0
+  index: -1
+arial32
+  rotate: false
+  xy: 128, 862
+  size: 512, 164
+  orig: 512, 164
+  offset: 0, 0
+  index: -1
 building/cancel
   rotate: false
-  xy: 384, 480
+  xy: 256, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/city
+  rotate: false
+  xy: 512, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/coalmine
+  rotate: false
+  xy: 896, 478
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/coalplant
+  rotate: false
+  xy: 640, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 building/destroy
   rotate: false
-  xy: 0, 608
+  xy: 768, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-building/oil
+building/gasplant
   rotate: false
-  xy: 256, 480
+  xy: 0, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-font_default
+building/gasrig
   rotate: false
-  xy: 0, 864
-  size: 512, 196
-  orig: 512, 196
+  xy: 868, 350
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-font_resource
+building/metalmine
   rotate: false
-  xy: 0, 32
-  size: 512, 64
-  orig: 512, 64
+  xy: 228, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/oilplant
+  rotate: false
+  xy: 100, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/oilrig
+  rotate: false
+  xy: 356, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_city
+  rotate: false
+  xy: 484, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_coalmine
+  rotate: false
+  xy: 612, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_coalplant
+  rotate: false
+  xy: 740, 350
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_gasplant
+  rotate: false
+  xy: 0, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_gasrig
+  rotate: false
+  xy: 128, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_metalmine
+  rotate: false
+  xy: 128, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_oilplant
+  rotate: false
+  xy: 512, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_oilrig
+  rotate: false
+  xy: 384, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_propellantfactory
+  rotate: false
+  xy: 768, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_solarfactory
+  rotate: false
+  xy: 896, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_solarplant
+  rotate: false
+  xy: 0, 862
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_spaceport
+  rotate: false
+  xy: 640, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_street
+  rotate: false
+  xy: 256, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/prev_waterplant
+  rotate: false
+  xy: 384, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/propellantfactory
+  rotate: false
+  xy: 0, 734
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/solarfactory
+  rotate: false
+  xy: 256, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/solarplant
+  rotate: false
+  xy: 512, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/spaceport
+  rotate: false
+  xy: 896, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/street
+  rotate: false
+  xy: 640, 606
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+building/waterplant
+  rotate: false
+  xy: 768, 606
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 ground/coal
   rotate: false
-  xy: 0, 480
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 350
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ground/gas
   rotate: false
-  xy: 128, 608
-  size: 128, 128
-  orig: 128, 128
+  xy: 900, 250
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ground/metal
   rotate: false
-  xy: 0, 736
-  size: 128, 128
-  orig: 128, 128
+  xy: 200, 250
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ground/oil
   rotate: false
-  xy: 384, 736
-  size: 128, 128
-  orig: 128, 128
+  xy: 800, 250
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ground/sand
   rotate: false
-  xy: 256, 736
-  size: 128, 128
-  orig: 128, 128
+  xy: 712, 50
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ground/water
   rotate: false
-  xy: 128, 736
-  size: 128, 128
-  orig: 128, 128
+  xy: 812, 50
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 resource/background
   rotate: false
-  xy: 32, 0
-  size: 32, 32
-  split: 8, 8, 8, 8
-  orig: 32, 32
+  xy: 24, 0
+  size: 20, 20
+  split: 6, 6, 6, 6
+  pad: 8, -4, 8, -4
+  orig: 20, 20
   offset: 0, 0
   index: -1
 resource/coal
   rotate: false
-  xy: 384, 608
-  size: 128, 128
-  orig: 128, 128
+  xy: 150, 50
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/dudes
   rotate: false
-  xy: 256, 608
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 50
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/electricity
   rotate: false
-  xy: 384, 352
-  size: 128, 128
-  orig: 128, 128
+  xy: 656, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/gas
   rotate: false
-  xy: 256, 224
-  size: 128, 128
-  orig: 128, 128
+  xy: 906, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/metal
   rotate: false
-  xy: 256, 96
-  size: 128, 128
-  orig: 128, 128
+  xy: 606, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/oil
   rotate: false
-  xy: 128, 96
-  size: 128, 128
-  orig: 128, 128
+  xy: 706, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/propellant
   rotate: false
-  xy: 0, 96
-  size: 128, 128
-  orig: 128, 128
+  xy: 856, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/solarpanel
   rotate: false
-  xy: 384, 96
-  size: 128, 128
-  orig: 128, 128
+  xy: 756, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 resource/water
   rotate: false
-  xy: 0, 224
-  size: 128, 128
-  orig: 128, 128
+  xy: 806, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
-space/planet
+skin/default-round-down
   rotate: false
-  xy: 128, 352
-  size: 128, 128
-  orig: 128, 128
+  xy: 12, 0
+  size: 12, 12
+  split: 5, 5, 5, 5
+  pad: 4, 1, 4, 1
+  orig: 12, 12
   offset: 0, 0
   index: -1
-spaceship/background
+skin/default-round
   rotate: false
   xy: 0, 0
-  size: 32, 32
-  split: 8, 8, 8, 8
-  orig: 32, 32
+  size: 12, 12
+  split: 5, 5, 5, 5
+  pad: 3, 3, 3, 3
+  orig: 12, 12
   offset: 0, 0
   index: -1
-spaceship/spaceship
+space/alphacentauri
   rotate: false
-  xy: 0, 352
-  size: 128, 128
-  orig: 128, 128
+  xy: 200, 150
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/earth
+  rotate: false
+  xy: 100, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet0
+  rotate: false
+  xy: 912, 50
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet1
+  rotate: false
+  xy: 400, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet2
+  rotate: false
+  xy: 700, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet3
+  rotate: false
+  xy: 500, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet4
+  rotate: false
+  xy: 600, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet5
+  rotate: false
+  xy: 300, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+space/planet6
+  rotate: false
+  xy: 0, 250
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+spaceship/giant
+  rotate: false
+  xy: 0, 150
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+spaceship/large
+  rotate: false
+  xy: 300, 150
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+spaceship/medium
+  rotate: false
+  xy: 800, 150
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+spaceship/small
+  rotate: false
+  xy: 500, 150
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+spaceship/small_giant
+  rotate: false
+  xy: 50, 50
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+spaceship/small_large
+  rotate: false
+  xy: 100, 50
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+spaceship/small_medium
+  rotate: false
+  xy: 956, 0
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+spaceship/small_small
+  rotate: false
+  xy: 556, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
 ui/background
   rotate: false
-  xy: 256, 352
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 1026
+  size: 800, 460
+  orig: 800, 460
   offset: 0, 0
   index: -1
 ui/button_back
   rotate: false
-  xy: 384, 224
-  size: 128, 128
-  orig: 128, 128
+  xy: 700, 150
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 ui/button_launch
   rotate: false
-  xy: 128, 224
+  xy: 128, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 ui/button_spacemap
   rotate: false
-  xy: 128, 480
+  xy: 384, 478
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

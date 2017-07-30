@@ -9,7 +9,7 @@ import java.util.EnumMap;
 
 public class Consts {
 
-	public static final boolean DEBUG = true;
+	public static final boolean LAYOUT_DEBUG = false;
 
 	public static final String GAME_NAME = "LD39 Dev Build";
 	public static final int DESIGN_WIDTH = 800;
@@ -19,6 +19,7 @@ public class Consts {
 	public static final String SPACESHIPS_CONFIG = "cfg/spaceships.xml";
 
 	public static final int UNIVERSE_STEP_SIZE = 100;
+	public static final float UNIVERSE_TIME_MULTIPLIER = 1000f / Consts.UNIVERSE_STEP_SIZE;
 
 	public static final float GRID_WIDTH = 50;
 	public static final float GRID_HEIGHT = 50;
@@ -38,15 +39,15 @@ public class Consts {
 	public static final int DUDES_START_COUNT = 1000;
 	public static final EnumMap<ResourceType, Float> RESOURCE_START
 			= new ResourceMapBuilder<Float>()
-			.add(ResourceType.electricity, 100f)
-			.add(ResourceType.metal, 100f)
-			.add(ResourceType.propellant, 0f)
-			.add(ResourceType.water, 10f)
+			.add(ResourceType.electricity, 1000000f)
+			.add(ResourceType.metal, 1000f)
+			.add(ResourceType.propellant, 1000f)
+			.add(ResourceType.water, 1000f)
 			.add(ResourceType.dudes, (float) DUDES_START_COUNT)
-			.add(ResourceType.solarpanel, 0f)
-			.add(ResourceType.oil, 0f)
-			.add(ResourceType.gas, 0f)
-			.add(ResourceType.coal, 0f)
+			.add(ResourceType.solarpanel, 1000f)
+			.add(ResourceType.oil, 1000f)
+			.add(ResourceType.gas, 1000f)
+			.add(ResourceType.coal, 1000f)
 			.build();
 	public static final int PLANET_COUNT = 10;
 	public static final EnumMap<GridElementType, Integer> PLANET_ELEMENTS_COUNT
@@ -82,4 +83,5 @@ public class Consts {
 	public static final int GRID_MAX_SIZE = 40;
 	public static final float SOLAR_MULTIPLIER_MIN = 0;
 	public static final float SOLAR_MULTIPLIER_MAX = 10;
+	public static final float START_LEVEL = 1000;
 }

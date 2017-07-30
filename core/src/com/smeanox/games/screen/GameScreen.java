@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -195,7 +194,7 @@ public class GameScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				SpaceShipType type = spaceShipTypeSelection.getSelected();
 				if (SpaceShip.canBuild(type, currentPlanet)){
-					SpaceShip ship = new SpaceShip(type, type + " ship " + MathUtils.random(1000));
+					SpaceShip ship = new SpaceShip(type, Universe.getRandomName(8));
 					ship.build(universe, currentPlanet);
 				}
 			}
@@ -231,6 +230,7 @@ public class GameScreen implements Screen {
 					@Override
 					public void changed(ChangeEvent event, Actor actor) {
 						buildWidget.setCurrentDestroy(true);
+						buildStage.setKeyboardFocus(buildWidget);
 					}
 				}));
 		for (final BuildingType buildingType : BuildingType.values()) {
@@ -239,6 +239,7 @@ public class GameScreen implements Screen {
 						@Override
 						public void changed(ChangeEvent event, Actor actor) {
 							buildWidget.setCurrentBuildingType(buildingType);
+							buildStage.setKeyboardFocus(buildWidget);
 						}
 					}));
 		}
@@ -254,7 +255,7 @@ public class GameScreen implements Screen {
 		errorLabel.setWrap(true);
 		buildTable.add(errorLabel).left();
 
-		buildTable.setDebug(Consts.DEBUG, true);
+		buildTable.setDebug(Consts.LAYOUT_DEBUG, true);
 	}
 
 	private void addEscToTextField(TextField textField) {
@@ -344,7 +345,7 @@ public class GameScreen implements Screen {
 		errorLabel.setWrap(true);
 		spaceTable.add(errorLabel);
 
-		spaceTable.setDebug(Consts.DEBUG, true);
+		spaceTable.setDebug(Consts.LAYOUT_DEBUG, true);
 	}
 
 	private void initPortStage() {
@@ -396,7 +397,7 @@ public class GameScreen implements Screen {
 		});
 		portTable.add(launchButton);
 
-		portTable.setDebug(Consts.DEBUG, true);
+		portTable.setDebug(Consts.LAYOUT_DEBUG, true);
 	}
 
 	private void centerSpaceMap(){

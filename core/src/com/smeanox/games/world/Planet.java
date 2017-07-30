@@ -51,7 +51,7 @@ public class Planet {
 	public void generatePlanet(EnumSet<GridElementType> possibleTypes, String textureName) {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				grid[y][x] = new GridElement(GridElementType.sand, 0, x, y);
+				grid[y][x] = new GridElement(GridElementType.sand, Consts.START_LEVEL, x, y);
 			}
 		}
 

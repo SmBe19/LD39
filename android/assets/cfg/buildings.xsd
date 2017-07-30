@@ -40,8 +40,8 @@
         </xs:sequence>
         <xs:attribute name="key" type="xs:string" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="texture" type="xs:string" use="required"/>
-        <xs:attribute name="preview" type="xs:string" use="required"/>
+        <xs:attribute name="texture" type="xs:string" use="optional"/>
+        <xs:attribute name="preview" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="gridelement">

@@ -38,7 +38,7 @@ public class BuildingConfigReader {
 			result.put(resourceType, 0f);
 		}
 		for (XmlReader.Element resource : element.getChildrenByName("resource")) {
-			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount"));
+			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount") * Consts.UNIVERSE_TIME_MULTIPLIER);
 		}
 		return result;
 	}
@@ -49,8 +49,8 @@ public class BuildingConfigReader {
 		XmlReader.Element root = xmlReader.parse(Gdx.files.internal(file));
 		for (XmlReader.Element building : root.getChildrenByName("building")) {
 			String key = building.getAttribute("key");
-			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(building.getAttribute("texture"));
-			TextureRegion previewTexture = Atlas.textures.atlas.findRegion(building.getAttribute("preview"));
+			TextureRegion textureRegion = Atlas.textures.atlas.findRegion(building.getAttribute("texture", "building/" + key));
+			TextureRegion previewTexture = Atlas.textures.atlas.findRegion(building.getAttribute("preview", "building/prev_" + key));
 			XmlReader.Element properties = building.getChildByName("properties");
 			XmlReader.Element needGridElement = building.getChildByName("needGridElement");
 			XmlReader.Element resourcesBuild = building.getChildByName("resourcesBuild");
@@ -66,7 +66,7 @@ public class BuildingConfigReader {
 					properties.getInt("dudes_needed"),
 					properties.getInt("dudes_capacity_increase"),
 					properties.getInt("spaceships_increase"),
-					properties.getFloat("level_usage"),
+					properties.getFloat("level_usage") * Consts.UNIVERSE_TIME_MULTIPLIER,
 					readElementList(needGridElement),
 					readResourceList(resourcesBuild),
 					readResourceList(resourcesDestroy),

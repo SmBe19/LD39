@@ -55,7 +55,7 @@ public class SpaceMapWidget extends Widget {
 		prefWidth = 2 * Consts.PLANET_PADDING + maX - miX;
 		prefHeight = 2 * Consts.PLANET_PADDING + maY - miY;
 
-		font = skin.getFont("default2-font");
+		font = skin.getFont("font-arial32");
 		currentPlanetCache = font.newFontCache();
 		hoverPlanetCache = font.newFontCache();
 		sprite = new Sprite();
@@ -152,13 +152,6 @@ public class SpaceMapWidget extends Widget {
 		batch.setColor(1, 1, 1, 1);
 
 		for (Planet planet : universe.getPlanets()) {
-			if (planet == currentPlanet) {
-				currentPlanetCache.setPosition(ax + currentPlanetFontCenter, ay + offY + planet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
-				currentPlanetCache.draw(batch);
-			} else if (planet == hoverPlanet) {
-				hoverPlanetCache.setPosition(ax + hoverPlanetFontCenter, ay + offY + planet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
-				hoverPlanetCache.draw(batch);
-			}
 			if (!planet.isVisited()){
 				batch.setColor(0.5f, 0.5f, 0.5f, 1);
 			}
@@ -166,6 +159,15 @@ public class SpaceMapWidget extends Widget {
 			batch.draw(planet.getTexture(), ax + offX + planet.getX(), ay + offY + planet.getY(), Consts.PLANET_SIZE, Consts.PLANET_SIZE);
 
 			batch.setColor(1, 1, 1, 1);
+		}
+
+		if (currentPlanet != null) {
+			currentPlanetCache.setPosition(ax + currentPlanetFontCenter, ay + offY + currentPlanet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
+			currentPlanetCache.draw(batch);
+		}
+		if (hoverPlanet != null && hoverPlanet != currentPlanet) {
+			hoverPlanetCache.setPosition(ax + hoverPlanetFontCenter, ay + offY + hoverPlanet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
+			hoverPlanetCache.draw(batch);
 		}
 
 		for (SpaceShip ship : universe.getSpaceShips()) {

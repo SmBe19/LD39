@@ -1,6 +1,7 @@
 package com.smeanox.games.world;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.smeanox.games.Consts;
 import com.smeanox.games.util.GridElementSetBuilder;
 
@@ -94,10 +95,24 @@ public class Universe {
 			int width = MathUtils.random(Consts.GRID_MIN_SIZE, small ? ((int) (Consts.GRID_MAX_SIZE * Consts.PLANET_SMALL_MULTIPLIER)) : Consts.GRID_MAX_SIZE);
 			int height = MathUtils.random(Consts.GRID_MIN_SIZE, small ? ((int) (Consts.GRID_MAX_SIZE * Consts.PLANET_SMALL_MULTIPLIER)) : Consts.GRID_MAX_SIZE);
 			float solarMultiplier = MathUtils.random(Consts.SOLAR_MULTIPLIER_MIN, Consts.SOLAR_MULTIPLIER_MAX);
-			Planet planet = new Planet("XY " + MathUtils.random(1000), width, height, x, y, solarMultiplier);
-			planet.generatePlanet(elements.get(i), "space/planet");
+			Planet planet = new Planet(getRandomName(8), width, height, x, y, solarMultiplier);
+			planet.generatePlanet(elements.get(i), "space/planet" + (MathUtils.random(6)));
 			planets.add(planet);
 		}
+	}
+
+	public static String getRandomName(int length){
+		StringBuilder stringBuilder = new StringBuilder();
+		String vocals = "aeiou";
+		String consonants = "bcdfghjklmnpqrstvwxyz";
+		for(int i = 0; i < length; i++) {
+			if (i % 2 == 0){
+				stringBuilder.append(vocals.charAt(MathUtils.random(vocals.length() - 1)));
+			} else {
+				stringBuilder.append(consonants.charAt(MathUtils.random(consonants.length() - 1)));
+			}
+		}
+		return stringBuilder.toString();
 	}
 
 	private void initEarth() {
@@ -108,7 +123,7 @@ public class Universe {
 						.add(GridElementType.gas)
 						.add(GridElementType.metal)
 						.add(GridElementType.water).build(),
-				"space/planet");
+				"space/earth");
 		earth.setVisited(true);
 		earth.setTotalDudes(1000);
 		for (ResourceType resourceType : ResourceType.values()) {
@@ -140,7 +155,8 @@ public class Universe {
 						.add(GridElementType.gas)
 						.add(GridElementType.metal)
 						.add(GridElementType.water).build(),
-				"space/planet");
+				"space/alphacentauri");
+		alphaCentauri.discoverPlanet();
 		planets.add(alphaCentauri);
 	}
 }
