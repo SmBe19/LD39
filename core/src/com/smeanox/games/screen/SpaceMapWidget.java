@@ -24,19 +24,18 @@ import com.smeanox.games.world.Universe;
 public class SpaceMapWidget extends Widget {
 
 	private final Skin skin;
-	private final BitmapFont font;
+	private final BitmapFont largeFont, smallFont;
 	private final Universe universe;
-	private final BitmapFontCache currentPlanetCache, hoverPlanetCache;
+	private final BitmapFontCache currentPlanetNameCache, hoverPlanetNameCache;
+	private final BitmapFontCache hoverPlanetDistanceCache;
 	private final Sprite sprite;
 	private Planet currentPlanet, hoverPlanet;
-	private float currentPlanetFontCenter, hoverPlanetFontCenter;
+	private float currentPlanetFontCenter, hoverPlanetNameFontCenter, hoverPlanetDistanceFontCenter;
 	private ResourceWidget resourceWidget;
 	private float prefWidth, prefHeight;
 	private int offX, offY;
 	private Vector2 start;
 	private Vector2 destination;
-
-	// TODO show unvisited planets
 
 	public SpaceMapWidget(Skin skin, final Universe universe) {
 		this.skin = skin;
@@ -55,9 +54,11 @@ public class SpaceMapWidget extends Widget {
 		prefWidth = 2 * Consts.PLANET_PADDING + maX - miX;
 		prefHeight = 2 * Consts.PLANET_PADDING + maY - miY;
 
-		font = skin.getFont("font-arial32");
-		currentPlanetCache = font.newFontCache();
-		hoverPlanetCache = font.newFontCache();
+		largeFont = skin.getFont("font-arial32");
+		smallFont = skin.getFont("font-arial16");
+		currentPlanetNameCache = largeFont.newFontCache();
+		hoverPlanetNameCache = largeFont.newFontCache();
+		hoverPlanetDistanceCache = smallFont.newFontCache();
 		sprite = new Sprite();
 		start = new Vector2();
 		destination = new Vector2();
@@ -102,8 +103,8 @@ public class SpaceMapWidget extends Widget {
 	public void setCurrentPlanet(Planet currentPlanet) {
 		this.currentPlanet = currentPlanet;
 		if (currentPlanet != null) {
-			currentPlanetCache.setText(currentPlanet.getName(), 0, 0);
-			currentPlanetFontCenter = offX + currentPlanet.getX() + (Consts.PLANET_SIZE - currentPlanetCache.getLayouts().get(0).width) * 0.5f;
+			currentPlanetNameCache.setText(currentPlanet.getName(), 0, 0);
+			currentPlanetFontCenter = offX + currentPlanet.getX() + (Consts.PLANET_SIZE - currentPlanetNameCache.getLayouts().get(0).width) * 0.5f;
 		}
 	}
 
@@ -119,8 +120,10 @@ public class SpaceMapWidget extends Widget {
 		if (hoverPlanet != null) {
 			int dist = MathUtils.ceil((float) Math.sqrt((hoverPlanet.getX() - currentPlanet.getX()) * (hoverPlanet.getX() - currentPlanet.getX())
 					+ (hoverPlanet.getY() - currentPlanet.getY()) * (hoverPlanet.getY() - currentPlanet.getY())));
-			hoverPlanetCache.setText(hoverPlanet.getName() + " (" + dist + " km)", 0, 0);
-			hoverPlanetFontCenter = offX + hoverPlanet.getX() + (Consts.PLANET_SIZE - hoverPlanetCache.getLayouts().get(0).width) * 0.5f;
+			hoverPlanetNameCache.setText(hoverPlanet.getName(), 0, 0);
+			hoverPlanetDistanceCache.setText(dist + " km", 0, 0);
+			hoverPlanetNameFontCenter = offX + hoverPlanet.getX() + (Consts.PLANET_SIZE - hoverPlanetNameCache.getLayouts().get(0).width) * 0.5f;
+			hoverPlanetDistanceFontCenter = offX + hoverPlanet.getX() + (Consts.PLANET_SIZE - hoverPlanetDistanceCache.getLayouts().get(0).width) * 0.5f;
 		}
 	}
 
@@ -162,12 +165,14 @@ public class SpaceMapWidget extends Widget {
 		}
 
 		if (currentPlanet != null) {
-			currentPlanetCache.setPosition(ax + currentPlanetFontCenter, ay + offY + currentPlanet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
-			currentPlanetCache.draw(batch);
+			currentPlanetNameCache.setPosition(ax + currentPlanetFontCenter, ay + offY + currentPlanet.getY() + Consts.PLANET_SIZE + largeFont.getCapHeight() + 10);
+			currentPlanetNameCache.draw(batch);
 		}
 		if (hoverPlanet != null && hoverPlanet != currentPlanet) {
-			hoverPlanetCache.setPosition(ax + hoverPlanetFontCenter, ay + offY + hoverPlanet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
-			hoverPlanetCache.draw(batch);
+			hoverPlanetNameCache.setPosition(ax + hoverPlanetNameFontCenter, ay + offY + hoverPlanet.getY() + Consts.PLANET_SIZE + largeFont.getCapHeight() + 10);
+			hoverPlanetDistanceCache.setPosition(ax + hoverPlanetDistanceFontCenter, ay + offY + hoverPlanet.getY() + Consts.PLANET_SIZE + largeFont.getCapHeight() + smallFont.getCapHeight() + 20);
+			hoverPlanetNameCache.draw(batch);
+			hoverPlanetDistanceCache.draw(batch);
 		}
 
 		for (SpaceShip ship : universe.getSpaceShips()) {

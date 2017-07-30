@@ -21,7 +21,7 @@ public class PlanetWidget extends TextButton {
 			}
 
 			@Override
-			public void totalDudesChanged(Planet planet) {
+			public void dudesChanged(Planet planet) {
 				getLabel().setText(createCurrentText());
 			}
 		});

@@ -1,10 +1,10 @@
 package com.smeanox.games.world;
 
 public enum ResourceType {
-	electricity(1),
+	electricity(0.1f),
 	metal(1),
-	propellant(1),
-	dudes(1),
+	propellant(0.1f),
+	dudes(2),
 	water(1),
 	solarpanel(1),
 	oil(1),

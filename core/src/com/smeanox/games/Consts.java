@@ -23,31 +23,31 @@ public class Consts {
 
 	public static final float GRID_WIDTH = 50;
 	public static final float GRID_HEIGHT = 50;
-	public static final float RESOURCE_ICON_SIZE = 0.5f;
+	public static final float RESOURCE_ICON_SIZE = 0.8f;
 	public static final float RESOURCE_ICON_PADDING = 0.1f;
 	public static final float RESOURCE_WIDTH = 70;
-	public static final float RESOURCE_HEIGHT = 30;
+	public static final float RESOURCE_HEIGHT = 20;
 	public static final int PLANET_PADDING = 200;
-	public static final int UNIVERSE_SIZE = 1000;
-	public static final int PLANET_MIN_DIST = 200;
 	public static final float PLANET_SIZE = 50;
 	public static final float SPACESHIP_SIZE = 10;
 	public static final int LOADING_RESOURCE_PER_LINE = 3;
 	public static final int DOUBLE_CLICK_TIME = 500;
 	public static final int DUDE_INCREASE_TIME = 10000;
 
+	public static final int UNIVERSE_SIZE = 1234;
+	public static final int PLANET_MIN_DIST = 200;
 	public static final int DUDES_START_COUNT = 1000;
 	public static final EnumMap<ResourceType, Float> RESOURCE_START
 			= new ResourceMapBuilder<Float>()
-			.add(ResourceType.electricity, 1000000f)
+			.add(ResourceType.electricity, 50000f)
 			.add(ResourceType.metal, 1000f)
-			.add(ResourceType.propellant, 1000f)
-			.add(ResourceType.water, 1000f)
+			.add(ResourceType.propellant, 100f)
+			.add(ResourceType.water, 0f)
 			.add(ResourceType.dudes, (float) DUDES_START_COUNT)
-			.add(ResourceType.solarpanel, 1000f)
-			.add(ResourceType.oil, 1000f)
-			.add(ResourceType.gas, 1000f)
-			.add(ResourceType.coal, 1000f)
+			.add(ResourceType.solarpanel, 0f)
+			.add(ResourceType.oil, 0f)
+			.add(ResourceType.gas, 0f)
+			.add(ResourceType.coal, 0f)
 			.build();
 	public static final int PLANET_COUNT = 10;
 	public static final EnumMap<GridElementType, Integer> PLANET_ELEMENTS_COUNT
@@ -64,8 +64,8 @@ public class Consts {
 			.add(GridElementType.sand, 0f)
 			.add(GridElementType.water, 0.05f)
 			.add(GridElementType.metal, 0.05f)
-			.add(GridElementType.oil, 0.05f)
-			.add(GridElementType.gas, 0.05f)
+			.add(GridElementType.oil, 0.04f)
+			.add(GridElementType.gas, 0.04f)
 			.add(GridElementType.coal, 0.05f)
 			.build();
 	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_CONTINUE
@@ -83,5 +83,5 @@ public class Consts {
 	public static final int GRID_MAX_SIZE = 40;
 	public static final float SOLAR_MULTIPLIER_MIN = 0;
 	public static final float SOLAR_MULTIPLIER_MAX = 10;
-	public static final float START_LEVEL = 1000;
+	public static final float START_LEVEL = 300;
 }

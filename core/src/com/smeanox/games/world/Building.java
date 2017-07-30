@@ -146,12 +146,11 @@ public class Building {
 		planet.addSpaceShipsCapacity(type.config.spaceShipsCapacityIncrease);
 	}
 
-	// TODO city does not correctly deactivate
 	public boolean canDeactivate(Planet planet) {
 		if (!active){
 			return false;
 		}
-		if (planet.getTotalDudes() < planet.getDudesCapacity() - type.config.dudesCapacityIncrease){
+		if (planet.getTotalDudes() > planet.getDudesCapacity() - type.config.dudesCapacityIncrease){
 			ErrorCatcher.get().setBuilding("Not enough capacity to house all dudes.");
 			return false;
 		}

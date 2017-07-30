@@ -18,6 +18,8 @@ public class SpaceShip {
 	private EnumMap<ResourceType, Rapper<Float>> resources;
 	private List<SpaceShipListener> listeners;
 
+	// TODO destroy
+
 	public SpaceShip(SpaceShipType type, String name) {
 		this.type = type;
 		this.name = name;

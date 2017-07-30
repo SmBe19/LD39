@@ -4,19 +4,19 @@ import com.smeanox.games.util.BuildingConfigReader;
 
 public enum BuildingType {
 	city,
-	street,
-	oilplant,
-	gasplant,
-	coalplant,
-	oilrig,
-	gasrig,
-	coalmine,
-	solarplant,
-	solarfactory,
 	spaceport,
 	propellantfactory,
 	waterplant,
 	metalmine,
+	solarfactory,
+	solarplant,
+	oilrig,
+	oilplant,
+	gasrig,
+	gasplant,
+	coalmine,
+	coalplant,
+	street,
 	;
 
 	public final BuildingConfig config;

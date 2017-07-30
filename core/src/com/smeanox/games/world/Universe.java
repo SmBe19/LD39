@@ -156,7 +156,6 @@ public class Universe {
 						.add(GridElementType.metal)
 						.add(GridElementType.water).build(),
 				"space/alphacentauri");
-		alphaCentauri.discoverPlanet();
 		planets.add(alphaCentauri);
 	}
 }

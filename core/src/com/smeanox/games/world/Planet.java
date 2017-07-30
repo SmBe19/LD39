@@ -195,6 +195,7 @@ public class Planet {
 
 	public void addDudesCapacity(int dudesCapacity) {
 		this.dudesCapacity += dudesCapacity;
+		fireDudesChanged();
 	}
 
 	public int getTotalDudes() {
@@ -203,12 +204,12 @@ public class Planet {
 
 	public void setTotalDudes(int totalDudes) {
 		this.totalDudes = totalDudes;
-		fireTotalDudesChanged();
+		fireDudesChanged();
 	}
 
 	public void addTotalDudes(int totalDudes) {
 		this.totalDudes += totalDudes;
-		fireTotalDudesChanged();
+		fireDudesChanged();
 	}
 
 	public int getSpaceShipsCapacity() {
@@ -246,8 +247,8 @@ public class Planet {
 			lastDudeIncrease = time;
 			int increase = MathUtils.ceil(totalDudes * 0.01f);
 			if (totalDudes + increase <= dudesCapacity) {
-				totalDudes += increase;
 				resources.get(ResourceType.dudes).val += increase;
+				addTotalDudes(increase);
 			}
 		}
 	}
@@ -272,9 +273,9 @@ public class Planet {
 		}
 	}
 
-	public void fireTotalDudesChanged() {
+	public void fireDudesChanged() {
 		for (PlanetListener listener : listeners) {
-			listener.totalDudesChanged(this);
+			listener.dudesChanged(this);
 		}
 	}
 
@@ -291,7 +292,7 @@ public class Planet {
 		public void planetNameChanged(Planet planet) {
 		}
 
-		public void totalDudesChanged(Planet planet) {
+		public void dudesChanged(Planet planet) {
 		}
 
 		public void discovered(Planet planet){

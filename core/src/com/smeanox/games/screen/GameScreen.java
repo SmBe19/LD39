@@ -55,7 +55,8 @@ public class GameScreen implements Screen {
 	private final Skin skin;
 	private Stage currentStage;
 	private final BuildWidget buildWidget;
-	private ResourceWidget resourceWidgetBuild, resourceWidgetPort;
+	private final ResourceWidget resourceWidgetBuild, resourceWidgetPort;
+	private final ResourceInfoWidget resourceInfoWidget;
 	private final SpaceMapWidget spaceMapWidget;
 	private final VerticalGroup shipListBuild, shipListSpace;
 	private final VerticalGroup planetList;
@@ -64,6 +65,7 @@ public class GameScreen implements Screen {
 	private final Image spaceShipImage;
 	private final SelectBox<SpaceShipType> spaceShipTypeSelection;
 	private final ScrollPane spaceMapScrollPane;
+	private final TextButton buyShipButton;
 
 	private final Planet.PlanetListener shipArrivedListener;
 
@@ -87,6 +89,7 @@ public class GameScreen implements Screen {
 
 		buildWidget = new BuildWidget();
 		resourceWidgetBuild = new ResourceWidget(skin, true);
+		resourceInfoWidget = new ResourceInfoWidget(skin);
 		resourceWidgetPort = new ResourceWidget(skin, true);
 		spaceMapResourceWidget = new ResourceWidget(skin, false);
 		spaceMapWidget = new SpaceMapWidget(skin, universe);
@@ -101,6 +104,7 @@ public class GameScreen implements Screen {
 		spaceShipLoadingWidget = new SpaceShipLoadingWidget(skin);
 		spaceShipTypeSelection = new SelectBox<SpaceShipType>(skin);
 		spaceMapScrollPane = new ScrollPane(spaceMapWidget, skin, "no-bars");
+		buyShipButton = new TextButton("Buy Ship", skin);
 
 		shipArrivedListener = new Planet.PlanetListener() {
 			@Override
@@ -175,6 +179,7 @@ public class GameScreen implements Screen {
 		buildTable.add(planetStuff);
 
 		// build grid
+		buildWidget.setResourceInfoWidget(resourceInfoWidget);
 		ScrollPane buildScrollPane = new ScrollPane(buildWidget, skin, "no-bars");
 		buildTable.add(buildScrollPane).expand();
 
@@ -184,11 +189,19 @@ public class GameScreen implements Screen {
 		VerticalGroup shipStuff = new VerticalGroup();
 		shipStuff.pad(5);
 		shipStuff.addActor(shipListBuild);
-		shipStuff.addActor(new Spacer(20));
+		Spacer spacer1 = new Spacer(20);
+		shipStuff.addActor(spacer1);
 		spaceShipTypeSelection.setItems(SpaceShipType.values());
+		spaceShipTypeSelection.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				resourceInfoWidget.setSpaceShipType(spaceShipTypeSelection.getSelected());
+			}
+		});
+		resourceInfoWidget.setSpaceShipType(spaceShipTypeSelection.getSelected());
 		shipStuff.addActor(spaceShipTypeSelection);
-		shipStuff.addActor(new Spacer(5));
-		TextButton buyShipButton = new TextButton("Buy Ship", skin);
+		Spacer spacer2 = new Spacer(5);
+		shipStuff.addActor(spacer2);
 		buyShipButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -200,6 +213,15 @@ public class GameScreen implements Screen {
 			}
 		});
 		shipStuff.addActor(buyShipButton);
+		Spacer spacer3 = new Spacer(5);
+		shipStuff.addActor(spacer3);
+		shipStuff.addActor(resourceInfoWidget);
+		resourceInfoWidget.getActorsToHide().add(shipListBuild);
+		resourceInfoWidget.getActorsToHide().add(spaceShipTypeSelection);
+		resourceInfoWidget.getActorsToHide().add(buyShipButton);
+		resourceInfoWidget.getActorsToHide().add(spacer1);
+		resourceInfoWidget.getActorsToHide().add(spacer2);
+		resourceInfoWidget.getActorsToHide().add(spacer3);
 		buildTable.add(shipStuff);
 
 		buildTable.row().height(100);
@@ -253,7 +275,7 @@ public class GameScreen implements Screen {
 			}
 		});
 		errorLabel.setWrap(true);
-		buildTable.add(errorLabel).left();
+		buildTable.add(errorLabel).left().pad(5);
 
 		buildTable.setDebug(Consts.LAYOUT_DEBUG, true);
 	}
@@ -276,7 +298,7 @@ public class GameScreen implements Screen {
 	private Button createBuildingButton(Image preview, String text, EventListener listener) {
 		Button building = new Button(skin);
 		preview.setScaling(Scaling.fit);
-		building.add(preview).height(Value.percentHeight(0.4f)).width(Value.percentHeight(0.4f));
+		building.add(preview).height(50).width(50);
 		building.row();
 		building.add(new Label(text, skin));
 		building.addListener(listener);
@@ -364,6 +386,7 @@ public class GameScreen implements Screen {
 		portTable.add(resourceWidgetPort).colspan(3).width(Value.prefWidth);
 		portTable.row();
 
+		VerticalGroup shipStuff = new VerticalGroup();
 		spaceShipNameTextField.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -371,7 +394,18 @@ public class GameScreen implements Screen {
 			}
 		});
 		addEscToTextField(spaceShipNameTextField);
-		portTable.add(spaceShipNameTextField).pad(5);
+		shipStuff.addActor(spaceShipNameTextField);
+		shipStuff.addActor(new Spacer(20));
+		TextButton shipDestroyButton = new TextButton("Destroy Ship", skin);
+		shipDestroyButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				currentSpaceShip.destroy(universe);
+				activateStage(buildStage);
+			}
+		});
+		shipStuff.addActor(shipDestroyButton);
+		portTable.add(shipStuff).pad(5);
 		spaceShipImage.setScaling(Scaling.fit);
 		portTable.add(spaceShipImage).expand();
 		portTable.add(spaceShipDetailWidget);
@@ -446,6 +480,7 @@ public class GameScreen implements Screen {
 		resourceWidgetBuild.setPlanet(currentPlanet);
 		spaceMapWidget.setCurrentPlanet(currentPlanet);
 		resourceWidgetPort.setPlanet(currentPlanet);
+		resourceInfoWidget.setPlanet(currentPlanet);
 
 		if (this.currentPlanet != null) {
 			planetNameTextField.setText(currentPlanet.getName());

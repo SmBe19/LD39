@@ -21,16 +21,17 @@ public class ResourceWidget extends Widget {
 	private final Drawable resourceBackground;
 	private EnumMap<ResourceType, Drawable> resourceIcons;
 	private boolean horizontal;
+	private final float padding = 5;
 
 	public ResourceWidget(Skin skin, boolean horizontal) {
 		this.skin = skin;
 		this.horizontal = horizontal;
 		if (horizontal) {
-			prefWidth = Consts.RESOURCE_WIDTH * ResourceType.values().length;
+			prefWidth = Consts.RESOURCE_WIDTH * ResourceType.values().length + padding * 2;
 			prefHeight = Consts.RESOURCE_HEIGHT;
 		} else {
 			prefWidth = Consts.RESOURCE_WIDTH;
-			prefHeight = Consts.RESOURCE_HEIGHT * ResourceType.values().length;
+			prefHeight = Consts.RESOURCE_HEIGHT * ResourceType.values().length + padding * 2;
 		}
 
 		font = skin.getFont("font-arial12");
@@ -79,12 +80,12 @@ public class ResourceWidget extends Widget {
 
 		float capHeight = font.getCapHeight();
 		float x = 0;
-		float y = horizontal ? 0 : aheight - Consts.RESOURCE_HEIGHT;
+		float y = horizontal ? 0 : (aheight - Consts.RESOURCE_HEIGHT - 2 * padding);
 		float iconsize = Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_SIZE;
-		float iconx = ax + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING;
-		float icony = ay + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) - iconsize) * 0.5f;
-		float fontx = ax + iconsize + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING * 2;
-		float fonty = ay + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) + capHeight) * 0.5f;
+		float iconx = ax + padding + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING;
+		float icony = ay + (horizontal ? 0 : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) - iconsize) * 0.5f;
+		float fontx = ax + padding + iconsize + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING * 2;
+		float fonty = ay + (horizontal ? 0 : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) + capHeight) * 0.5f;
 		for (ResourceType resourceType : ResourceType.values()) {
 			int val = MathUtils.floor(planet.getResources().get(resourceType).val);
 			resourceIcons.get(resourceType).draw(batch, x + iconx, y + icony, iconsize, iconsize);

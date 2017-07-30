@@ -1,5 +1,6 @@
 package com.smeanox.games.screen;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.StringBuilder;
@@ -52,13 +53,14 @@ public class SpaceShipDetailWidget extends Label {
 	private StringBuilder getCurrentText(){
 		StringBuilder stringBuilder = new StringBuilder();
 		SpaceShipConfig config = spaceShip.getType().config;
+		float propellant = MathUtils.round(config.propellantPerWeightAndDistance * spaceShip.getWeight() * 100) / 100f;
 		stringBuilder
 				.append("Name: ").append(spaceShip.getName())
 				.append("\nPosition: ").append(spaceShip.isInSpace() ? "Space" : spaceShip.getStart().getName())
 				.append("\nSpeed: ").append(config.speed / Consts.UNIVERSE_STEP_SIZE * 1000f).append(" km/s")
 				.append("\nMass empty: ").append(config.weight).append(" kg")
 				.append("\nMass now: ").append(spaceShip.getWeight()).append(" kg")
-				.append("\nPropellant [1/kgkm]: ").append(config.propellantPerWeightAndDistance)
+				.append("\nPropellant: ").append(propellant).append(" /km")
 				.append("\nCapacity total: ").append(config.capacity).append(" kg")
 				.append("\nCapacity used: ").append(spaceShip.getWeight() - config.weight).append(" kg");
 		return stringBuilder;

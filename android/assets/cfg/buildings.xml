@@ -9,15 +9,15 @@
             <element type="sand"/>
         </needGridElement>
         <resourcesBuild>
-            <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="metal" amount="50"/>
+            <resource type="electricity" amount="1000"/>
         </resourcesBuild>
         <resourcesDestroy>
-            <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="metal" amount="-40"/>
+            <resource type="electricity" amount="100"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="electricity" amount="1"/>
+            <resource type="electricity" amount="10"/>
         </resourcesUsage>
     </building>
     <building key="street" name="Street">
@@ -27,7 +27,7 @@
             <element type="sand"/>
         </needGridElement>
         <resourcesBuild>
-            <resource type="electricity" amount="1"/>
+            <resource type="electricity" amount="10"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="electricity" amount="1"/>
@@ -44,15 +44,16 @@
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
+            <resource type="oil" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="oil" amount="4"/>
-            <resource type="electricity" amount="-2"/>
+            <resource type="oil" amount="5"/>
+            <resource type="electricity" amount="-10"/>
         </resourcesUsage>
     </building>
     <building key="gasplant" name="Gas Plant">
@@ -63,15 +64,16 @@
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
+            <resource type="gas" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="gas" amount="5"/>
-            <resource type="electricity" amount="-2"/>
+            <resource type="electricity" amount="-10"/>
         </resourcesUsage>
     </building>
     <building key="coalplant" name="Coal Plant">
@@ -82,69 +84,73 @@
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
+            <resource type="coal" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="coal" amount="10"/>
-            <resource type="electricity" amount="-2"/>
+            <resource type="electricity" amount="-10"/>
         </resourcesUsage>
     </building>
     <building key="oilrig" name="Oil Rig">
-        <properties width="1" height="1" dudes_needed="2" dudes_capacity_increase="0"
-                    spaceships_increase="0" level_usage="10"/>
+        <properties width="1" height="1" dudes_needed="20" dudes_capacity_increase="0"
+                    spaceships_increase="0" level_usage="1"/>
         <needGridElement>
             <element type="oil"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="oil" amount="-10"/>
+            <resource type="electricity" amount="2"/>
         </resourcesUsage>
     </building>
     <building key="gasrig" name="Gas Rig">
-        <properties width="1" height="1" dudes_needed="2" dudes_capacity_increase="0"
-                    spaceships_increase="0" level_usage="10"/>
+        <properties width="1" height="1" dudes_needed="20" dudes_capacity_increase="0"
+                    spaceships_increase="0" level_usage="1"/>
         <needGridElement>
             <element type="gas"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="gas" amount="-10"/>
+            <resource type="electricity" amount="2"/>
         </resourcesUsage>
     </building>
     <building key="coalmine" name="Coal Mine">
-        <properties width="1" height="1" dudes_needed="20" dudes_capacity_increase="0"
-                    spaceships_increase="0" level_usage="10"/>
+        <properties width="1" height="1" dudes_needed="100" dudes_capacity_increase="0"
+                    spaceships_increase="0" level_usage="1"/>
         <needGridElement>
             <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="coal" amount="-10"/>
+            <resource type="electricity" amount="2"/>
         </resourcesUsage>
     </building>
     <building key="solarplant" name="Solar Plant">
@@ -155,109 +161,111 @@
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
-            <resource type="solarpanel" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="electricity" amount="-2"/>
+            <resource type="electricity" amount="-10"/>
         </resourcesUsage>
     </building>
-    <building key="solarfactory" name="Solar Panel Factory">
+    <building key="solarfactory" name="Solar Factory">
         <properties width="1" height="1" dudes_needed="10" dudes_capacity_increase="0"
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
         </needGridElement>
         <resourcesBuild>
-            <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="metal" amount="20"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
-            <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="metal" amount="-16"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
             <resource type="electricity" amount="10"/>
-            <resource type="solarpanel" amount="0.1"/>
+            <resource type="metal" amount="2"/>
+            <resource type="solarpanel" amount="-0.1"/>
         </resourcesUsage>
     </building>
     <building key="spaceport" name="Space Port">
         <properties width="1" height="1" dudes_needed="100" dudes_capacity_increase="0"
-                    spaceships_increase="2" level_usage="1"/>
+                    spaceships_increase="2" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
         </needGridElement>
         <resourcesBuild>
-            <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="metal" amount="200"/>
+            <resource type="electricity" amount="1000"/>
+            <resource type="propellant" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
-            <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="metal" amount="-160"/>
+            <resource type="electricity" amount="100"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="electricity" amount="1"/>
+            <resource type="propellant" amount="0.1"/>
+            <resource type="electricity" amount="10"/>
         </resourcesUsage>
     </building>
-    <building key="propellantfactory" name="Propellant Factory">
+    <building key="propellantfactory" name="Space Factory">
         <properties width="1" height="1" dudes_needed="10" dudes_capacity_increase="0"
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="sand"/>
         </needGridElement>
         <resourcesBuild>
-            <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="metal" amount="20"/>
+            <resource type="electricity" amount="200"/>
         </resourcesBuild>
         <resourcesDestroy>
-            <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="metal" amount="-16"/>
+            <resource type="electricity" amount="20"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="propellant" amount="-10"/>
-            <resource type="water" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="propellant" amount="-1"/>
+            <resource type="water" amount="5"/>
+            <resource type="electricity" amount="5"/>
         </resourcesUsage>
     </building>
     <building key="waterplant" name="Water plant">
-        <properties width="1" height="1" dudes_needed="1" dudes_capacity_increase="0"
+        <properties width="1" height="1" dudes_needed="10" dudes_capacity_increase="0"
                     spaceships_increase="0" level_usage="0"/>
         <needGridElement>
             <element type="water"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="electricity" amount="1"/>
+            <resource type="electricity" amount="2"/>
             <resource type="water" amount="-10"/>
         </resourcesUsage>
     </building>
     <building key="metalmine" name="Metal mine">
-        <properties width="1" height="1" dudes_needed="10" dudes_capacity_increase="0"
-                    spaceships_increase="0" level_usage="1"/>
+        <properties width="1" height="1" dudes_needed="100" dudes_capacity_increase="0"
+                    spaceships_increase="0" level_usage="0.01"/>
         <needGridElement>
             <element type="metal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="metal" amount="10"/>
-            <resource type="electricity" amount="10"/>
+            <resource type="electricity" amount="100"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>
-            <resource type="electricity" amount="5"/>
+            <resource type="electricity" amount="10"/>
         </resourcesDestroy>
         <resourcesUsage>
-            <resource type="electricity" amount="1"/>
+            <resource type="electricity" amount="2"/>
             <resource type="metal" amount="-10"/>
         </resourcesUsage>
     </building>
