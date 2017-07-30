@@ -212,6 +212,8 @@
             <key type="filename">img/resource/propellant.png</key>
             <key type="filename">img/resource/solarpanel.png</key>
             <key type="filename">img/resource/water.png</key>
+            <key type="filename">img/space/planet.png</key>
+            <key type="filename">img/spaceship/spaceship.png</key>
             <key type="filename">img/ui/background.png</key>
             <key type="filename">img/ui/button_back.png</key>
             <key type="filename">img/ui/button_launch.png</key>
@@ -228,7 +230,34 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">img/font_default.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,49,256,98</rect>
+                <key>scale9Paddings</key>
+                <rect>128,49,256,98</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">img/font_resource.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,128,256,256</rect>
+                <key>scale9Paddings</key>
+                <rect>128,128,256,256</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">img/resource/background.png</key>
+            <key type="filename">img/spaceship/background.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

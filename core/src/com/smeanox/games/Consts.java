@@ -1,5 +1,12 @@
 package com.smeanox.games;
 
+import com.smeanox.games.util.GridElementMapBuilder;
+import com.smeanox.games.util.ResourceMapBuilder;
+import com.smeanox.games.world.GridElementType;
+import com.smeanox.games.world.ResourceType;
+
+import java.util.EnumMap;
+
 public class Consts {
 
 	public static final boolean DEBUG = true;
@@ -17,11 +24,62 @@ public class Consts {
 	public static final float GRID_HEIGHT = 50;
 	public static final float RESOURCE_ICON_SIZE = 0.5f;
 	public static final float RESOURCE_ICON_PADDING = 0.1f;
-	public static final float RESOURCE_WIDTH = 50;
-	public static final float RESOURCE_HEIGHT = 20;
+	public static final float RESOURCE_WIDTH = 70;
+	public static final float RESOURCE_HEIGHT = 30;
 	public static final int PLANET_PADDING = 200;
+	public static final int UNIVERSE_SIZE = 1000;
 	public static final int PLANET_MIN_DIST = 200;
 	public static final float PLANET_SIZE = 50;
 	public static final float SPACESHIP_SIZE = 10;
 	public static final int LOADING_RESOURCE_PER_LINE = 3;
+	public static final int DOUBLE_CLICK_TIME = 500;
+	public static final int DUDE_INCREASE_TIME = 10000;
+
+	public static final int DUDES_START_COUNT = 1000;
+	public static final EnumMap<ResourceType, Float> RESOURCE_START
+			= new ResourceMapBuilder<Float>()
+			.add(ResourceType.electricity, 100f)
+			.add(ResourceType.metal, 100f)
+			.add(ResourceType.propellant, 0f)
+			.add(ResourceType.water, 10f)
+			.add(ResourceType.dudes, (float) DUDES_START_COUNT)
+			.add(ResourceType.solarpanel, 0f)
+			.add(ResourceType.oil, 0f)
+			.add(ResourceType.gas, 0f)
+			.add(ResourceType.coal, 0f)
+			.build();
+	public static final int PLANET_COUNT = 10;
+	public static final EnumMap<GridElementType, Integer> PLANET_ELEMENTS_COUNT
+			= new GridElementMapBuilder<Integer>()
+			.add(GridElementType.sand, PLANET_COUNT)
+			.add(GridElementType.water, 4)
+			.add(GridElementType.metal, 5)
+			.add(GridElementType.oil, 6)
+			.add(GridElementType.gas, 5)
+			.add(GridElementType.coal, 4)
+			.build();
+	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_AMOUNT
+			= new GridElementMapBuilder<Float>()
+			.add(GridElementType.sand, 0f)
+			.add(GridElementType.water, 0.05f)
+			.add(GridElementType.metal, 0.05f)
+			.add(GridElementType.oil, 0.05f)
+			.add(GridElementType.gas, 0.05f)
+			.add(GridElementType.coal, 0.05f)
+			.build();
+	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_CONTINUE
+			= new GridElementMapBuilder<Float>()
+			.add(GridElementType.sand, 0f)
+			.add(GridElementType.water, 0.8f)
+			.add(GridElementType.metal, 0.5f)
+			.add(GridElementType.oil, 0.8f)
+			.add(GridElementType.gas, 0.8f)
+			.add(GridElementType.coal, 0.8f)
+			.build();
+	public static final float PLANET_SMALL_CHANCE = 0.7f;
+	public static final float PLANET_SMALL_MULTIPLIER = 0.25f;
+	public static final int GRID_MIN_SIZE = 2;
+	public static final int GRID_MAX_SIZE = 40;
+	public static final float SOLAR_MULTIPLIER_MIN = 0;
+	public static final float SOLAR_MULTIPLIER_MAX = 10;
 }

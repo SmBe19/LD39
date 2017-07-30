@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -34,6 +35,8 @@ public class SpaceMapWidget extends Widget {
 	private int offX, offY;
 	private Vector2 start;
 	private Vector2 destination;
+
+	// TODO show unvisited planets
 
 	public SpaceMapWidget(Skin skin, final Universe universe) {
 		this.skin = skin;
@@ -116,7 +119,7 @@ public class SpaceMapWidget extends Widget {
 		if (hoverPlanet != null) {
 			int dist = MathUtils.ceil((float) Math.sqrt((hoverPlanet.getX() - currentPlanet.getX()) * (hoverPlanet.getX() - currentPlanet.getX())
 					+ (hoverPlanet.getY() - currentPlanet.getY()) * (hoverPlanet.getY() - currentPlanet.getY())));
-			hoverPlanetCache.setText(hoverPlanet.getName() + " (" + dist + ")", 0, 0);
+			hoverPlanetCache.setText(hoverPlanet.getName() + " (" + dist + " km)", 0, 0);
 			hoverPlanetFontCenter = offX + hoverPlanet.getX() + (Consts.PLANET_SIZE - hoverPlanetCache.getLayouts().get(0).width) * 0.5f;
 		}
 	}
@@ -156,7 +159,13 @@ public class SpaceMapWidget extends Widget {
 				hoverPlanetCache.setPosition(ax + hoverPlanetFontCenter, ay + offY + planet.getY() + Consts.PLANET_SIZE + font.getCapHeight() + 10);
 				hoverPlanetCache.draw(batch);
 			}
+			if (!planet.isVisited()){
+				batch.setColor(0.5f, 0.5f, 0.5f, 1);
+			}
+
 			batch.draw(planet.getTexture(), ax + offX + planet.getX(), ay + offY + planet.getY(), Consts.PLANET_SIZE, Consts.PLANET_SIZE);
+
+			batch.setColor(1, 1, 1, 1);
 		}
 
 		for (SpaceShip ship : universe.getSpaceShips()) {
@@ -187,6 +196,11 @@ public class SpaceMapWidget extends Widget {
 		public void setPlanet(Planet planet) {
 			this.planet = planet;
 		}
+	}
+
+	public void centerOnCurrentPlanet(ScrollPane scrollPane){
+		scrollPane.setScrollX(offX + currentPlanet.getX() - scrollPane.getWidth() * 0.5f);
+		scrollPane.setScrollY(prefHeight - (offY + currentPlanet.getY()) - scrollPane.getHeight() * 0.5f);
 	}
 
 	public static abstract class PlanetClickedListener implements EventListener {

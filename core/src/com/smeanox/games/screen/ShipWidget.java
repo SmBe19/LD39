@@ -8,23 +8,23 @@ import com.smeanox.games.world.SpaceShip;
 public class ShipWidget extends TextButton {
 
 	private final SpaceShip spaceShip;
-	private boolean wasInSpace;
 
 	public ShipWidget(SpaceShip spaceShip, Skin skin) {
 		super("", skin);
 		this.spaceShip = spaceShip;
-		wasInSpace = spaceShip.isInSpace();
 		getLabel().setText(getCurrentText());
-	}
 
-	@Override
-	public void act(float delta) {
-		super.act(delta);
+		spaceShip.addListener(new SpaceShip.SpaceShipListener() {
+			@Override
+			public void spaceShipStateChanged(SpaceShip spaceShip) {
+				getLabel().setText(getCurrentText());
+			}
 
-		if (wasInSpace != spaceShip.isInSpace()) {
-			getLabel().setText(getCurrentText());
-			wasInSpace = spaceShip.isInSpace();
-		}
+			@Override
+			public void spaceShipNameChanged(SpaceShip spaceShip) {
+				getLabel().setText(getCurrentText());
+			}
+		});
 	}
 
 	private StringBuilder getCurrentText(){

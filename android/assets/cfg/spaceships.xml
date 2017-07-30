@@ -4,14 +4,38 @@
             xsi:schemaLocation="http://games.smeanox.com spaceships.xsd">
     <spaceship key="small" name="small" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
         <properties capacity="10" propellant="1" speed="1" weight="5"/>
+        <resourcesBuild>
+            <resource type="metal" amount="5"/>
+        </resourcesBuild>
+        <resourcesDestroy>
+            <resource type="metal" amount="-3"/>
+        </resourcesDestroy>
     </spaceship>
     <spaceship key="medium" name="medium" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
         <properties capacity="10" propellant="1" speed="1" weight="5"/>
+        <resourcesBuild>
+            <resource type="metal" amount="5"/>
+        </resourcesBuild>
+        <resourcesDestroy>
+            <resource type="metal" amount="-3"/>
+        </resourcesDestroy>
     </spaceship>
     <spaceship key="large" name="large" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
         <properties capacity="10" propellant="1" speed="1" weight="5"/>
+        <resourcesBuild>
+            <resource type="metal" amount="5"/>
+        </resourcesBuild>
+        <resourcesDestroy>
+            <resource type="metal" amount="-3"/>
+        </resourcesDestroy>
     </spaceship>
     <spaceship key="giant" name="giant" texture="spaceship/spaceship" small_texture="spaceship/spaceship">
         <properties capacity="10" propellant="1" speed="1" weight="5"/>
+        <resourcesBuild>
+            <resource type="metal" amount="5"/>
+        </resourcesBuild>
+        <resourcesDestroy>
+            <resource type="metal" amount="-3"/>
+        </resourcesDestroy>
     </spaceship>
 </spaceships>

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -16,8 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -25,8 +28,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.smeanox.games.Consts;
+import com.smeanox.games.util.ErrorCatcher;
 import com.smeanox.games.world.BuildingType;
 import com.smeanox.games.world.Planet;
 import com.smeanox.games.world.SpaceShip;
@@ -59,13 +63,15 @@ public class GameScreen implements Screen {
 	private final TextField planetNameTextField, spaceShipNameTextField;
 	private final HorizontalGroup buildingsList;
 	private final Image spaceShipImage;
+	private final SelectBox<SpaceShipType> spaceShipTypeSelection;
+	private final ScrollPane spaceMapScrollPane;
+
+	private final Planet.PlanetListener shipArrivedListener;
 
 	public GameScreen() {
 		universe = new Universe();
 		universe.bigBang();
-		currentPlanet = universe.getPlanets().get(0);
-		currentSpaceShip = new SpaceShip(SpaceShipType.medium, "Ship", currentPlanet);
-		universe.getSpaceShips().add(currentSpaceShip);
+		currentPlanet = universe.getEarth();
 		unusedTime = 0;
 
 		skin = new Skin();
@@ -73,9 +79,12 @@ public class GameScreen implements Screen {
 		skin.addRegions(Atlas.textures.atlas);
 		skin.load(Gdx.files.internal("uiskin.json"));
 
-		buildStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
-		spaceStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
-		portStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+//		buildStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+//		spaceStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+//		portStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
+		buildStage = new Stage(new ScreenViewport());
+		spaceStage = new Stage(new ScreenViewport());
+		portStage = new Stage(new ScreenViewport());
 
 		buildWidget = new BuildWidget();
 		resourceWidgetBuild = new ResourceWidget(skin, true);
@@ -91,10 +100,19 @@ public class GameScreen implements Screen {
 		spaceShipImage = new Image();
 		spaceShipDetailWidget = new SpaceShipDetailWidget(skin);
 		spaceShipLoadingWidget = new SpaceShipLoadingWidget(skin);
+		spaceShipTypeSelection = new SelectBox<SpaceShipType>(skin);
+		spaceMapScrollPane = new ScrollPane(spaceMapWidget, skin, "no-bars");
+
+		shipArrivedListener = new Planet.PlanetListener() {
+			@Override
+			public void spaceShipArrived(Planet planet, SpaceShip spaceShip) {
+				initSpaceShipList(shipListBuild, planet.getSpaceShips());
+			}
+		};
 
 		initUI();
 
-		setCurrentPlanet(universe.getPlanets().get(0));
+		setCurrentPlanet(currentPlanet);
 		activateStage(buildStage);
 	}
 
@@ -113,28 +131,37 @@ public class GameScreen implements Screen {
 		Table buildTable = new Table(skin);
 		buildTable.setFillParent(true);
 		buildStage.addActor(buildTable);
+		buildTable.columnDefaults(0).width(150);
+		buildTable.columnDefaults(2).width(150);
 
-		buildTable.row().height(30);
-		buildTable.add();
-		buildTable.add(resourceWidgetBuild);
-		buildTable.add();
+		buildTable.row().height(50);
+		buildTable.add(resourceWidgetBuild).colspan(3).width(Value.prefWidth);
 		buildTable.row();
 
 		// planets
-		planetList.padLeft(5);
 		// TODO fix alignment
 		planetList.align(Align.left);
-		for (final Planet planet : universe.getPlanets()) {
-			PlanetWidget planetWidget = new PlanetWidget(planet, skin);
-			planetWidget.addListener(new ChangeListener() {
-				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					setCurrentPlanet(planet);
-				}
-			});
-			planetList.addActor(planetWidget);
+		Planet.PlanetListener discoveryListener = new Planet.PlanetListener() {
+			@Override
+			public void discovered(final Planet planet) {
+				PlanetWidget planetWidget = new PlanetWidget(planet, skin);
+				planetWidget.addListener(new ChangeListener() {
+					@Override
+					public void changed(ChangeEvent event, Actor actor) {
+						setCurrentPlanet(planet);
+					}
+				});
+				planetList.addActor(planetWidget);
+			}
+		};
+		for (Planet planet : universe.getPlanets()) {
+			planet.addListener(discoveryListener);
+			if (planet.isVisited()){
+				discoveryListener.discovered(planet);
+			}
 		}
 		VerticalGroup planetStuff = new VerticalGroup();
+		planetStuff.pad(5);
 		planetStuff.align(Align.left);
 		planetNameTextField.addListener(new ChangeListener() {
 			@Override
@@ -144,8 +171,9 @@ public class GameScreen implements Screen {
 		});
 		addEscToTextField(planetNameTextField);
 		planetStuff.addActor(planetNameTextField);
+		planetStuff.addActor(new Spacer(10));
 		planetStuff.addActor(planetList);
-		buildTable.add(planetStuff).width(150);
+		buildTable.add(planetStuff);
 
 		// build grid
 		ScrollPane buildScrollPane = new ScrollPane(buildWidget, skin, "no-bars");
@@ -154,7 +182,26 @@ public class GameScreen implements Screen {
 		// spaceships
 		shipListBuild.padRight(5);
 		shipListBuild.align(Align.right);
-		buildTable.add(shipListBuild).width(150);
+		VerticalGroup shipStuff = new VerticalGroup();
+		shipStuff.pad(5);
+		shipStuff.addActor(shipListBuild);
+		shipStuff.addActor(new Spacer(20));
+		spaceShipTypeSelection.setItems(SpaceShipType.values());
+		shipStuff.addActor(spaceShipTypeSelection);
+		shipStuff.addActor(new Spacer(5));
+		TextButton buyShipButton = new TextButton("Buy Ship", skin);
+		buyShipButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				SpaceShipType type = spaceShipTypeSelection.getSelected();
+				if (SpaceShip.canBuild(type, currentPlanet)){
+					SpaceShip ship = new SpaceShip(type, type + " ship " + MathUtils.random(1000));
+					ship.build(universe, currentPlanet);
+				}
+			}
+		});
+		shipStuff.addActor(buyShipButton);
+		buildTable.add(shipStuff);
 
 		buildTable.row().height(100);
 
@@ -164,6 +211,7 @@ public class GameScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				activateStage(spaceStage);
+				centerSpaceMap();
 			}
 		});
 		buildTable.add(spacemapButton);
@@ -196,7 +244,15 @@ public class GameScreen implements Screen {
 		}
 		buildTable.add(buildingsScrollPane);
 
-		buildTable.add();
+		final Label errorLabel = new Label("", skin);
+		ErrorCatcher.get().addListener(new ErrorCatcher.ErrorHappenedListener() {
+			@Override
+			public void errorHappened(String error) {
+				errorLabel.setText(ErrorCatcher.get().getAny());
+			}
+		});
+		errorLabel.setWrap(true);
+		buildTable.add(errorLabel).left();
 
 		buildTable.setDebug(Consts.DEBUG, true);
 	}
@@ -241,13 +297,14 @@ public class GameScreen implements Screen {
 						setSelectingStart(false);
 					}
 				} else {
-					setCurrentPlanet(planet);
-					activateStage(buildStage);
+					if (planet.isVisited()) {
+						setCurrentPlanet(planet);
+						activateStage(buildStage);
+					}
 				}
 			}
 		});
 		spaceMapWidget.setResourceWidget(spaceMapResourceWidget);
-		ScrollPane spaceMapScrollPane = new ScrollPane(spaceMapWidget, skin, "no-bars");
 		spaceMapScrollPane.setFillParent(true);
 		spaceStage.addActor(spaceMapScrollPane);
 
@@ -255,14 +312,17 @@ public class GameScreen implements Screen {
 		spaceTable.setFillParent(true);
 		spaceStage.addActor(spaceTable);
 
-		spaceTable.row().height(30);
+		spaceTable.columnDefaults(0).width(150);
+		spaceTable.columnDefaults(2).width(150);
+
+		spaceTable.row().height(50);
 		spaceTable.add();
 		spaceTable.row();
-		spaceTable.add(spaceMapResourceWidget);
+		spaceTable.add(spaceMapResourceWidget).pad(10);
 		spaceTable.add().expand();
-		shipListSpace.padRight(5);
+		shipListSpace.pad(5);
 		shipListSpace.align(Align.right);
-		spaceTable.add(shipListSpace).width(150);
+		spaceTable.add(shipListSpace);
 		spaceTable.row().height(100);
 		ImageButton backButton = new ImageButton(skin.getDrawable("ui/button_back"));
 		backButton.addListener(new ChangeListener() {
@@ -272,7 +332,17 @@ public class GameScreen implements Screen {
 				setSelectingStart(false);
 			}
 		});
-		spaceTable.add(backButton).width(150);
+		spaceTable.add(backButton);
+		spaceTable.add();
+		final Label errorLabel = new Label("", skin);
+		ErrorCatcher.get().addListener(new ErrorCatcher.ErrorHappenedListener() {
+			@Override
+			public void errorHappened(String error) {
+				errorLabel.setText(ErrorCatcher.get().getStart());
+			}
+		});
+		errorLabel.setWrap(true);
+		spaceTable.add(errorLabel);
 
 		spaceTable.setDebug(Consts.DEBUG, true);
 	}
@@ -286,11 +356,11 @@ public class GameScreen implements Screen {
 		Table portTable = new Table(skin);
 		portTable.setFillParent(true);
 		portStage.addActor(portTable);
+		portTable.columnDefaults(0).width(200);
+		portTable.columnDefaults(2).width(200);
 
-		portTable.row().height(30);
-		portTable.add();
-		portTable.add(resourceWidgetPort);
-		portTable.add();
+		portTable.row().height(50);
+		portTable.add(resourceWidgetPort).colspan(3).width(Value.prefWidth);
 		portTable.row();
 
 		spaceShipNameTextField.addListener(new ChangeListener() {
@@ -300,10 +370,10 @@ public class GameScreen implements Screen {
 			}
 		});
 		addEscToTextField(spaceShipNameTextField);
-		portTable.add(spaceShipNameTextField);
+		portTable.add(spaceShipNameTextField).pad(5);
 		spaceShipImage.setScaling(Scaling.fit);
 		portTable.add(spaceShipImage).expand();
-		portTable.add(spaceShipDetailWidget).width(200);
+		portTable.add(spaceShipDetailWidget);
 		portTable.row().height(100);
 		ImageButton backButton = new ImageButton(skin.getDrawable("ui/button_back"));
 		backButton.addListener(new ChangeListener() {
@@ -321,11 +391,17 @@ public class GameScreen implements Screen {
 				setCurrentPlanet(currentSpaceShip.getStart());
 				setSelectingStart(true);
 				activateStage(spaceStage);
+				centerSpaceMap();
 			}
 		});
-		portTable.add(launchButton).width(200);
+		portTable.add(launchButton);
 
 		portTable.setDebug(Consts.DEBUG, true);
+	}
+
+	private void centerSpaceMap(){
+		// TODO fix not working on first call
+		spaceMapWidget.centerOnCurrentPlanet(spaceMapScrollPane);
 	}
 
 	private void activateStage(Stage stage) {
@@ -360,15 +436,22 @@ public class GameScreen implements Screen {
 	}
 
 	public void setCurrentPlanet(Planet currentPlanet) {
+		if (this.currentPlanet != null){
+			this.currentPlanet.removeListener(shipArrivedListener);
+		}
+
 		this.currentPlanet = currentPlanet;
 		buildWidget.setPlanet(currentPlanet);
 		resourceWidgetBuild.setPlanet(currentPlanet);
-		planetNameTextField.setText(currentPlanet.getName());
 		spaceMapWidget.setCurrentPlanet(currentPlanet);
 		resourceWidgetPort.setPlanet(currentPlanet);
 
-		// TODO update list once a ship arrives
-		initSpaceShipList(shipListBuild, currentPlanet.getSpaceShips());
+		if (this.currentPlanet != null) {
+			planetNameTextField.setText(currentPlanet.getName());
+
+			initSpaceShipList(shipListBuild, currentPlanet.getSpaceShips());
+			this.currentPlanet.addListener(shipArrivedListener);
+		}
 	}
 
 	private void initSpaceShipList(Group group, List<SpaceShip> ships) {
@@ -400,6 +483,9 @@ public class GameScreen implements Screen {
 
 	public void setCurrentSpaceShip(SpaceShip currentSpaceShip) {
 		this.currentSpaceShip = currentSpaceShip;
+		if (this.currentSpaceShip == null){
+			return;
+		}
 		spaceShipImage.setDrawable(new TextureRegionDrawable(currentSpaceShip.getType().config.texture));
 		spaceShipNameTextField.setText(currentSpaceShip.getName());
 		spaceShipDetailWidget.setSpaceShip(currentSpaceShip);

@@ -4,15 +4,15 @@ import com.smeanox.games.world.ResourceType;
 
 import java.util.EnumMap;
 
-public class ResourceBuilder<T> {
+public class ResourceMapBuilder<T> {
 
 	private EnumMap<ResourceType, T> map;
 
-	public ResourceBuilder() {
+	public ResourceMapBuilder() {
 		map = new EnumMap<ResourceType, T>(ResourceType.class);
 	}
 
-	public ResourceBuilder<T> add(ResourceType type, T val){
+	public ResourceMapBuilder<T> add(ResourceType type, T val){
 		map.put(type, val);
 		return this;
 	}

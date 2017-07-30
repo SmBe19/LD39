@@ -3,16 +3,34 @@ package com.smeanox.games.screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.StringBuilder;
+import com.smeanox.games.Consts;
 import com.smeanox.games.world.SpaceShip;
 import com.smeanox.games.world.SpaceShipConfig;
 
 public class SpaceShipDetailWidget extends Label {
 
 	private SpaceShip spaceShip;
-	private boolean wasInSpace;
+	private final SpaceShip.SpaceShipListener listener;
 
 	public SpaceShipDetailWidget(Skin skin) {
 		super("", skin);
+
+		listener = new SpaceShip.SpaceShipListener() {
+			@Override
+			public void spaceShipStateChanged(SpaceShip spaceShip) {
+				setText(getCurrentText());
+			}
+
+			@Override
+			public void spaceShipNameChanged(SpaceShip spaceShip) {
+				setText(getCurrentText());
+			}
+
+			@Override
+			public void spaceShipFreightChanged(SpaceShip spaceShip) {
+				setText(getCurrentText());
+			}
+		};
 	}
 
 	public SpaceShip getSpaceShip() {
@@ -20,30 +38,29 @@ public class SpaceShipDetailWidget extends Label {
 	}
 
 	public void setSpaceShip(SpaceShip spaceShip) {
+		if(this.spaceShip != null) {
+			this.spaceShip.removeListener(listener);
+		}
+
 		this.spaceShip = spaceShip;
 
+		this.spaceShip.addListener(listener);
+
 		setText(getCurrentText());
-		wasInSpace = spaceShip.isInSpace();
-	}
-
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-
-		if (wasInSpace != spaceShip.isInSpace()) {
-			setText(getCurrentText());
-			wasInSpace = spaceShip.isInSpace();
-		}
 	}
 
 	private StringBuilder getCurrentText(){
 		StringBuilder stringBuilder = new StringBuilder();
 		SpaceShipConfig config = spaceShip.getType().config;
 		stringBuilder
-				.append("Position: ").append(spaceShip.isInSpace() ? "Space" : spaceShip.getStart().getName())
-				.append("\nCapacity: ").append(config.capacity)
-				.append("\nPropellant usage: ").append(config.propellantPerWeightAndDistance)
-				.append("\nSpeed: ").append(config.speed);
+				.append("Name: ").append(spaceShip.getName())
+				.append("\nPosition: ").append(spaceShip.isInSpace() ? "Space" : spaceShip.getStart().getName())
+				.append("\nSpeed: ").append(config.speed / Consts.UNIVERSE_STEP_SIZE * 1000f).append(" km/s")
+				.append("\nMass empty: ").append(config.weight).append(" kg")
+				.append("\nMass now: ").append(spaceShip.getWeight()).append(" kg")
+				.append("\nPropellant [1/kgkm]: ").append(config.propellantPerWeightAndDistance)
+				.append("\nCapacity total: ").append(config.capacity).append(" kg")
+				.append("\nCapacity used: ").append(spaceShip.getWeight() - config.weight).append(" kg");
 		return stringBuilder;
 	}
 }

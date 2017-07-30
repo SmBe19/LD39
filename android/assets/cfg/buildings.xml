@@ -3,10 +3,13 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://games.smeanox.com buildings.xsd">
     <building key="city" name="Oil rig" texture="building/oil" preview="building/oil">
-        <properties width="1" height="1" dudes_needed="1" dudes_capacity_increase="0"
+        <properties width="1" height="1" dudes_needed="0" dudes_capacity_increase="100"
                     spaceships_increase="0" level_usage="1"/>
         <needGridElement>
+            <element type="sand"/>
             <element type="oil"/>
+            <element type="gas"/>
+            <element type="coal"/>
         </needGridElement>
         <resourcesBuild>
             <resource type="electricity" amount="5"/>

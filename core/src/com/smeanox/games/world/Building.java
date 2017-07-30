@@ -1,5 +1,7 @@
 package com.smeanox.games.world;
 
+import com.smeanox.games.util.ErrorCatcher;
+
 public class Building {
 
 	private final BuildingType type;
@@ -10,6 +12,7 @@ public class Building {
 		this.type = type;
 		this.x = -1;
 		this.y = -1;
+		this.active = false;
 	}
 
 	public BuildingType getType() {
@@ -18,16 +21,20 @@ public class Building {
 
 	public static boolean canBuild(BuildingType type, Planet planet, int x, int y) {
 		if (!type.config.needGridElementType.contains(planet.getGrid()[y][x].getType())) {
+			ErrorCatcher.get().setBuilding("Can't build on this type of ground.");
 			return false;
 		}
-		if (planet.getGrid()[y][x] != null){
+		if (planet.getGrid()[y][x].getBuilding() != null){
+			ErrorCatcher.get().setBuilding("There is already a building.");
 			return false;
 		}
 		for (ResourceType resourceType : ResourceType.values()) {
 			if (planet.getResources().get(resourceType).val < type.config.resourcesBuild.get(resourceType)){
+				ErrorCatcher.get().setBuilding("Not enough " + resourceType + ".");
 				return false;
 			}
 		}
+		ErrorCatcher.get().setBuilding("");
 		return true;
 	}
 
@@ -47,6 +54,10 @@ public class Building {
 			planet.getResources().get(resourceType).val -= type.config.resourcesBuild.get(resourceType);
 		}
 		planet.addDudesCapacity(type.config.dudesCapacityIncrease);
+		planet.addSpaceShipsCapacity(type.config.spaceShipsCapacityIncrease);
+		if (canActivate(planet)){
+			activate(planet);
+		}
 	}
 
 	public boolean canStep(Planet planet) {
@@ -75,18 +86,28 @@ public class Building {
 		for (ResourceType resourceType : ResourceType.values()) {
 			planet.getResources().get(resourceType).val -= type.config.resourcesUsage.get(resourceType);
 		}
+		if (type == BuildingType.solarplant){
+			planet.getResources().get(ResourceType.electricity).val -= (planet.getSolarMultiplier() - 1) * type.config.resourcesUsage.get(ResourceType.electricity);
+		}
 		planet.getGrid()[y][x].addLevel(-type.config.levelUsage);
 	}
 
 	public static boolean canDestroy(BuildingType type, Planet planet) {
 		for (ResourceType resourceType : ResourceType.values()) {
 			if (planet.getResources().get(resourceType).val < type.config.resourcesDestroy.get(resourceType)){
+				ErrorCatcher.get().setBuilding("Not enough " + resourceType + ".");
 				return false;
 			}
 		}
 		if (planet.getDudesCapacity() - type.config.dudesCapacityIncrease < planet.getTotalDudes()){
+			ErrorCatcher.get().setBuilding("Not enough capacity to house all dudes.");
 			return false;
 		}
+		if (planet.getFreeSpaceShipCapacity() < type.config.spaceShipsCapacityIncrease) {
+			ErrorCatcher.get().setBuilding("Not enough capacity to store all space ships.");
+			return false;
+		}
+		ErrorCatcher.get().setBuilding("");
 		return true;
 	}
 
@@ -106,6 +127,11 @@ public class Building {
 			planet.getResources().get(resourceType).val -= type.config.resourcesDestroy.get(resourceType);
 		}
 		planet.addDudesCapacity(-type.config.dudesCapacityIncrease);
+		planet.addSpaceShipsCapacity(-type.config.spaceShipsCapacityIncrease);
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 
 	public boolean canActivate(Planet planet) {
@@ -113,8 +139,10 @@ public class Building {
 			return false;
 		}
 		if (planet.getResources().get(ResourceType.dudes).val < type.config.dudesNeeded) {
+			ErrorCatcher.get().setBuilding("Not enough dudes available.");
 			return false;
 		}
+		ErrorCatcher.get().setBuilding("");
 		return true;
 	}
 
@@ -122,6 +150,8 @@ public class Building {
 		if (!canActivate(planet)) {
 			return;
 		}
+
+		active = true;
 
 		planet.getResources().get(ResourceType.dudes).val -= type.config.dudesNeeded;
 	}
@@ -135,6 +165,16 @@ public class Building {
 			return;
 		}
 
+		active = false;
+
 		planet.getResources().get(ResourceType.dudes).val += type.config.dudesNeeded;
+	}
+
+	public void toggle(Planet planet){
+		if (active){
+			deactivate(planet);
+		} else {
+			activate(planet);
+		}
 	}
 }

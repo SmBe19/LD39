@@ -21,8 +21,8 @@
                     <xs:attribute name="weight" type="xs:float" use="required"/>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="resourcesBuild" type="resourceList"/>
-            <xs:element name="resourcesDestroy" type="resourceList"/>
+            <xs:element name="resourcesBuild" type="resourceList" minOccurs="1"/>
+            <xs:element name="resourcesDestroy" type="resourceList" minOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="key" type="xs:string" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>

@@ -1,8 +1,11 @@
 package com.smeanox.games.world;
 
+import com.smeanox.games.util.ErrorCatcher;
 import com.smeanox.games.util.Rapper;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 public class SpaceShip {
 
@@ -13,14 +16,13 @@ public class SpaceShip {
 	private boolean inSpace;
 	private float weight;
 	private EnumMap<ResourceType, Rapper<Float>> resources;
+	private List<SpaceShipListener> listeners;
 
-	// TODO add ship construction and ship cost
-	public SpaceShip(SpaceShipType type, String name, Planet start) {
+	public SpaceShip(SpaceShipType type, String name) {
 		this.type = type;
 		this.name = name;
-		this.start = start;
-		this.destination = start;
-		start.getSpaceShips().add(this);
+
+		listeners = new ArrayList<SpaceShipListener>();
 
 		resources = new EnumMap<ResourceType, Rapper<Float>>(ResourceType.class);
 		for (ResourceType resourceType : ResourceType.values()) {
@@ -38,6 +40,7 @@ public class SpaceShip {
 
 	public void setName(String name) {
 		this.name = name;
+		fireNameChanged();
 	}
 
 	public Planet getStart() {
@@ -68,6 +71,72 @@ public class SpaceShip {
 		return resources;
 	}
 
+	public static boolean canBuild(SpaceShipType type, Planet planet){
+		for (ResourceType resourceType : ResourceType.values()) {
+			if (planet.getResources().get(resourceType).val < type.config.resourcesBuild.get(resourceType)){
+				ErrorCatcher.get().setSpaceShip("Not enough " + resourceType + ".");
+				return false;
+			}
+		}
+		if (planet.getFreeSpaceShipCapacity() < 1){
+			ErrorCatcher.get().setSpaceShip("Not enough capacity to store space ship.");
+			return false;
+		}
+		ErrorCatcher.get().setSpaceShip("");
+		return true;
+	}
+
+	public boolean canBuild(Planet planet){
+		return SpaceShip.canBuild(type, planet);
+	}
+
+	public void build(Universe universe, Planet planet) {
+		if (!canBuild(planet)) {
+			return;
+		}
+		start = planet;
+		destination = planet;
+		inSpace = false;
+		for (ResourceType resourceType : ResourceType.values()) {
+			planet.getResources().get(resourceType).val -= type.config.resourcesBuild.get(resourceType);
+		}
+		universe.getSpaceShips().add(this);
+		start.getSpaceShips().add(this);
+
+		updateDistanceAndWeight();
+
+		start.fireSpaceShipsChanged(this);
+	}
+
+	public boolean canDestroy(Planet planet) {
+		if (inSpace){
+			ErrorCatcher.get().setSpaceShip("Space ship can't be destroyed while flying.");
+			return false;
+		}
+		for (ResourceType resourceType : ResourceType.values()) {
+			if (planet.getResources().get(resourceType).val + resources.get(resourceType).val < type.config.resourcesDestroy.get(resourceType)){
+				ErrorCatcher.get().setSpaceShip("Not enough " + resourceType + ".");
+				return false;
+			}
+		}
+		ErrorCatcher.get().setSpaceShip("");
+		return true;
+	}
+
+	public void destroy(Universe universe){
+		if (!canDestroy(start)){
+			return;
+		}
+
+		universe.getSpaceShips().remove(this);
+		start.getSpaceShips().remove(this);
+		start.fireSpaceShipsChanged(this);
+
+		for (ResourceType resourceType : ResourceType.values()) {
+			start.getResources().get(resourceType).val -= type.config.resourcesDestroy.get(resourceType) - resources.get(resourceType).val;
+		}
+	}
+
 	private void updateDistanceAndWeight() {
 		distance = (float) Math.sqrt((destination.getX() - start.getX()) * (destination.getX() - start.getX()) +
 				(destination.getY() - start.getY()) * (destination.getY() - start.getY()));
@@ -81,24 +150,36 @@ public class SpaceShip {
 		if (start.getResources().get(type).val < amountPlanetToSpaceShip || resources.get(type).val + amountPlanetToSpaceShip < 0) {
 			return false;
 		}
+		if (weight - getType().config.weight + amountPlanetToSpaceShip * type.weight > getType().config.capacity) {
+			return false;
+		}
 		start.getResources().get(type).val -= amountPlanetToSpaceShip;
 		resources.get(type).val += amountPlanetToSpaceShip;
 		if (type == ResourceType.dudes) {
 			start.addTotalDudes((int) -amountPlanetToSpaceShip);
 		}
+		updateDistanceAndWeight();
+		fireFreightChanged();
 		return true;
 	}
 
 	public boolean canStart(Planet destination) {
 		if (inSpace) {
+			ErrorCatcher.get().setStart("Space ship is already flying.");
 			return false;
 		}
 		this.destination = destination;
 		updateDistanceAndWeight();
 		float usage = type.config.propellantPerWeightAndDistance * distance * weight;
 		if (usage > resources.get(ResourceType.propellant).val) {
+			ErrorCatcher.get().setStart("Not enough propellant to reach destination.");
 			return false;
 		}
+		if (destination.getFreeSpaceShipCapacity() < 1){
+			ErrorCatcher.get().setStart("Not enough capacity on the destination planet.");
+			return false;
+		}
+		ErrorCatcher.get().setStart("");
 		return true;
 	}
 
@@ -111,6 +192,9 @@ public class SpaceShip {
 		progress = 0;
 		inSpace = true;
 		start.getSpaceShips().remove(this);
+		destination.getArrivingSpaceShips().add(this);
+		fireStateChanged();
+		start.fireSpaceShipsChanged(this);
 	}
 
 	public void step(Universe universe) {
@@ -118,8 +202,9 @@ public class SpaceShip {
 			return;
 		}
 
+		float moveDist = Math.min(type.config.speed, distance - progress);
 		progress += type.config.speed;
-		resources.get(ResourceType.propellant).val -= type.config.propellantPerWeightAndDistance * weight;
+		resources.get(ResourceType.propellant).val -= type.config.propellantPerWeightAndDistance * moveDist * weight;
 
 		if (progress >= distance) {
 			arrive();
@@ -132,6 +217,46 @@ public class SpaceShip {
 		}
 		inSpace = false;
 		start = destination;
+		if (!destination.isVisited()){
+			destination.discoverPlanet();
+		}
+		destination.getArrivingSpaceShips().remove(this);
 		destination.getSpaceShips().add(this);
+		fireStateChanged();
+		destination.fireSpaceShipsChanged(this);
+	}
+
+	public void addListener(SpaceShipListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeListener(SpaceShipListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireStateChanged (){
+		for (SpaceShipListener listener : listeners) {
+			listener.spaceShipStateChanged(this);
+		}
+	}
+
+	public void fireNameChanged () {
+		for (SpaceShipListener listener : listeners) {
+			listener.spaceShipNameChanged(this);
+		}
+	}
+
+	public void fireFreightChanged () {
+		for (SpaceShipListener listener : listeners) {
+			listener.spaceShipFreightChanged(this);
+		}
+	}
+
+	public static abstract class SpaceShipListener {
+		public void spaceShipStateChanged(SpaceShip spaceShip){}
+
+		public void spaceShipNameChanged(SpaceShip spaceShip){}
+
+		public void spaceShipFreightChanged(SpaceShip spaceShip) {}
 	}
 }

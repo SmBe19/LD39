@@ -34,7 +34,6 @@ public class ResourceWidget extends Widget {
 		}
 
 		font = skin.getFont("resource-font");
-		font.getData().setScale(0.8f);
 		resourceBackground = skin.getDrawable("resource/background");
 		resourceIcons = new EnumMap<ResourceType, Drawable>(ResourceType.class);
 		for (ResourceType resourceType : ResourceType.values()) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.smeanox.games.Consts;
 import com.smeanox.games.world.Building;
 import com.smeanox.games.world.BuildingType;
@@ -18,6 +19,10 @@ public class BuildWidget extends Widget {
 	private boolean currentDestroy;
 	private float mouseX, mouseY;
 	private int mouseXX, mouseYY;
+
+	private long lastTouchDown;
+
+	// TODO show level
 
 	public BuildWidget() {
 		prefWidth = 0;
@@ -44,6 +49,17 @@ public class BuildWidget extends Widget {
 				} else if (currentBuildingType != null){
 					new Building(currentBuildingType).build(planet, mouseXX, mouseYY);
 					return true;
+				} else {
+					long now = planet.getTime();
+					if (now - lastTouchDown < Consts.DOUBLE_CLICK_TIME){
+						lastTouchDown = 0;
+						GridElement gridElement = planet.getGrid()[mouseYY][mouseXX];
+						if (gridElement.getBuilding() != null) {
+							gridElement.getBuilding().toggle(planet);
+						}
+					} else {
+						lastTouchDown = now;
+					}
 				}
 
 				return super.touchDown(event, x, y, pointer, button);
@@ -118,23 +134,24 @@ public class BuildWidget extends Widget {
 						ax + x * Consts.GRID_WIDTH,
 						ay + y * Consts.GRID_HEIGHT,
 						Consts.GRID_WIDTH, Consts.GRID_HEIGHT);
-				if (gridElement.getBuilding() != null) {
+				Building building = gridElement.getBuilding();
+				if (building != null) {
 					if (currentDestroy && x == mouseXX && y == mouseYY){
-						if (gridElement.getBuilding().canDestroy(planet)){
+						if (building.canDestroy(planet)){
 							batch.setColor(1, 0.5f, 0.5f, 0.5f);
 						} else {
 							batch.setColor(1, 1, 1, 0.5f);
 						}
+					} else if (!building.isActive()){
+						batch.setColor(0.7f, 0.7f, 0.7f, 1);
 					}
 
-					batch.draw(gridElement.getBuilding().getType().config.texture,
+					batch.draw(building.getType().config.texture,
 							ax + x * Consts.GRID_WIDTH,
 							ay + y * Consts.GRID_HEIGHT,
 							Consts.GRID_WIDTH, Consts.GRID_HEIGHT);
 
-					if (currentDestroy && x == mouseXX && y == mouseYY){
-						batch.setColor(1, 1, 1, 1);
-					}
+					batch.setColor(1, 1, 1, 1);
 				}
 			}
 		}
