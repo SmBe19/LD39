@@ -72,6 +72,7 @@ public class GameScreen implements Screen {
 	private final Dialog winDialog, loseDialog, welcomeDialog;
 
 	private final Planet.PlanetListener shipArrivedListener;
+	private final Planet.PlanetListener discoveryListener;
 
 	public GameScreen() {
 		universe = new Universe();
@@ -128,6 +129,20 @@ public class GameScreen implements Screen {
 			}
 		};
 
+		discoveryListener = new Planet.PlanetListener() {
+			@Override
+			public void discovered(final Planet planet) {
+				PlanetWidget planetWidget = new PlanetWidget(planet, skin);
+				planetWidget.addListener(new ChangeListener() {
+					@Override
+					public void changed(ChangeEvent event, Actor actor) {
+						setCurrentPlanet(planet);
+					}
+				});
+				planetList.addActor(planetWidget);
+			}
+		};
+
 		initUI();
 
 		setCurrentPlanet(currentPlanet);
@@ -165,25 +180,7 @@ public class GameScreen implements Screen {
 		// planets
 		// TODO fix alignment
 		planetList.align(Align.left);
-		Planet.PlanetListener discoveryListener = new Planet.PlanetListener() {
-			@Override
-			public void discovered(final Planet planet) {
-				PlanetWidget planetWidget = new PlanetWidget(planet, skin);
-				planetWidget.addListener(new ChangeListener() {
-					@Override
-					public void changed(ChangeEvent event, Actor actor) {
-						setCurrentPlanet(planet);
-					}
-				});
-				planetList.addActor(planetWidget);
-			}
-		};
-		for (Planet planet : universe.getPlanets()) {
-			planet.addListener(discoveryListener);
-			if (planet.isVisited()){
-				discoveryListener.discovered(planet);
-			}
-		}
+		addDiscoveryListeners();
 		VerticalGroup planetStuff = new VerticalGroup();
 		planetStuff.pad(5);
 		planetStuff.align(Align.left);
@@ -299,6 +296,16 @@ public class GameScreen implements Screen {
 		buildTable.add(errorLabel).left().pad(5);
 
 		buildTable.setDebug(Consts.LAYOUT_DEBUG, true);
+	}
+
+	private void addDiscoveryListeners() {
+		planetList.clearChildren();
+		for (Planet planet : universe.getPlanets()) {
+			planet.addListener(discoveryListener);
+			if (planet.isVisited()){
+				discoveryListener.discovered(planet);
+			}
+		}
 	}
 
 	private void addEscToTextField(TextField textField) {
@@ -632,6 +639,7 @@ public class GameScreen implements Screen {
 				hide();
 			} else if (object.equals(2)){
 				universe.bigBang();
+				addDiscoveryListeners();
 				unusedTime = 0;
 				handledWin = false;
 				setCurrentPlanet(universe.getEarth());

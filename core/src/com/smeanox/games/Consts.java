@@ -56,19 +56,19 @@ public class Consts {
 			= new GridElementMapBuilder<Integer>()
 			.add(GridElementType.sand, PLANET_COUNT)
 			.add(GridElementType.water, 8)
-			.add(GridElementType.metal, 10)
+			.add(GridElementType.metal, 12)
 			.add(GridElementType.oil, 12)
-			.add(GridElementType.gas, 10)
-			.add(GridElementType.coal, 8)
+			.add(GridElementType.gas, 12)
+			.add(GridElementType.coal, 12)
 			.build();
 	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_AMOUNT
 			= new GridElementMapBuilder<Float>()
 			.add(GridElementType.sand, 0f)
 			.add(GridElementType.water, 0.05f)
 			.add(GridElementType.metal, 0.05f)
-			.add(GridElementType.oil, 0.04f)
-			.add(GridElementType.gas, 0.04f)
-			.add(GridElementType.coal, 0.05f)
+			.add(GridElementType.oil, 0.06f)
+			.add(GridElementType.gas, 0.06f)
+			.add(GridElementType.coal, 0.06f)
 			.build();
 	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_CONTINUE
 			= new GridElementMapBuilder<Float>()
