@@ -64,7 +64,7 @@ public class Universe {
 	}
 
 	public boolean isWon(){
-		return alphaCentauri.getTotalDudes() == getTotalDudes();
+		return alphaCentauri.getTotalDudes() > 0 && alphaCentauri.getTotalDudes() == getTotalDudes();
 	}
 
 	public boolean isLost(){
@@ -106,9 +106,11 @@ public class Universe {
 
 		for (int i = 0; i < Consts.PLANET_COUNT; i++) {
 			int x = 0, y = 0;
-			while (!possiblePosition(x, y)) {
+			int endless = 10000;
+			while (!possiblePosition(x, y) && endless > 0) {
 				x = MathUtils.random(0, Consts.UNIVERSE_SIZE);
 				y = MathUtils.random(0, Consts.UNIVERSE_SIZE);
+				endless--;
 			}
 			boolean small = MathUtils.randomBoolean(Consts.PLANET_SMALL_CHANCE);
 			int width = MathUtils.random(Consts.GRID_MIN_SIZE, small ? ((int) (Consts.GRID_MAX_SIZE * Consts.PLANET_SMALL_MULTIPLIER)) : Consts.GRID_MAX_SIZE);
@@ -144,7 +146,7 @@ public class Universe {
 						.add(GridElementType.water).build(),
 				"space/earth");
 		earth.setVisited(true);
-		earth.setTotalDudes(1000);
+		earth.setTotalDudes(Consts.DUDES_START_COUNT);
 		for (ResourceType resourceType : ResourceType.values()) {
 			earth.getResources().get(resourceType).val = Consts.RESOURCE_START.get(resourceType);
 		}

@@ -131,8 +131,12 @@ public class GameScreen implements Screen {
 		initUI();
 
 		setCurrentPlanet(currentPlanet);
-		activateStage(pauseStage);
-		welcomeDialog.show(pauseStage);
+		if(Consts.DEBUG){
+			activateStage(buildStage);
+		} else {
+			activateStage(pauseStage);
+			welcomeDialog.show(pauseStage);
+		}
 	}
 
 	private void initUI() {
@@ -581,6 +585,7 @@ public class GameScreen implements Screen {
 		buildStage.getViewport().update(width, height, true);
 		spaceStage.getViewport().update(width, height, true);
 		portStage.getViewport().update(width, height, true);
+		pauseStage.getViewport().update(width, height, true);
 	}
 
 	@Override

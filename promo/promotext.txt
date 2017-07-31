@@ -1,0 +1,43 @@
+Hi there, adventurer!
+
+After years of exploitation of the earth there is almost nothing left.
+The earth is low on oil and coal and due to pollution solar panels don't work anymore.
+We are running out of power!
+
+Humanity's last hope is to move to another planet and start over. Our astronomer found a suitable planet with the beautiful name of Unadexus.
+You are in charge of guiding this mission and bringing all remaining humans to Unadexus.
+Good luck!
+
+How to play
+-----------
+Your goal is to get all humans to Unadexus. For this you have to gather enough energy to build space ships and fly to other planets. As it is far too long to Unadexus you will have to make stops on other planets in between.
+
+On a planet you can build different types of energy production facilities and space related buildings.
+
+![Promo001.png](///raw/11a/z/5fe1.png)
+
+This is the main screen of a planet. Here you can build stuff.
+In the middle of the screen there is the view of the planet (you can move the view with drag & drop). If you double click on a building you can (de)activate it to save electricity.
+At the top you can see all your resources and the current usage.
+On the left there is a list of already visited planets (right now only earth). You can rename the current planet with the textbox at the top of the list.
+On the right side you can buy ships (they will be displayed there once you bought one). In the list of space ships you can click on one to get to its detail view.
+Below this there is some information about the currently selected object (either ship type of building type) and its resource usage.
+At the bottom you can select buildings to build (once you select one you will see its stats in the window on the right side). Press on "Cancel", press Esc or click with the right mouse button to cancel the construction. Most buildings can only be built at certain spots (e.g. oil rig only on oil).
+With the button on the bottom left you can get to an overview of the universe.
+On the bottom right there will be error messages (e.g. if you don't have enough of a resource to build something).
+
+![Promo002.png](///raw/11a/z/602e.png)
+
+This is the overview of the universe. If you hover over a planet you can see the current resources and usages in the window on the left. If a planet is grayed out (like the two other planets) then you did not yet visit it.
+If you hover over another planet than the current one (the one with the name above it) the name and the distance to it will be displayed. This is useful to know how much propellant you need.
+With the button on the bottom you get back to the previous view.
+
+![Promo003.png](///raw/11a/z/6045.png)
+
+This is the detail view of a space ship.
+On the left side you can rename the ship and destroy it (if you want to).
+On the right side you have some useful information about the current state of the ship.
+On the bottom you can load and unload resources. Just enter the amount you want to be on the ship (i.e. 0 if you want to unload everything).
+With the button on the bottom right you can send the space ship to another planet. You need to have enough propellant loaded on the ship for it to be able to reach the destination. You can see the current propellant usage in the detail window and the distance on the space map.
+
+Sorry for the long description, I didn't have time to include a tutorial. Have fun playing.

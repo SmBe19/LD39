@@ -3,7 +3,7 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://games.smeanox.com spaceships.xsd">
     <spaceship key="small" name="small">
-        <properties capacity="100" propellant="1" speed="1" weight="10"/>
+        <properties capacity="100" propellant="0.5" speed="10" weight="10"/>
         <resourcesBuild>
             <resource type="metal" amount="100"/>
             <resource type="electricity" amount="1000"/>
@@ -14,7 +14,7 @@
         </resourcesDestroy>
     </spaceship>
     <spaceship key="medium" name="medium">
-        <properties capacity="1000" propellant="0.1" speed="4" weight="20"/>
+        <properties capacity="1000" propellant="0.1" speed="40" weight="20"/>
         <resourcesBuild>
             <resource type="metal" amount="1000"/>
             <resource type="electricity" amount="10000"/>
@@ -25,7 +25,7 @@
         </resourcesDestroy>
     </spaceship>
     <spaceship key="large" name="large">
-        <properties capacity="10000" propellant="0.01" speed="8" weight="50"/>
+        <properties capacity="10000" propellant="0.01" speed="80" weight="50"/>
         <resourcesBuild>
             <resource type="metal" amount="10000"/>
             <resource type="electricity" amount="100000"/>
@@ -36,7 +36,7 @@
         </resourcesDestroy>
     </spaceship>
     <spaceship key="giant" name="giant">
-        <properties capacity="100000" propellant="0.001" speed="32" weight="100"/>
+        <properties capacity="100000" propellant="0.001" speed="320" weight="100"/>
         <resourcesBuild>
             <resource type="metal" amount="100000"/>
             <resource type="electricity" amount="1000000"/>

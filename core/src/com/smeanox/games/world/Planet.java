@@ -26,6 +26,7 @@ public class Planet {
 	private final List<Building> buildings;
 	private final List<SpaceShip> spaceShips, arrivingSpaceShips;
 	private final EnumMap<ResourceType, Rapper<Float>> resources;
+	private final EnumMap<ResourceType, Rapper<Float>> resourceChange;
 	private int totalDudes, dudesCapacity;
 	private int spaceShipsCapacity;
 	private boolean visited;
@@ -46,6 +47,7 @@ public class Planet {
 		this.spaceShips = new ArrayList<SpaceShip>();
 		this.arrivingSpaceShips = new ArrayList<SpaceShip>();
 		this.resources = new EnumMap<ResourceType, Rapper<Float>>(ResourceType.class);
+		this.resourceChange = new EnumMap<ResourceType, Rapper<Float>>(ResourceType.class);
 
 		this.spaceShipsCapacity = Consts.SPACE_SHIP_CAPACITY_WITHOUT_PORT;
 
@@ -69,6 +71,7 @@ public class Planet {
 
 		for (ResourceType resourceType : ResourceType.values()) {
 			resources.put(resourceType, new Rapper<Float>(0f));
+			resourceChange.put(resourceType, new Rapper<Float>(0f));
 		}
 
 		texture = Atlas.textures.atlas.findRegion(textureName);
@@ -188,6 +191,10 @@ public class Planet {
 		return resources;
 	}
 
+	public EnumMap<ResourceType, Rapper<Float>> getResourceChange() {
+		return resourceChange;
+	}
+
 	public int getDudesCapacity() {
 		return dudesCapacity;
 	}
@@ -242,13 +249,22 @@ public class Planet {
 	public void step() {
 		time += Consts.UNIVERSE_STEP_SIZE;
 
+		for (ResourceType resourceType : ResourceType.values()) {
+			resourceChange.get(resourceType).val = resources.get(resourceType).val;
+		}
+
 		for (Building building : buildings) {
 			building.step(this);
 		}
 
+
+		for (ResourceType resourceType : ResourceType.values()) {
+			resourceChange.get(resourceType).val = resources.get(resourceType).val - resourceChange.get(resourceType).val;
+		}
+
 		if (time - lastDudeIncrease > Consts.DUDE_INCREASE_TIME) {
 			lastDudeIncrease = time;
-			int increase = MathUtils.ceil(totalDudes * 0.01f);
+			int increase = MathUtils.ceil(totalDudes * Consts.DUDE_INCREASE_AMOUNT);
 			if (totalDudes + increase <= dudesCapacity) {
 				resources.get(ResourceType.dudes).val += increase;
 				addTotalDudes(increase);
@@ -265,25 +281,25 @@ public class Planet {
 	}
 
 	public void fireSpaceShipsChanged(SpaceShip spaceShip) {
-		for (PlanetListener listener : listeners) {
+		for (PlanetListener listener : new ArrayList<PlanetListener>(listeners)) {
 			listener.spaceShipArrived(this, spaceShip);
 		}
 	}
 
 	public void fireNameChanged() {
-		for (PlanetListener listener : listeners) {
+		for (PlanetListener listener : new ArrayList<PlanetListener>(listeners)) {
 			listener.planetNameChanged(this);
 		}
 	}
 
 	public void fireDudesChanged() {
-		for (PlanetListener listener : listeners) {
+		for (PlanetListener listener : new ArrayList<PlanetListener>(listeners)) {
 			listener.dudesChanged(this);
 		}
 	}
 
 	public void fireDiscovered() {
-		for (PlanetListener listener : listeners) {
+		for (PlanetListener listener : new ArrayList<PlanetListener>(listeners)) {
 			listener.discovered(this);
 		}
 	}

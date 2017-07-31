@@ -85,11 +85,15 @@ public class ResourceWidget extends Widget {
 		float iconx = ax + padding + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING;
 		float icony = ay + (horizontal ? 0 : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) - iconsize) * 0.5f;
 		float fontx = ax + padding + iconsize + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING * 2;
-		float fonty = ay + (horizontal ? 0 : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) + capHeight) * 0.5f;
+		float fonty = ay + (horizontal ? Consts.RESOURCE_HEIGHT * 0.3f : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) + capHeight) * 0.5f;
+		float fontChangex = ax + padding + (horizontal ? iconsize + Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_PADDING * 2 : Consts.RESOURCE_WIDTH);
+		float fontChangey = ay + (horizontal ? -Consts.RESOURCE_HEIGHT * 0.3f : padding) + ((horizontal ? aheight : Consts.RESOURCE_HEIGHT) + capHeight) * 0.5f;
 		for (ResourceType resourceType : ResourceType.values()) {
 			int val = MathUtils.floor(planet.getResources().get(resourceType).val);
+			int changeVal = MathUtils.ceil(planet.getResourceChange().get(resourceType).val / Consts.UNIVERSE_TIME_MULTIPLIER);
 			resourceIcons.get(resourceType).draw(batch, x + iconx, y + icony, iconsize, iconsize);
 			font.draw(batch, "" + val, x + fontx, y + fonty);
+			font.draw(batch, (changeVal >= 0 ? "+" : "") + changeVal, x + fontChangex, y + fontChangey);
 			if (horizontal) {
 				x += Consts.RESOURCE_WIDTH;
 			} else {

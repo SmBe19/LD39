@@ -10,6 +10,7 @@ import java.util.EnumMap;
 public class Consts {
 
 	public static final boolean LAYOUT_DEBUG = false;
+	public static final boolean DEBUG = false;
 
 	public static final String GAME_NAME = "Unadexus";
 	public static final int DESIGN_WIDTH = 800;
@@ -32,14 +33,15 @@ public class Consts {
 	public static final float SPACESHIP_SIZE = 10;
 	public static final int LOADING_RESOURCE_PER_LINE = 3;
 	public static final int DOUBLE_CLICK_TIME = 500;
-	public static final int DUDE_INCREASE_TIME = 10000;
 
 	public static final int UNIVERSE_SIZE = 1234;
 	public static final int PLANET_MIN_DIST = 200;
-	public static final int DUDES_START_COUNT = 1000;
+	public static final int DUDES_START_COUNT = 200;
+	public static final int DUDE_INCREASE_TIME = 30000;
+	public static final float DUDE_INCREASE_AMOUNT = 0.05f;
 	public static final EnumMap<ResourceType, Float> RESOURCE_START
 			= new ResourceMapBuilder<Float>()
-			.add(ResourceType.electricity, 10000f)
+			.add(ResourceType.electricity, 2000f)
 			.add(ResourceType.metal, 500f)
 			.add(ResourceType.propellant, 100f)
 			.add(ResourceType.water, 0f)
@@ -49,15 +51,15 @@ public class Consts {
 			.add(ResourceType.gas, 0f)
 			.add(ResourceType.coal, 0f)
 			.build();
-	public static final int PLANET_COUNT = 10;
+	public static final int PLANET_COUNT = 20;
 	public static final EnumMap<GridElementType, Integer> PLANET_ELEMENTS_COUNT
 			= new GridElementMapBuilder<Integer>()
 			.add(GridElementType.sand, PLANET_COUNT)
-			.add(GridElementType.water, 4)
-			.add(GridElementType.metal, 5)
-			.add(GridElementType.oil, 6)
-			.add(GridElementType.gas, 5)
-			.add(GridElementType.coal, 4)
+			.add(GridElementType.water, 8)
+			.add(GridElementType.metal, 10)
+			.add(GridElementType.oil, 12)
+			.add(GridElementType.gas, 10)
+			.add(GridElementType.coal, 8)
 			.build();
 	public static final EnumMap<GridElementType, Float> ELEMENT_FLOW_AMOUNT
 			= new GridElementMapBuilder<Float>()
