@@ -153,7 +153,6 @@ public class Building {
 		}
 		if (planet.getTotalDudes() > planet.getDudesCapacity() - type.config.dudesCapacityIncrease){
 			ErrorCatcher.get().setBuilding("Not enough capacity to house all dudes.");
-			System.out.println(planet.getTotalDudes() + " " + planet.getDudesCapacity() + " " + type.config.dudesCapacityIncrease);
 			return false;
 		}
 		if (planet.getFreeSpaceShipCapacity() < type.config.spaceShipsCapacityIncrease){

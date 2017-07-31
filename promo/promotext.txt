@@ -41,3 +41,9 @@ On the bottom you can load and unload resources. Just enter the amount you want 
 With the button on the bottom right you can send the space ship to another planet. You need to have enough propellant loaded on the ship for it to be able to reach the destination. You can see the current propellant usage in the detail window and the distance on the space map.
 
 Sorry for the long description, I didn't have time to include a tutorial. Have fun playing.
+
+Post-Compo fixes:
+ - When creating a new universe, there were still some buttons that lead to old, destroyed planets
+ - When all your dudes were in space ships, the universe thought everyone died
+ - Solar plants were basically free, didn't need any solar panels
+ - There was a bit too much sun on Unadexus

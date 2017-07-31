@@ -69,7 +69,7 @@
             <resource type="metal" amount="-160"/>
             <resource type="electricity" amount="100"/>
         </resourcesDestroy>
-        <resourcesUsage>
+        <resourcesUsage>r
             <resource type="gas" amount="30"/>
             <resource type="electricity" amount="-60"/>
         </resourcesUsage>
@@ -159,6 +159,7 @@
         <resourcesBuild>
             <resource type="metal" amount="10"/>
             <resource type="electricity" amount="100"/>
+            <resource type="solarpanel" amount="70"/>
         </resourcesBuild>
         <resourcesDestroy>
             <resource type="metal" amount="-8"/>

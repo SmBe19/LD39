@@ -60,6 +60,9 @@ public class Universe {
 		for (Planet planet : planets) {
 			sum += planet.getTotalDudes();
 		}
+		for (SpaceShip spaceShip : spaceShips) {
+			sum += spaceShip.getResources().get(ResourceType.dudes).val;
+		}
 		return sum;
 	}
 
@@ -149,6 +152,9 @@ public class Universe {
 		earth.setTotalDudes(Consts.DUDES_START_COUNT);
 		for (ResourceType resourceType : ResourceType.values()) {
 			earth.getResources().get(resourceType).val = Consts.RESOURCE_START.get(resourceType);
+			if (Consts.DEBUG){
+				earth.getResources().get(resourceType).val += Consts.DEBUG_RESOURCE_ADD;
+			}
 		}
 		earth.getResources().get(ResourceType.dudes).val = (float) Consts.DUDES_START_COUNT;
 		int cityCount = MathUtils.ceil((float) Consts.DUDES_START_COUNT / BuildingType.city.config.dudesCapacityIncrease);
@@ -169,7 +175,7 @@ public class Universe {
 	}
 
 	private void initAlphaCentauri() {
-		alphaCentauri = new Planet("Unadexus", this, Consts.GRID_MAX_SIZE, Consts.GRID_MAX_SIZE, Consts.UNIVERSE_SIZE, 0, 1000);
+		alphaCentauri = new Planet("Unadexus", this, Consts.GRID_MAX_SIZE, Consts.GRID_MAX_SIZE, Consts.UNIVERSE_SIZE, 0, 100);
 		alphaCentauri.generatePlanet(new GridElementSetBuilder()
 						.add(GridElementType.coal)
 						.add(GridElementType.oil)

@@ -11,6 +11,7 @@ public class Consts {
 
 	public static final boolean LAYOUT_DEBUG = false;
 	public static final boolean DEBUG = false;
+	public static final float DEBUG_RESOURCE_ADD = 100000;
 
 	public static final String GAME_NAME = "Unadexus";
 	public static final int DESIGN_WIDTH = 800;
