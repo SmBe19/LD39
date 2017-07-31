@@ -1,0 +1,19 @@
+body {
+    background-color: #EEE;
+	color: #000;
+    text-align: left;
+    font-family: Verdana, Geneva, sans-serif;
+    max-width: 800px;
+}
+
+a:link {
+	color: #FA0;
+}
+
+a:visited {
+	color: #AA0;
+}
+
+img{
+    max-width: 100%;
+}

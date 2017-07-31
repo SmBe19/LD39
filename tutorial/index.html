@@ -1,0 +1,429 @@
+<!doctype html>
+<html>
+<head>
+    <title>LD39: Unadexus Tutorial</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Unadexus Tutorial</h1>
+<p>
+    <img src="img/title.png"/>
+</p>
+<p>
+    Hi there, adventurer!
+</p>
+<p>
+    After years of exploitation of the earth there is almost nothing left.
+    The earth is low on oil and coal and due to pollution solar panels don't work anymore.
+    We are running out of power!
+</p>
+<p>
+    Humanity's last hope is to move to another planet and start over. Our astronomer found a
+    suitable planet with the beautiful name of Unadexus.
+    You are in charge of guiding this mission and bringing all remaining humans to Unadexus.
+    Good luck!
+</p>
+<p><a href="https://ldjam.com/events/ludum-dare/39/unadexus">Ludum Dare page</a></p>
+<p><a href="https://ludumdare.games.smeanox.com/LD39/web/">Play the game online</a></p>
+<p><a href="https://ludumdare.games.smeanox.com/LD39/unadexus.jar">Download the game</a></p>
+<p>
+    This tutorial will help you get started in Unadexus. Ok, let's start the game.
+</p>
+<p>
+    After we read the short introduction we are greeted by the main build screen. We are currently
+    looking at earth.
+</p>
+<h2>Screens</h2>
+<h3>Build screen</h3>
+<p>
+    <img src="img/tut_build_overview.png"/>
+</p>
+<p>
+    On this screen you will manage a planet and build stuff. Here you will spend most of your time.
+    Let's see what we got:
+</p>
+<p>
+    <img src="img/tut_build_center.png"/>
+</p>
+<p>
+    The thing that will catch your eye is probably the big map in the center. Here you can see a map
+    of the current planet with all the buildings and resources. To see what the different resources
+    are take a look at the end of the tutorial.
+</p>
+<p>
+    You will use this view to build and destroy stuff as
+    well as (de)activate buildings. To (de)activate something just double click on it. While a
+    building is deactivated it does not use any resources but it also does not produce anything.
+    Sometimes buildings will be deactivated automatically if they don't get enough resources. You
+    than have to reactivate them once there are again enough resources. You can drag to move the map
+    around.
+</p>
+<p>
+    <img src="img/tut_build_resources.png"/>
+</p>
+<p>
+    Here you can see all the resources that we have on this planet. The top row is the current
+    storage and the bottom row shows the current production (positive) or consumption (negative) per
+    second. To
+    see what each resource means take a look at the end of the tutorial. As you can see, we
+    currently lose 13 electricity per second. If we run out of it, all humans (from now on called
+    dudes, as in the game) on this planet will die.
+</p>
+<p>
+    <img src="img/tut_build_planetlist.png"/>
+</p>
+<p>
+    Here you find all the planets you visited so far. The text field at the top is the name of the
+    current planet. You can change it if you want to. For each planet (in this picture only earth)
+    you see how many dudes are living there and for how many we would have available space in the
+    cities. If you click on a planet you can directly change to it.
+</p>
+<p>
+    <img src="img/tut_build_buildings.png"/>
+</p>
+<p>
+    This list allows you to select a building to build. To cancel building something you can press
+    on "cancel" (in this list), Esc on the keyboard or the right mouse button. Once you selected
+    something you can build it in the center view. If you later want to destroy a building you can
+    select "remove" from the list and then click on a building.
+</p>
+<p>
+    Once you selected something you get
+    detail information about the building (on the right side of the screen, see below) and how much
+    it will cost. If you can't build something
+    there will be an error message in the bottom right corner. Note that some buildings have to be
+    built on some special type of ground (e.g. oil rig on an oil part).
+</p>
+<p>
+    <img src="img/tut_build_ships.png"/>
+</p>
+<p>
+    In this part we can buy ships. We would also see ships that are currently on this planet. With a
+    click on a ship we get to its detail page where we can send it to another planet. To buy a ship
+    first select the size from the dropdown and then click "buy ship".
+</p>
+<p>
+    <img src="img/tut_build_buydetails.png"/>
+    <img src="img/tut_build_buydetails2.png"/>
+</p>
+<p>
+    This little window gives us some information about the ship we are about to purchase (left
+    image) or about the building we currently selected (right image, example of the solar factory)
+    in the building list. The values in the "production" section are units per second. If the value
+    is negative, the resource will be used, if it is positive it will be produced.
+</p>
+<p>
+    In this example
+    the solar factory will produce 1 solar panel per second and use 10 electricity and 2 metal. The
+    dudes are a bit special: the number specifies how many dudes are necessary to operate the
+    building. Once it is deactivated they will be available again. The values in the other two
+    sections are one time costs (destroying often costs some electricity and give back some metal).
+</p>
+<p>
+    Note that those values are the same for all planets except the solar plants. Each planet has a
+    hidden value that determines how much energy is produced by solar plants. On the earth solar
+    plants don't produce any electricity so there is no point in building them. On Unadexus on the
+    other hand you won't know what to do with so much energy once you have built a solar plant.
+</p>
+<p>
+    <img src="img/tut_build_spacemap.png"/>
+</p>
+<p>
+    With this button we will get to an overview of the universe. Let's do that now!
+</p>
+<h3>Map screen</h3>
+<p>
+    <img src="img/tut_map_overview.png"/>
+</p>
+<p>
+    This map shows you all planets in the universe. You can drag to move the view. The grayed out
+    planets are the ones we did not yet visit.
+</p>
+<p>
+    <img src="img/tut_map_earth.png"/>
+</p>
+<p>
+    If we hover over a planet we get the resources that we have on this planet and the current
+    production / usage.
+</p>
+<p>
+    <img src="img/tut_map_other.png"/>
+</p>
+<p>
+    For other planets it also shows the distance from the current planet. As we did not yet visit
+    ubavalaj all resources are zero. We won't know how much resources there are to extract until we
+    went there and checked.
+</p>
+<p>
+    <img src="img/tut_map_unadexus.png"/>
+</p>
+<p>
+    The goal of this mission is the planet Unadexus. It is located in the lower right corner while
+    the earth is in the top left. You will need a space ship that can transport enough dudes and
+    resources 1746 km. Or you could just make some stops in between and refill your space ships.
+</p>
+<p>
+    Let's go back (with the button on the bottom left corner) and buy a small space ship. Note that
+    it probably is not a good idea to buy a ship so early in the game.
+</p>
+<h3>Space ship screen</h3>
+<p>
+    <img src="img/tut_build_spaceship.png"/>
+</p>
+<p>
+    As you can see there is now a space ship in the previously empty list. You can see the name of
+    the ship and its current location (either a planet or space). If you click on a space ship you
+    get to the detail page for it.
+</p>
+<p>
+    <img src="img/tut_ship_overview.png"/>
+</p>
+<p>
+    This screen gives you all necessary information about your space ship. Let's take a look.
+</p>
+<p>
+    <img src="img/tut_ship_name.png"/>
+</p>
+<p>
+    Here you can see and change the name of the ship. Also you could destroy it. This might make
+    sense to make room for a bigger ship as you can only have two ships per space port (but you
+    could build many space ports).
+</p>
+<p>
+    <img src="img/tut_ship_loading_empty.png"/>
+</p>
+<p>
+    This is where you can move resources from the planet onto the ship and vice versa. Just enter
+    the amount of resources you want to be on the ship. To move to the ship, you increase the
+    amount. To move to the planet, you decrease the amount. There is a limited capacity on the ship
+    so you can't enter any values. Let's add some resources.
+</p>
+<p>
+    <img src="img/tut_ship_loading_full.png"/>
+</p>
+<p>
+    Notice how the resources of the planet (visible at the top of the screen) and the details window
+    on the right adjusted accordingly. Let's look at this details window.
+</p>
+<p>
+    <img src="img/tut_ship_details.png"/>
+</p>
+<p>
+    Here you can find all kinds of information about the ship. Most important are the capacity and
+    propellant. The first specifies how much we can load onto the ship (not every resource has the
+    same weight, you have to test a bit). Propellant tells us how much propellant we need per km we
+    want to travel. This value is dependent on the weight of the ship. You have to load enough
+    propellant to reach the destination before you can
+    launch. Note that the additional propellant increases the weight of the ship a bit and thus how
+    much propellant is used per km travelled. You can see the range for the current loaded amount of
+    propellant also in this view.
+</p>
+<p>
+    <img src="img/tut_ship_launch.png"/>
+</p>
+<p>
+    To fly a space ship to another planet you first have to load enough propellant (and the desired
+    freight). Then you can click on the launch button and choose the destination planet. Should you
+    not be able to fly to the chosen planet there will be an error message in the bottom right
+    corner.
+</p>
+<p>
+    Phew, that's it for the different screens. Now let's look at the different buildings and
+    resources.
+</p>
+<h2>Resources</h2>
+<h3>Electricity</h3>
+<p>
+    <img src="img/tut_resource_electricity.png"/>
+</p>
+<p>
+    Electricity is the main resource and is used to power everything. Most other resources can be
+    transformed to electricity using the corresponding building.
+</p>
+<h3>Metal</h3>
+<p>
+    <img src="img/tut_resource_metal.png"/>
+    <img src="img/tut_resource2_metal.png"/>
+</p>
+<p>
+    Metal is used to buy new buildings and produce solar panels. It can be mined in a metal mine.
+</p>
+<h3>Propellant</h3>
+<p>
+    <img src="img/tut_resource_propellant.png"/>
+</p>
+<p>
+    Propellant is used to power space ships. It is created in space factories.
+</p>
+<h3>Dudes</h3>
+<p>
+    <img src="img/tut_resource_dudes.png"/>
+</p>
+<p>
+    Dudes are needed to run the different buildings. Different buildings need a different number of
+    dudes. This resource is a bit special as it can't be created nor used. The value displayed is
+    just the number of people that live on the planet and don't work in a building. If there is free
+    capacity on a planet the number of dudes will slowly increase.
+</p>
+<h3>Water</h3>
+<p>
+    <img src="img/tut_resource_water.png"/>
+    <img src="img/tut_resource2_water.png"/>
+</p>
+<p>
+    Water is used to produce propellant. It can be retrieved in water plants.
+</p>
+<h3>Solar panel</h3>
+<p>
+    <img src="img/tut_resource_solarpanel.png"/>
+</p>
+<p>
+    Solar panels are used to buy solar plants. They are produced in solar factories.
+</p>
+<h3>Coal</h3>
+<p>
+    <img src="img/tut_resource_coal.png"/>
+    <img src="img/tut_resource2_coal.png"/>
+</p>
+<p>
+    Coal can be mined in coal mines and then transformed into electricity in a coal plant. It is the
+    least efficient energy source of coal, oil and gas.
+</p>
+<h3>Oil</h3>
+<p>
+    <img src="img/tut_resource_oil.png"/>
+    <img src="img/tut_resource2_oil.png"/>
+</p>
+<p>
+    Oil can be obtained at an oil rig and transformed into electricity in a oil plant. It is the
+    second most efficient energy source of coal, oil and gas.
+</p>
+<h3>Gas</h3>
+<p>
+    <img src="img/tut_resource_gas.png"/>
+    <img src="img/tut_resource2_gas.png"/>
+</p>
+<p>
+    Gas can be obtained at a gas rig and transformed into electricity in a gas plant. It is the most
+    efficient energy source of coal, oil and gas.
+</p>
+<h2>Buildings</h2>
+<p>
+    All buildings use and/or produce a certain amount of resources per second. Should a building not
+    get enough resources it will be deactivated and you have to manually reactivate it. This is
+    especially important for the power plants.
+</p>
+<h3>City</h3>
+<p>
+    <img src="img/tut_building_city.png"/>
+</p>
+<p>
+    Increases the capacity of dudes for this planet by 100. As long as a planet has remaining
+    capacity the number of people will slowly increase. Should you need more dudes to power the
+    buildings you can build a new city. You can deactivate a city only if there is still enough
+    capacity to house all dudes without that city.
+</p>
+<h3>Space port</h3>
+<p>
+    <img src="img/tut_building_spaceport.png"/>
+</p>
+<p>
+    Increases the number of ships a planet can have by two. A planet without a space port already
+    has one available slot. You can deactivate a space port only if there is still enough capacity
+    to store all space ships without that space port.
+</p>
+<h3>Space factory</h3>
+<p>
+    <img src="img/tut_building_propellantfactory.png"/>
+</p>
+<p>
+    Is used to produce propellant from water.
+</p>
+<h3>Water plant</h3>
+<p>
+    <img src="img/tut_building_waterplant.png"/>
+</p>
+<p>
+    Draws water from a water source. A water source can give an infinite amount of water.
+</p>
+<h3>Metal mine</h3>
+<p>
+    <img src="img/tut_building_metalmine.png"/>
+</p>
+<p>
+    Mines metal from a metal region.
+</p>
+<h3>Solar factory</h3>
+<p>
+    <img src="img/tut_building_solarfactory.png"/>
+</p>
+<p>
+    Produces solar panels. Those are then used to produce solar plants.
+</p>
+<h3>Solar plant</h3>
+<p>
+    <img src="img/tut_building_solarplant.png"/>
+</p>
+<p>
+    Produces electricity using the sun. The available sun light is not the same on every planet so
+    the amount of energy that is produced varies. On earth they can't produce any electricity, but
+    on Unadexus they produce very much energy.
+</p>
+<h3>Coal mine</h3>
+<p>
+    <img src="img/tut_building_coalmine.png"/>
+</p>
+<p>
+    Mines coal from a coal region.
+</p>
+<h3>Coal plant</h3>
+<p>
+    <img src="img/tut_building_coalplant.png"/>
+</p>
+<p>
+    Transforms coal into electricity. Three coal mines are needed to fully supply a coal plant.
+</p>
+<h3>Oil rig</h3>
+<p>
+    <img src="img/tut_building_oilrig.png"/>
+</p>
+<p>
+    Extracts oil from an oil region.
+</p>
+<h3>Oil plant</h3>
+<p>
+    <img src="img/tut_building_oilplant.png"/>
+</p>
+<p>
+    Transforms oil into electricity. Three oil rigs are needed to fully supply an oil plant.
+</p>
+<h3>Gas rig</h3>
+<p>
+    <img src="img/tut_building_gasrig.png"/>
+</p>
+<p>
+    Extracts gas from a gas region.
+</p>
+<h3>Gas plant</h3>
+<p>
+    <img src="img/tut_building_gasplant.png"/>
+</p>
+<p>
+    Transforms gas into electricity. Three gas rigs are needed to fully supply a gas plant.
+</p>
+<h3>Street</h3>
+<p>
+    <img src="img/tut_building_street.png"/>
+</p>
+<p>
+    Does nothing but uses a little bit of electricity. Why would you build this?
+</p>
+<h2>That's it</h2>
+<p>
+    I hope this tutorial will give you enough information to play the game. If something is still
+    unclear feel free to ask me.
+</p>
+</body>
+</html>

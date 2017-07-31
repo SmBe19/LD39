@@ -16,6 +16,7 @@ public class Consts {
 	public static final String GAME_NAME = "Unadexus";
 	public static final int DESIGN_WIDTH = 800;
 	public static final int DESIGN_HEIGHT = 480;
+	public static final float DESIGN_DPI = 0.6f;
 
 	public static final String BUILDINGS_CONFIG = "cfg/buildings.xml";
 	public static final String SPACESHIPS_CONFIG = "cfg/spaceships.xml";

@@ -157,6 +157,9 @@ public class SpaceShip {
 		if (weight - getType().config.weight + amountPlanetToSpaceShip * type.weight > getType().config.capacity) {
 			return false;
 		}
+		if (type == ResourceType.dudes && amountPlanetToSpaceShip < 0 && start.getTotalDudes() - amountPlanetToSpaceShip > start.getDudesCapacity()){
+			return false;
+		}
 		start.getResources().get(type).val -= amountPlanetToSpaceShip;
 		resources.get(type).val += amountPlanetToSpaceShip;
 		if (type == ResourceType.dudes) {

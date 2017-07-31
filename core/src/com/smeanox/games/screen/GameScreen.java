@@ -1,6 +1,7 @@
 package com.smeanox.games.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
 	private final ResourceWidget spaceMapResourceWidget;
 	private final SpaceShipDetailWidget spaceShipDetailWidget;
 	private final SpaceShipLoadingWidget spaceShipLoadingWidget;
+	private final ScreenViewport viewport;
 	private float unusedTime;
 	private Planet currentPlanet;
 	private SpaceShip currentSpaceShip;
@@ -86,10 +88,12 @@ public class GameScreen implements Screen {
 		skin.addRegions(Atlas.textures.atlas);
 		skin.load(Gdx.files.internal("uiskin.json"));
 
-		buildStage = new Stage(new ScreenViewport());
-		spaceStage = new Stage(new ScreenViewport());
-		portStage = new Stage(new ScreenViewport());
-		pauseStage = new Stage(new ScreenViewport());
+		viewport = new ScreenViewport();
+		viewport.setUnitsPerPixel(Consts.DESIGN_DPI / Gdx.graphics.getDensity());
+		buildStage = new Stage(viewport);
+		spaceStage = new Stage(viewport);
+		portStage = new Stage(viewport);
+		pauseStage = new Stage(viewport);
 
 		buildWidget = new BuildWidget(skin);
 		resourceWidgetBuild = new ResourceWidget(skin, true);
@@ -589,10 +593,14 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		buildStage.getViewport().update(width, height, true);
-		spaceStage.getViewport().update(width, height, true);
-		portStage.getViewport().update(width, height, true);
-		pauseStage.getViewport().update(width, height, true);
+		viewport.update(width, height, true);
+		centerDialog(winDialog);
+		centerDialog(loseDialog);
+		centerDialog(welcomeDialog);
+	}
+
+	private void centerDialog(Dialog dialog) {
+		dialog.setPosition(Math.round((pauseStage.getWidth() - dialog.getWidth()) / 2), Math.round((pauseStage.getHeight() - dialog.getHeight()) / 2));
 	}
 
 	@Override
