@@ -55,6 +55,22 @@ public class Universe {
 		}
 	}
 
+	public int getTotalDudes(){
+		int sum = 0;
+		for (Planet planet : planets) {
+			sum += planet.getTotalDudes();
+		}
+		return sum;
+	}
+
+	public boolean isWon(){
+		return alphaCentauri.getTotalDudes() == getTotalDudes();
+	}
+
+	public boolean isLost(){
+		return getTotalDudes() == 0;
+	}
+
 	private boolean possiblePosition(int x, int y) {
 		for (Planet planet : planets) {
 			if ((planet.getX() - x) * (planet.getX() - x) + (planet.getY() - y) * (planet.getY() - y) < Consts.PLANET_MIN_DIST * Consts.PLANET_MIN_DIST) {
@@ -65,6 +81,9 @@ public class Universe {
 	}
 
 	public void bigBang() {
+		planets.clear();
+		spaceShips.clear();
+
 		initEarth();
 		initAlphaCentauri();
 
@@ -95,7 +114,7 @@ public class Universe {
 			int width = MathUtils.random(Consts.GRID_MIN_SIZE, small ? ((int) (Consts.GRID_MAX_SIZE * Consts.PLANET_SMALL_MULTIPLIER)) : Consts.GRID_MAX_SIZE);
 			int height = MathUtils.random(Consts.GRID_MIN_SIZE, small ? ((int) (Consts.GRID_MAX_SIZE * Consts.PLANET_SMALL_MULTIPLIER)) : Consts.GRID_MAX_SIZE);
 			float solarMultiplier = MathUtils.random(Consts.SOLAR_MULTIPLIER_MIN, Consts.SOLAR_MULTIPLIER_MAX);
-			Planet planet = new Planet(getRandomName(8), width, height, x, y, solarMultiplier);
+			Planet planet = new Planet(getRandomName(8), this, width, height, x, y, solarMultiplier);
 			planet.generatePlanet(elements.get(i), "space/planet" + (MathUtils.random(6)));
 			planets.add(planet);
 		}
@@ -116,7 +135,7 @@ public class Universe {
 	}
 
 	private void initEarth() {
-		earth = new Planet("Earth", 10, 10, 0, Consts.UNIVERSE_SIZE, 0);
+		earth = new Planet("Earth", this, 10, 10, 0, Consts.UNIVERSE_SIZE, 0);
 		earth.generatePlanet(new GridElementSetBuilder()
 						.add(GridElementType.coal)
 						.add(GridElementType.oil)
@@ -148,7 +167,7 @@ public class Universe {
 	}
 
 	private void initAlphaCentauri() {
-		alphaCentauri = new Planet("Alpha Centauri", Consts.GRID_MAX_SIZE, Consts.GRID_MAX_SIZE, Consts.UNIVERSE_SIZE, 0, 1000);
+		alphaCentauri = new Planet("Unadexus", this, Consts.GRID_MAX_SIZE, Consts.GRID_MAX_SIZE, Consts.UNIVERSE_SIZE, 0, 1000);
 		alphaCentauri.generatePlanet(new GridElementSetBuilder()
 						.add(GridElementType.coal)
 						.add(GridElementType.oil)

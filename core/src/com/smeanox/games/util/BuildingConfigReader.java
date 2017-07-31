@@ -32,13 +32,13 @@ public class BuildingConfigReader {
 		return result;
 	}
 
-	private EnumMap<ResourceType, Float> readResourceList(XmlReader.Element element) {
+	private EnumMap<ResourceType, Float> readResourceList(XmlReader.Element element, boolean convert) {
 		EnumMap<ResourceType, Float> result = new EnumMap<ResourceType, Float>(ResourceType.class);
 		for (ResourceType resourceType : ResourceType.values()) {
 			result.put(resourceType, 0f);
 		}
 		for (XmlReader.Element resource : element.getChildrenByName("resource")) {
-			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount") * Consts.UNIVERSE_TIME_MULTIPLIER);
+			result.put(ResourceType.valueOf(resource.getAttribute("type")), resource.getFloat("amount") * (convert ? Consts.UNIVERSE_TIME_MULTIPLIER : 1));
 		}
 		return result;
 	}
@@ -68,9 +68,9 @@ public class BuildingConfigReader {
 					properties.getInt("spaceships_increase"),
 					properties.getFloat("level_usage") * Consts.UNIVERSE_TIME_MULTIPLIER,
 					readElementList(needGridElement),
-					readResourceList(resourcesBuild),
-					readResourceList(resourcesDestroy),
-					readResourceList(resourcesUsage)));
+					readResourceList(resourcesBuild, false),
+					readResourceList(resourcesDestroy, false),
+					readResourceList(resourcesUsage, true)));
 		}
 	}
 

@@ -11,7 +11,6 @@ import com.smeanox.games.Consts;
 import com.smeanox.games.world.BuildingType;
 import com.smeanox.games.world.Planet;
 import com.smeanox.games.world.ResourceType;
-import com.smeanox.games.world.SpaceShip;
 import com.smeanox.games.world.SpaceShipType;
 
 import java.util.ArrayList;
@@ -111,7 +110,6 @@ public class ResourceInfoWidget extends Widget {
 						cnt[1]++;
 					}
 				}
-				System.out.println(cnt[0] + " " + cnt[1]);
 				for (int i = 0; i < 2; i++) {
 					prefHeight += cnt[i] * Consts.RESOURCE_HEIGHT;
 				}
@@ -183,17 +181,17 @@ public class ResourceInfoWidget extends Widget {
 		}
 
 		if (resourcesUsage != null) {
-			yy = drawList(batch, "Usage", resourcesUsage, buildingType.config.dudesNeeded, planet != null ? planet.getSolarMultiplier() : 1, true, ax + padding, yy) - spacing;
+			yy = drawList(batch, "Production", resourcesUsage, buildingType.config.dudesNeeded, planet != null ? planet.getSolarMultiplier() : 1, true, true, ax + padding, yy) - spacing;
 		}
 		if (resourcesBuild != null) {
-			yy = drawList(batch, "Build", resourcesBuild, 0, 1, true, ax + padding, yy) - spacing;
+			yy = drawList(batch, "Build", resourcesBuild, 0, 1, true, false, ax + padding, yy) - spacing;
 		}
 		if (resourcesDestroy != null) {
-			yy = drawList(batch, "Destroy", resourcesDestroy, 0, 1, true, ax + padding, yy) - spacing;
+			yy = drawList(batch, "Destroy", resourcesDestroy, 0, 1, true, false, ax + padding, yy) - spacing;
 		}
 	}
 
-	private float drawList(Batch batch, String title, EnumMap<ResourceType, Float> resources, int dudes, float solarMultiplier, boolean flipValues, float x, float y) {
+	private float drawList(Batch batch, String title, EnumMap<ResourceType, Float> resources, int dudes, float solarMultiplier, boolean flipValues, boolean convert, float x, float y) {
 		float ax = x;
 		float ay = y;
 		float iconsize = Consts.RESOURCE_HEIGHT * Consts.RESOURCE_ICON_SIZE;
@@ -205,10 +203,13 @@ public class ResourceInfoWidget extends Widget {
 		ay -= fontoff;
 		for (ResourceType resourceType : ResourceType.values()) {
 			float usageUnrounded = resources.get(resourceType);
-			if (resourceType == ResourceType.solarpanel){
+			if (buildingType == BuildingType.solarplant && resourceType == ResourceType.electricity){
 				usageUnrounded *= solarMultiplier;
 			}
-			float usage = MathUtils.round(usageUnrounded * 100 / Consts.UNIVERSE_TIME_MULTIPLIER) / 100f;
+			if (convert){
+				usageUnrounded /= Consts.UNIVERSE_TIME_MULTIPLIER;
+			}
+			int usage = MathUtils.ceil(usageUnrounded);
 			if (flipValues){
 				usage *= -1;
 			}

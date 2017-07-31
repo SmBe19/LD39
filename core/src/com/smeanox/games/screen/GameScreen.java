@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -27,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.smeanox.games.Consts;
 import com.smeanox.games.util.ErrorCatcher;
@@ -50,8 +52,9 @@ public class GameScreen implements Screen {
 	private Planet currentPlanet;
 	private SpaceShip currentSpaceShip;
 	private boolean selectingStart;
+	private boolean handledWin;
 
-	private final Stage buildStage, spaceStage, portStage;
+	private final Stage buildStage, spaceStage, portStage, pauseStage;
 	private final Skin skin;
 	private Stage currentStage;
 	private final BuildWidget buildWidget;
@@ -66,6 +69,7 @@ public class GameScreen implements Screen {
 	private final SelectBox<SpaceShipType> spaceShipTypeSelection;
 	private final ScrollPane spaceMapScrollPane;
 	private final TextButton buyShipButton;
+	private final Dialog winDialog, loseDialog, welcomeDialog;
 
 	private final Planet.PlanetListener shipArrivedListener;
 
@@ -74,18 +78,17 @@ public class GameScreen implements Screen {
 		universe.bigBang();
 		currentPlanet = universe.getEarth();
 		unusedTime = 0;
+		handledWin = false;
 
 		skin = new Skin();
 		skin.addRegions(Atlas.ui.atlas);
 		skin.addRegions(Atlas.textures.atlas);
 		skin.load(Gdx.files.internal("uiskin.json"));
 
-//		buildStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
-//		spaceStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
-//		portStage = new Stage(new ExtendViewport(Consts.DESIGN_WIDTH, Consts.DESIGN_HEIGHT));
 		buildStage = new Stage(new ScreenViewport());
 		spaceStage = new Stage(new ScreenViewport());
 		portStage = new Stage(new ScreenViewport());
+		pauseStage = new Stage(new ScreenViewport());
 
 		buildWidget = new BuildWidget(skin);
 		resourceWidgetBuild = new ResourceWidget(skin, true);
@@ -106,6 +109,18 @@ public class GameScreen implements Screen {
 		spaceMapScrollPane = new ScrollPane(spaceMapWidget, skin, "no-bars");
 		buyShipButton = new TextButton("Buy Ship", skin);
 
+		winDialog = new MyDialog("Won", skin).text("\nCongratulations, you won!\n").button("Continue playing", 1).button("Start again", 2);
+		loseDialog = new MyDialog("Lost", skin).text("\nYou lost, all your dudes are dead!\nTry again!\n").button("Start again", 2);
+		welcomeDialog = new MyDialog("Mission to Unadexus", skin)
+				.button("Let's go", 1)
+				.text("\nHi there, adventurer!\nAfter years of exploitation of the earth there is almost nothing left.\n" +
+						"The earth is low on oil and coal and due to pollution solar panels don't work anymore.\n" +
+						"We are running out of power!\n\n" +
+						"Humanity's last hope is to move to another planet and start over.\n" +
+						"Our astronomer found a suitable planet with the beautiful name of Unadexus.\n" +
+						"You are in charge of guiding this mission and bringing all remaining humans to Unadexus.\n" +
+						"Good luck!\n");
+
 		shipArrivedListener = new Planet.PlanetListener() {
 			@Override
 			public void spaceShipArrived(Planet planet, SpaceShip spaceShip) {
@@ -116,13 +131,15 @@ public class GameScreen implements Screen {
 		initUI();
 
 		setCurrentPlanet(currentPlanet);
-		activateStage(buildStage);
+		activateStage(pauseStage);
+		welcomeDialog.show(pauseStage);
 	}
 
 	private void initUI() {
 		initBuildStage();
 		initSpaceStage();
 		initPortStage();
+		initPauseStage();
 	}
 
 	private void initBuildStage() {
@@ -433,6 +450,12 @@ public class GameScreen implements Screen {
 
 		portTable.setDebug(Consts.LAYOUT_DEBUG, true);
 	}
+	private void initPauseStage() {
+		Image background = new Image(skin.getDrawable("ui/background"));
+		background.setScaling(Scaling.fill);
+		background.setFillParent(true);
+		pauseStage.addActor(background);
+	}
 
 	private void centerSpaceMap(){
 		// TODO fix not working on first call
@@ -459,10 +482,30 @@ public class GameScreen implements Screen {
 	}
 
 	private void update(float delta) {
+		if (currentStage == pauseStage){
+			return;
+		}
 		unusedTime += delta * 1000;
 		while (unusedTime >= Consts.UNIVERSE_STEP_SIZE) {
 			universe.step();
 			unusedTime -= Consts.UNIVERSE_STEP_SIZE;
+		}
+
+		handleWinLoss();
+	}
+
+	private void handleWinLoss() {
+		if (handledWin){
+			return;
+		}
+		if (universe.isWon()){
+			activateStage(pauseStage);
+			winDialog.show(pauseStage);
+			handledWin = true;
+		} else if (universe.isLost()){
+			activateStage(pauseStage);
+			loseDialog.show(pauseStage);
+			handledWin = true;
 		}
 	}
 
@@ -563,6 +606,38 @@ public class GameScreen implements Screen {
 		skin.dispose();
 		for (Atlas atlas : Atlas.values()) {
 			atlas.atlas.dispose();
+		}
+	}
+
+	private class MyDialog extends Dialog {
+
+		public MyDialog(String title, Skin skin) {
+			super(title, skin);
+		}
+
+		@Override
+		protected void result(Object object) {
+			if (object.equals(1)) {
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						activateStage(buildStage);
+					}
+				}, 1);
+				hide();
+			} else if (object.equals(2)){
+				universe.bigBang();
+				unusedTime = 0;
+				handledWin = false;
+				setCurrentPlanet(universe.getEarth());
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						activateStage(buildStage);
+					}
+				}, 1);
+				hide();
+			}
 		}
 	}
 }

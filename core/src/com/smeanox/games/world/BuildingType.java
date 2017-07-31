@@ -10,12 +10,12 @@ public enum BuildingType {
 	metalmine,
 	solarfactory,
 	solarplant,
+	coalmine,
+	coalplant,
 	oilrig,
 	oilplant,
 	gasrig,
 	gasplant,
-	coalmine,
-	coalplant,
 	street,
 	;
 

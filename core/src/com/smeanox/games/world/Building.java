@@ -1,5 +1,6 @@
 package com.smeanox.games.world;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.smeanox.games.util.ErrorCatcher;
 
 public class Building {
@@ -78,7 +79,7 @@ public class Building {
 			return;
 		}
 		if (!canStep(planet)) {
-			deactivate(planet);
+			deactivate(planet, true);
 			return;
 		}
 		for (ResourceType resourceType : ResourceType.values()) {
@@ -163,7 +164,11 @@ public class Building {
 	}
 
 	public void deactivate(Planet planet) {
-		if (!canDeactivate(planet)){
+		deactivate(planet, false);
+	}
+
+	public void deactivate(Planet planet, boolean force) {
+		if (!force && !canDeactivate(planet)){
 			return;
 		}
 
@@ -172,6 +177,17 @@ public class Building {
 		planet.getResources().get(ResourceType.dudes).val += type.config.dudesNeeded;
 		planet.addDudesCapacity(-type.config.dudesCapacityIncrease);
 		planet.addSpaceShipsCapacity(-type.config.spaceShipsCapacityIncrease);
+
+		if (force){
+			if (planet.getTotalDudes() > planet.getDudesCapacity()) {
+				int diff = planet.getTotalDudes() - planet.getDudesCapacity();
+				planet.getResources().get(ResourceType.dudes).val -= diff;
+				planet.addTotalDudes(-diff);
+			}
+			while (planet.getFreeSpaceShipCapacity() < 0) {
+				planet.getSpaceShips().get(MathUtils.random(planet.getSpaceShips().size() - 1)).destroy(planet.getUniverse(), true);
+			}
+		}
 	}
 
 	public void toggle(Planet planet){

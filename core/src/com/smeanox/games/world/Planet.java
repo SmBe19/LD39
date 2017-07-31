@@ -16,6 +16,7 @@ public class Planet {
 	private long time;
 	private TextureRegion texture;
 	private String name;
+	private final Universe universe;
 	private final int width;
 	private final int height;
 	private final int x, y;
@@ -32,8 +33,9 @@ public class Planet {
 
 	private List<PlanetListener> listeners;
 
-	public Planet(String name, int width, int height, int x, int y, float solarMultiplier) {
+	public Planet(String name, Universe universe, int width, int height, int x, int y, float solarMultiplier) {
 		this.name = name;
+		this.universe = universe;
 		this.width = width;
 		this.height = height;
 		this.x = x;
@@ -44,6 +46,8 @@ public class Planet {
 		this.spaceShips = new ArrayList<SpaceShip>();
 		this.arrivingSpaceShips = new ArrayList<SpaceShip>();
 		this.resources = new EnumMap<ResourceType, Rapper<Float>>(ResourceType.class);
+
+		this.spaceShipsCapacity = Consts.SPACE_SHIP_CAPACITY_WITHOUT_PORT;
 
 		listeners = new ArrayList<PlanetListener>();
 	}
@@ -82,11 +86,6 @@ public class Planet {
 			y = MathUtils.random(height - 1);
 		} while (grid[y][x].getType() != GridElementType.sand || grid[y][x].getBuilding() != null);
 		buildFreeBuilding(BuildingType.city, x, y);
-		do {
-			x = MathUtils.random(width - 1);
-			y = MathUtils.random(height - 1);
-		} while (grid[y][x].getType() != GridElementType.sand || grid[y][x].getBuilding() != null);
-		buildFreeBuilding(BuildingType.spaceport, x, y);
 
 		fireDiscovered();
 	}
@@ -122,6 +121,10 @@ public class Planet {
 			new Building(type).build(this, x, y);
 			return true;
 		}
+	}
+
+	public Universe getUniverse() {
+		return universe;
 	}
 
 	public long getTime() {

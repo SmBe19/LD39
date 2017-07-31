@@ -11,7 +11,7 @@ public class Consts {
 
 	public static final boolean LAYOUT_DEBUG = false;
 
-	public static final String GAME_NAME = "LD39 Dev Build";
+	public static final String GAME_NAME = "Unadexus";
 	public static final int DESIGN_WIDTH = 800;
 	public static final int DESIGN_HEIGHT = 480;
 
@@ -39,8 +39,8 @@ public class Consts {
 	public static final int DUDES_START_COUNT = 1000;
 	public static final EnumMap<ResourceType, Float> RESOURCE_START
 			= new ResourceMapBuilder<Float>()
-			.add(ResourceType.electricity, 50000f)
-			.add(ResourceType.metal, 1000f)
+			.add(ResourceType.electricity, 10000f)
+			.add(ResourceType.metal, 500f)
 			.add(ResourceType.propellant, 100f)
 			.add(ResourceType.water, 0f)
 			.add(ResourceType.dudes, (float) DUDES_START_COUNT)
@@ -84,4 +84,5 @@ public class Consts {
 	public static final float SOLAR_MULTIPLIER_MIN = 0;
 	public static final float SOLAR_MULTIPLIER_MAX = 10;
 	public static final float START_LEVEL = 300;
+	public static final int SPACE_SHIP_CAPACITY_WITHOUT_PORT = 1;
 }

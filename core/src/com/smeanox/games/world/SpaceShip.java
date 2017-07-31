@@ -123,8 +123,12 @@ public class SpaceShip {
 		return true;
 	}
 
-	public void destroy(Universe universe){
-		if (!canDestroy(start)){
+	public void destroy(Universe universe) {
+		destroy(universe, false);
+	}
+
+	public void destroy(Universe universe, boolean force){
+		if (!force && !canDestroy(start)){
 			return;
 		}
 
