@@ -175,6 +175,10 @@ public class SpaceShip {
 			ErrorCatcher.get().setStart("Space ship is already flying.");
 			return false;
 		}
+		if (destination == this.start){
+			ErrorCatcher.get().setSpaceShip("Destination has to be different from start planet.");
+			return false;
+		}
 		this.destination = destination;
 		updateDistanceAndWeight();
 		float usage = type.config.propellantPerWeightAndDistance * distance * weight;

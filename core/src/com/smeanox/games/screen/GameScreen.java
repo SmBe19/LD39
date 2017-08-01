@@ -33,8 +33,11 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.smeanox.games.Consts;
 import com.smeanox.games.util.ErrorCatcher;
+import com.smeanox.games.util.PlanetClickedEvent;
+import com.smeanox.games.util.PlanetClickedListener;
 import com.smeanox.games.world.BuildingType;
 import com.smeanox.games.world.Planet;
+import com.smeanox.games.world.ResourceType;
 import com.smeanox.games.world.SpaceShip;
 import com.smeanox.games.world.SpaceShipType;
 import com.smeanox.games.world.Universe;
@@ -343,9 +346,9 @@ public class GameScreen implements Screen {
 		background.setFillParent(true);
 		spaceStage.addActor(background);
 
-		spaceMapWidget.addListener(new SpaceMapWidget.PlanetClickedListener() {
+		spaceMapWidget.addListener(new PlanetClickedListener() {
 			@Override
-			public void clicked(SpaceMapWidget.PlanetClickedEvent event, Planet planet) {
+			public void clicked(PlanetClickedEvent event, Planet planet) {
 				if(selectingStart){
 					if(currentSpaceShip.canStart(planet)){
 						currentSpaceShip.start(planet);
@@ -506,6 +509,7 @@ public class GameScreen implements Screen {
 			unusedTime -= Consts.UNIVERSE_STEP_SIZE;
 		}
 
+		handleCheats();
 		handleWinLoss();
 	}
 
@@ -521,6 +525,17 @@ public class GameScreen implements Screen {
 			activateStage(pauseStage);
 			loseDialog.show(pauseStage);
 			handledWin = true;
+		}
+	}
+
+	private void handleCheats() {
+		if (Gdx.input.isKeyPressed(Input.Keys.Y) && Gdx.input.isKeyPressed(Input.Keys.P) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			for (ResourceType resourceType : ResourceType.values()) {
+				if (resourceType == ResourceType.dudes) {
+					continue;
+				}
+				currentPlanet.getResources().get(resourceType).val += Consts.CHEAT_RESOURCE_ADD;
+			}
 		}
 	}
 

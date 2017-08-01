@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Pools;
 import com.smeanox.games.Consts;
+import com.smeanox.games.util.PlanetClickedEvent;
 import com.smeanox.games.world.Planet;
 import com.smeanox.games.world.SpaceShip;
 import com.smeanox.games.world.Universe;
@@ -69,10 +70,9 @@ public class SpaceMapWidget extends Widget {
 			public void clicked(InputEvent event, float x, float y) {
 				Planet planet = hitPlanet(x, y);
 				if (planet != null) {
-					PlanetClickedEvent planetEvent = Pools.obtain(PlanetClickedEvent.class);
+					PlanetClickedEvent planetEvent = new PlanetClickedEvent();
 					planetEvent.setPlanet(planet);
 					fire(planetEvent);
-					Pools.free(planetEvent);
 				}
 			}
 		});
@@ -190,38 +190,8 @@ public class SpaceMapWidget extends Widget {
 		}
 	}
 
-	public static class PlanetClickedEvent extends Event {
-		private Planet planet;
-
-		public PlanetClickedEvent() {
-		}
-
-		public Planet getPlanet() {
-			return planet;
-		}
-
-		public void setPlanet(Planet planet) {
-			this.planet = planet;
-		}
-	}
-
 	public void centerOnCurrentPlanet(ScrollPane scrollPane){
 		scrollPane.setScrollX(offX + currentPlanet.getX() - scrollPane.getWidth() * 0.5f);
 		scrollPane.setScrollY(prefHeight - (offY + currentPlanet.getY()) - scrollPane.getHeight() * 0.5f);
-	}
-
-	public static abstract class PlanetClickedListener implements EventListener {
-
-		@Override
-		public boolean handle(Event event) {
-			if (!(event instanceof PlanetClickedEvent)) {
-				return false;
-			}
-			PlanetClickedEvent planetEvent = (PlanetClickedEvent) event;
-			clicked(planetEvent, planetEvent.getPlanet());
-			return true;
-		}
-
-		public abstract void clicked(PlanetClickedEvent event, Planet planet);
 	}
 }

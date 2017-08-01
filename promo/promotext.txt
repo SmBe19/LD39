@@ -37,3 +37,4 @@ Post-Compo fixes:
  - There was a bit too much sun on Unadexus
  - Dudes could leave a space ship even though the planet did not have enough capacity
  - Support high DPI screens
+ - Fix web build: planet selection was not working, thus unable to fly space ships (thanks @jimbly for reporting)
