@@ -30,6 +30,8 @@ Space ship view:
 
 Have fun playing.
 
+Also available on [itch.io](https://smeanox.itch.io/unadexus)
+
 Post-Compo fixes:
  - When creating a new universe, there were still some buttons that led to old, destroyed planets
  - When all your dudes were in space ships, the universe thought everyone died
